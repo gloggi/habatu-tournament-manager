@@ -1,0 +1,26 @@
+### Post a Category
+POST http://localhost:8000/categories HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Leitende"
+}
+### Get one Category
+GET http://localhost:8000/categories/id HTTP/1.1
+content-type: application/json
+
+### Get all Categories
+GET http://localhost:8000/categories HTTP/1.1
+content-type: application/json
+
+### Update a Categorie
+POST http://localhost:8000/categories HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+
+### Delete one Categorie
+Delete http://localhost:8000/categories/id HTTP/1.1
+content-type: application/json

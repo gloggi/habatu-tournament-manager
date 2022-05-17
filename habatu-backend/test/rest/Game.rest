@@ -1,0 +1,26 @@
+### Post a Game
+POST http://localhost:8000/games HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+### Get one Game
+GET http://localhost:8000/games/id HTTP/1.1
+content-type: application/json
+
+### Get all Games
+GET http://localhost:8000/games HTTP/1.1
+content-type: application/json
+
+### Update a Game
+POST http://localhost:8000/games HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+
+### Delete one Game
+Delete http://localhost:8000/games/id HTTP/1.1
+content-type: application/json

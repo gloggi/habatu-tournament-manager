@@ -1,0 +1,26 @@
+### Post a Section
+POST http://localhost:8000/sections HTTP/1.1
+content-type: application/json
+
+{
+    "name": "See"
+}
+### Get one Section
+GET http://localhost:8000/sections/id HTTP/1.1
+content-type: application/json
+
+### Get all Sections
+GET http://localhost:8000/sections HTTP/1.1
+content-type: application/json
+
+### Update a Section
+POST http://localhost:8000/sections HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+
+### Delete one Section
+Delete http://localhost:8000/sections/id HTTP/1.1
+content-type: application/json
