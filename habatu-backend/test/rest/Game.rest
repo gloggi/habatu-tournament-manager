@@ -13,6 +13,10 @@ content-type: application/json
 GET http://localhost:8000/games HTTP/1.1
 content-type: application/json
 
+### Get all Games Preview
+GET http://localhost:8000/games/preview HTTP/1.1
+content-type: application/json
+
 ### Update a Game
 POST http://localhost:8000/games HTTP/1.1
 content-type: application/json
