@@ -1,0 +1,29 @@
+### Post a Option
+POST http://localhost:8000/options HTTP/1.1
+content-type: application/json
+
+{
+    "tournamentName": "Testtorunament",
+    "startTime": "string",
+    "gameDuration": 10,
+    "breakDuration": 5
+}
+### Get one Option
+GET http://localhost:8000/options/id HTTP/1.1
+content-type: application/json
+
+### Get all Options
+GET http://localhost:8000/options HTTP/1.1
+content-type: application/json
+
+### Update a Option
+POST http://localhost:8000/options HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+
+### Delete one Option
+Delete http://localhost:8000/options/6314bb51b44c6df1e6fa2548 HTTP/1.1
+content-type: application/json
