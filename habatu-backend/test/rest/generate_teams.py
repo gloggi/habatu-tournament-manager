@@ -1,11 +1,6 @@
 import requests
 categories = [
   {
-    "_id": "62824596b7de7a472c9d7343",
-    "name": "Gemischt",
-    "__v": 0
-  },
-  {
     "_id": "62824fcc00d8c849809675d3",
     "name": "Gemischt",
     "__v": 0

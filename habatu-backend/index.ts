@@ -1,4 +1,5 @@
 import express, { Express, Request, Response, json, } from 'express';
+import cors from "cors"
 import "express-async-errors";
 import { connect } from 'mongoose';
 import dotenv from 'dotenv';
@@ -8,6 +9,9 @@ connect('mongodb://mongo:27017');
 const app: Express = express();
 const port = process.env.PORT;
 app.use(json())
+app.use(cors({
+  origin: "*"
+}))
 app.use(router);
 app.get('/', (req: Request, res: Response) => {
   res.json({ message: "Alles guet :)" })

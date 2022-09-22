@@ -1,8 +1,11 @@
-import { Category, Game, Hall } from "../models";
+import { Category, Game, Hall, Option, Team } from "../models";
 import { IGame } from '../interfaces/game.interface';
-import { Types } from "mongoose";
-import { Team } from "../models";
+import { PopulatedDoc, Types } from "mongoose";
 import { gamesGenerator } from "../utils/roundRobin";
+import { IHall } from "../interfaces/hall.interface";
+import { ITeam } from "../interfaces/team.interface";
+import { ICategory } from "../interfaces/category.interface";
+import { IOption } from "../interfaces/option.interface";
 
 export const createGame = async (game: IGame) => {
     return await Game.create(game)
@@ -30,9 +33,24 @@ export const deleteGame = async (_id: String) => {
 }
 
 export const getGamesPreview = async () => {
-    const teams = await Team.find({},{},{autopopulate: false})
-    const categories = await Category.find({});
-    const halls = await Hall.find({});
-    const games = gamesGenerator(teams, categories, halls)
-    return games
+    const teams :ITeam[] = await Team.find({},{},).lean() as ITeam[]
+    const categories : ICategory[] = await Category.find({}).lean();
+    const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
+    const options :IOption = await Option.findOne().orFail().lean();
+    const tempGames = gamesGenerator(teams, categories, halls, options)
+    await Game.deleteMany({})
+    await  Game.insertMany(tempGames)
+    const games = await Game.find({}).populate<{ hall: IHall }>('hall')
+    
+    const table: Record<string, Record<string, any[]>> = {}
+    for(let game of games){
+        if(table[game.startTime.toString()]==undefined){
+            table[game.startTime.toString()] ={}
+        }
+        if(table[game.startTime.toString()][game.hall.name]==undefined){
+            table[game.startTime.toString()][game.hall.name] = []
+        }
+        table[game.startTime.toString()][game.hall.name].push(game)
+    }
+    return {table, halls}
 }

@@ -23,5 +23,5 @@ content-type: application/json
 }
 
 ### Delete one Team
-Delete http://localhost:8000/teams/62829a853ba23abd58fc3dd4 HTTP/1.1
+Delete http://localhost:8000/teams/6314ff50e8fa25faabb8de99 HTTP/1.1
 content-type: application/json

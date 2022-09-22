@@ -3,10 +3,10 @@ POST http://localhost:8000/options HTTP/1.1
 content-type: application/json
 
 {
-    "tournamentName": "Testtorunament",
-    "startTime": "string",
-    "gameDuration": 10,
-    "breakDuration": 5
+    "tournamentName": "HaBaTu",
+    "startTime": "2022/09/04  10:00",
+    "gameDuration": "2022/09/04  00:10",
+    "breakDuration": "2022/09/04  00:05"
 }
 ### Get one Option
 GET http://localhost:8000/options/id HTTP/1.1

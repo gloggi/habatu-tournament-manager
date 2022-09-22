@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@types/mongoose-autopopulate": "^0.10.3"
+  }
+}
