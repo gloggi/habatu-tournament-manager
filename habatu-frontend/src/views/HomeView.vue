@@ -1,13 +1,17 @@
 <template>
-  <div v-if="games" >
-    
-    <div class="flex flex-row space-x-4 justify-even items-center space-y-4" v-for="timeslot in Object.keys(games.table)" :key="timeslot">
-     <div class="p-3 w-1/2"> {{format(new Date(timeslot),"HH:mm")}}</div>
-     <div v-for="(hall, i) in Object.keys(games.table[timeslot])" :style="`background: ${games.table[timeslot][hall][0].category.color};`" :key="i" :class="`p-2 border font-bold rounded-md w-full ${games.table[timeslot][hall][0].teamA.name===games.table[timeslot][hall][0].teamB.name?'text-red':''}`"> {{games.table[timeslot][hall][0].teamA.name}} vs {{games.table[timeslot][hall][0].teamB.name}}</div>
-     <div v-for="i in games.halls.length-Object.keys(games.table[timeslot]).length" :key="i"></div>
+  <div v-if="timeslots" :key="tableKey" class="space-y-4 mt-3 px-2 h-full w-full" >
+    <div class="flex flex-row space-x-4 justify-center items-baseline">
+      <div class="w-1/2"></div>
+      <div v-for="hall in halls" :key="hall._id" class="w-full text-xl">{{hall.name}}</div>
     </div>
-    
+    <div :class="`flex flex-row space-x-4 justify-center items-baseline ${i==5?'ring-2 ring-red-400 ring-offset-1 ring-opacity-75 rounded-lg':''}`" v-for="(timeslot, i) in Object.keys(timeslots)" :key="timeslot">
+     <div class="w-1/2 self-center">{{timeslot.split("|")[0]}}</div>
+     <DragSlot class="w-full self-stretch" @reload="handleReload" :hall="hall.split('|')[1]" :timeslot="timeslot.split('|')[1]" v-for="(hall) in Object.keys(timeslots[timeslot])"  :key="hall.name">
+     <GameField :games="timeslots[timeslot][hall]" />
+    </DragSlot>
+    </div>
   </div>
+  <GameModal />
 </template>
 
 <script>
@@ -19,22 +23,43 @@
 
 */
 import {format} from "date-fns"
+import DragSlot from "@/components/DragSlot.vue"
+import GameField from "@/components/GameField.vue"
+import GameModal from "@/components/GameModal.vue"
 
 export default {
   name: 'HomeView',
   data(){
     return {
-      games: undefined
+      timeslots: undefined,
+      halls: undefined,
+      tableKey: 0
 
     }
   },
   components: {
-  },
+    DragSlot,
+    GameField,
+    GameModal
+},
   methods:{
-    async getGames(){
+    async getTimeslots(){
       console.log(this)
-      const games = await this.callApi("get","/games/preview")
-      this.games = games.data;
+      const timeslots = await this.callApi("get","/games/preview")
+      this.timeslots = timeslots.data
+      console.log("reload")
+      this.tableKey++
+    },
+    async getHalls(){
+      console.log(this)
+      const halls = await this.callApi("get","/halls")
+      this.halls = halls.data
+    },
+    handleReload(){
+      this.getTimeslots()
+    },
+    dragStartHandler(evt, gameId){
+      evt.dataTransfer.setData("gameId", gameId)
 
     },
     format(date, form){
@@ -42,7 +67,9 @@ export default {
     }
   },
   async created(){
-    this.getGames()
+    this.getHalls()
+    this.getTimeslots()
+    await this.$store.dispatch('games/get');
   }
 }
 </script>
