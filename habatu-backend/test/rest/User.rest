@@ -1,0 +1,27 @@
+### Post a User
+POST http://localhost:8000/users HTTP/1.1
+content-type: application/json
+
+{
+    "nickname": "Archi",
+    "password": "Test"
+}
+### Get one User
+GET http://localhost:8000/users/id HTTP/1.1
+content-type: application/json
+
+### Get all Users
+GET http://localhost:8000/users HTTP/1.1
+content-type: application/json
+
+### Update a User
+POST http://localhost:8000/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Wildert"
+}
+
+### Delete one User
+Delete http://localhost:8000/users/63304763e11fb347d0dbfff8 HTTP/1.1
+content-type: application/json

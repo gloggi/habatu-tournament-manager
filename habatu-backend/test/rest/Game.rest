@@ -26,5 +26,5 @@ content-type: application/json
 }
 
 ### Delete one Game
-Delete http://localhost:8000/games/id HTTP/1.1
+Delete http://localhost:8000/games/632df0185fc24c21fa88ac46 HTTP/1.1
 content-type: application/json

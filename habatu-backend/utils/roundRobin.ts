@@ -6,6 +6,7 @@ import { IOption } from "../interfaces/option.interface"
 import { Document, HydratedDocument, Types } from 'mongoose';
 import { flattenDeep, zip } from "lodash"
 import {addMinutes, getMinutes} from "date-fns"
+import { ITimeslot } from "../interfaces/timeslot.interface"
 
 export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: IHall[], option: IOption): IGame[] => {
     const teamsByCategory: Record<string, ITeam[]> = {}
@@ -32,9 +33,6 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
                         teamA: isHome? teamsById[i] : teamsById[o],
                         teamB: isHome? teamsById[o] : teamsById[i],
                         category: category,
-                        hall: "",
-                        startTime: new Date(),
-                        endTime: new Date(),
                         pointsTeamA: 0,
                         pointsTeamB: 0
                     }
@@ -52,37 +50,33 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
         tempGames.push(gamesByCategory[category])
     }
     const games: IGame[]  = flattenDeep<Array<IGame>>(zip<IGame>(...tempGames) as IGame[][]).filter(g=>g)
-    console.log(games)
-    let startTime = option.startTime
-    for (const [i, game] of games.entries()) {
-        const hallIndex = i%halls.length
-        game.startTime = startTime;
-        game.endTime = addMinutes(startTime,getMinutes(option.gameDuration));
-        game.hall = halls[hallIndex]._id.toString()
-        
-        if(hallIndex==halls.length-1){
-            startTime = addMinutes(startTime, getMinutes(option.gameDuration)+getMinutes(option.breakDuration))
-        }
 
-
-    }
 
     return games
 } 
-
-const roundRobin = (teams:string[])=>{
-    const DUMMY = ""
-    const rounds = []
-    if(teams.length%2==1){
-        teams.push(DUMMY)
+export const generateTimeslots = (games: IGame[], halls: IHall[], option: IOption) :ITimeslot[]=>{
+    const nslots = Math.ceil(games.length/halls.length)+3
+    const timeSlots : ITimeslot[] = []
+    let startTime = option.startTime
+    for(let i=0;i<nslots;i++){
+        timeSlots.push({
+            startTime: startTime,
+            endTime: addMinutes(startTime,getMinutes(option.gameDuration)),
+        })
+        startTime = addMinutes(startTime, getMinutes(option.gameDuration)+getMinutes(option.breakDuration))
     }
-    for(let i = 0;i<teams.length-1;i++){
-        const o = teams.length - 1 - i;
-        for(let j=0;j<teams.length/2;j++){
-            if(teams[i]!==""||teams[o]!==""){
+    return timeSlots
+}
 
-            }
-
+export const allocateSlots = (games: IGame[], halls: IHall[], timeslots: ITimeslot[]) : IGame[] =>{
+    let slotCounter = 0
+    for (const [i, game] of games.entries()) {
+        const hallIndex = i%halls.length
+        game.hall = halls[hallIndex]._id.toString()
+        game.timeslot= timeslots[slotCounter]._id as string;
+        if(hallIndex==halls.length-1){
+            slotCounter++
         }
     }
+    return games
 }

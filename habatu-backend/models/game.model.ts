@@ -6,9 +6,8 @@ import autopopulate from 'mongoose-autopopulate';
     teamA: {type: Schema.Types.ObjectId, ref: "Team", autopopulate: true},
     teamB: {type: Schema.Types.ObjectId, ref: "Team", autopopulate: true},
     category: {type: Schema.Types.ObjectId, ref: "Category", autopopulate: true},
-    hall: {type: Schema.Types.ObjectId, ref: "Hall", autopopulate: true},
-    startTime: { type: Date },
-    endTime: { type: Date },
+    hall: {type: Schema.Types.ObjectId , ref: "Hall", autopopulate: true},
+    timeslot: {type: Schema.Types.ObjectId, ref: "Timeslot", autopopulate: true},
     pointsTeamA: { type: Number },
     pointsTeamB: { type: Number },
   });

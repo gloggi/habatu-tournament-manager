@@ -5,6 +5,7 @@ import { router as gameRoute } from "./game.router";
 import { router as hallRouter } from "./hall.router";
 import { router as optionRouter } from "./option.router";
 import { router as timeslotRouter } from "./timeslot.router";
+import { router as userRouter } from "./user.router";
 import { Router } from "express";
 
 export const router: Router = Router();
@@ -43,6 +44,11 @@ const routes: {path: string, route:Router}[] = [
     {
         path: "/timeslots",
         route: timeslotRouter
+
+    },
+    {
+        path: "/users",
+        route: userRouter
 
     }
 ]

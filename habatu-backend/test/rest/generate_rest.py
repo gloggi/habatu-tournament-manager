@@ -2,7 +2,7 @@ f = open('D:/Dokumente/HaBaTu 2022/habatu-backend/test/rest/sections.rest', "r")
 
 text = f.read();
 f.close()
-tests = ["Option"]
+tests = ["User"]
 
 for test in tests:
     f = open("%s%s.rest"%('D:/Dokumente/HaBaTu 2022/habatu-backend/test/rest/',test), "w")

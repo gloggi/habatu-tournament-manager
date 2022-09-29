@@ -1,11 +1,13 @@
-import { Category, Game, Hall, Option, Team } from "../models";
+import { Category, Game, Hall, Option, Team, Timeslot } from "../models";
 import { IGame } from '../interfaces/game.interface';
 import { PopulatedDoc, Types } from "mongoose";
-import { gamesGenerator } from "../utils/roundRobin";
+import { allocateSlots, gamesGenerator, generateTimeslots } from "../utils/roundRobin";
 import { IHall } from "../interfaces/hall.interface";
 import { ITeam } from "../interfaces/team.interface";
 import { ICategory } from "../interfaces/category.interface";
 import { IOption } from "../interfaces/option.interface";
+import { ITimeslot } from "../interfaces/timeslot.interface";
+import {format} from "date-fns"
 
 export const createGame = async (game: IGame) => {
     return await Game.create(game)
@@ -33,24 +35,29 @@ export const deleteGame = async (_id: String) => {
 }
 
 export const getGamesPreview = async () => {
+   
     const teams :ITeam[] = await Team.find({},{},).lean() as ITeam[]
     const categories : ICategory[] = await Category.find({}).lean();
     const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
-    const options :IOption = await Option.findOne().orFail().lean();
-    const tempGames = gamesGenerator(teams, categories, halls, options)
+    const option :IOption = await Option.findOne().orFail().lean();
+    const tempGames = gamesGenerator(teams, categories, halls, option)
+     /*
     await Game.deleteMany({})
-    await  Game.insertMany(tempGames)
-    const games = await Game.find({}).populate<{ hall: IHall }>('hall')
-    
-    const table: Record<string, Record<string, any[]>> = {}
-    for(let game of games){
-        if(table[game.startTime.toString()]==undefined){
-            table[game.startTime.toString()] ={}
+    await Timeslot.deleteMany({})
+    const timeslots = await Timeslot.insertMany(generateTimeslots(tempGames,halls,option)) as ITimeslot[]
+    const newGames = allocateSlots(tempGames,halls, timeslots)
+    await Game.insertMany(newGames)
+     */
+    const timeslots = await Timeslot.find({})
+    const games = await Game.find({}).populate<{hall: IHall}>("hall").populate<{timeslot: ITimeslot}>("timeslot")
+    const output :any = {}
+    for(let timeslot of timeslots){
+        output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}|${timeslot._id}`] = {}
+        for(let hall of halls){
+            output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}|${timeslot._id}`][`${hall.name}|${hall._id}`] = games.filter(g=>g.timeslot!._id!.toString()==timeslot._id!.toString()&&g.hall!._id!.toString()==hall._id!.toString())
         }
-        if(table[game.startTime.toString()][game.hall.name]==undefined){
-            table[game.startTime.toString()][game.hall.name] = []
-        }
-        table[game.startTime.toString()][game.hall.name].push(game)
     }
-    return {table, halls}
+
+    
+    return output
 }
