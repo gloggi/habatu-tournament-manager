@@ -13,15 +13,17 @@
         <TextInput label="Username" type="text" />
         <TextInput label="Password" type="password" />
         <TextInput label="Confirm Password" type="password" />
-        <BasicButton>Login</BasicButton>
+        <BasicButton>Register</BasicButton>
       </div>
       
    </div>
-    <div class="w-2/3 h-full flex flex-col justify-center bg-gray-900"><h1
-  class="font-black text-transparent text-7xl bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+    <div class="w-2/3 h-full flex flex-col items-center justify-center bg-red-600"><h1
+  class="font-black text-transparent text-7xl bg-clip-text bg-white"
 >
  HaBaTu
-</h1></div>
+</h1>
+<img class="h-64 w-64 mt-10" src="@/assets/rotating_ball.gif" />
+</div>
 
   </div>
 </template>
