@@ -1,7 +1,7 @@
 <template>
     <div class="p-3 h-screen shadow-lg">
-        <BasicButton class="absolute w-1/12 left-3 bottom-3 rounded-tl-none rounded-br-none">back</BasicButton>
-        <BasicButton class="absolute w-1/12 right-3 bottom-3 rounded-tr-none rounded-bl-none">next</BasicButton>
+        <router-link v-if="backRoute" :to="{name: backRoute}"><BasicButton class="absolute w-1/12 left-3 bottom-3 rounded-tl-none rounded-br-none">back</BasicButton></router-link>
+        <router-link v-if="nextRoute" :to="{name: nextRoute}"><BasicButton @click="$router.push({to: nextRoute })" class="absolute w-1/12 right-3 bottom-3 rounded-tr-none rounded-bl-none">next</BasicButton></router-link>
   <div class="w-full h-full  rounded-lg border flex flex-row text-left">
     
     <form @submit.prevent="createItem" class="w-full flex flex-col space-y-3 border-r p-5 ">
@@ -41,7 +41,7 @@ import TextInput from '@/components/TextInput.vue';
 import SelectField from '@/components/SelectField.vue';
 export default {
     components: { BasicButton, CollapseItem, TrashIcon, TextInput, SelectField },
-    props: ["name", "form"],
+    props: ["name", "form", "state", "nextRoute", "backRoute"],
     data(){
         return {
             item: {}
@@ -49,16 +49,16 @@ export default {
     },
     computed:{
         items(){
-            return this.$store.state.sections.sections
+            return this.$store.state[this.state][this.state]
         }
     },
     methods:{
         deleteItem(id){
-            this.$store.dispatch("sections/delete",id)
+            this.$store.dispatch(`${this.state}/delete`,id)
 
         },
         createItem(){
-            this.$store.dispatch("sections/create",this.item)
+            this.$store.dispatch(`${this.state}/create`,this.item)
         }
     }
 }

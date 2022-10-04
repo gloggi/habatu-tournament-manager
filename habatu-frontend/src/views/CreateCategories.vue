@@ -13,13 +13,13 @@ export default {
     components: { CreateView },
     data() {
         return {
-            name: "Abteilungen",
-            state: "sections",
-            nextRoute: "categories",
-            backRoute: undefined,
+            name: "Kategorien",
+            state: "categories",
+            nextRoute: "teams",
+            backRoute: "sections",
             form: [
                 [
-                    { label: "Abteilung", model: "name", component: "TextField" }
+                    { label: "Kategorie", model: "name", component: "TextField" }
                 ]
             ]
         }
