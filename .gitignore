@@ -132,4 +132,7 @@ dist
 # Documents
 *.docx
 /data
-*.js
+
+habatu-backend/*.js
+habatu-backend/*/*.js
+
