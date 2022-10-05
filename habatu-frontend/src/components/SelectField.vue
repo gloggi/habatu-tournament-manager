@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div class="w-full relative">
       <label class="block text-gray-700 text-sm font-bold mb-1" for="username">
         {{ label }}
       </label>
@@ -23,7 +23,7 @@
         :type="type"
         :placeholder="label"
       />
-        <div id="dropdown" v-if="select.length>0" class="relative w-full p-3 rounded-b-lg bg-gray-100 text-left z-50">
+        <div id="dropdown" v-if="select.length>0" class="absolute left-0 right-0 p-3 rounded-b-lg bg-gray-100 text-left z-50">
         <button id="dropdown" @click="handleSelect(item.name)" v-for="item in select" class="w-full rounded-lg bg-gray-100 hover:bg-gray-300 p-3 cursor-pointer" :key="item.name">
         {{item.name}}
         </button>

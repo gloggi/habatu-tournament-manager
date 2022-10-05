@@ -59,6 +59,7 @@ export default {
         },
         createItem(){
             this.$store.dispatch(`${this.state}/create`,this.item)
+            this.item = {}
         }
     }
 }

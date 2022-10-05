@@ -30,6 +30,9 @@ export default {
                     { label: "Teamname", model: "name", component: "TextField" }
                 ],
                 [
+                    { label: "Abteilung", model: "section", options: this.$store.state.sections.sections, component: "SelectField" }
+                ],
+                [
                     { label: "Kategorie", model: "category", options: this.$store.state.categories.categories, component: "SelectField" }
                 ]
             ]
