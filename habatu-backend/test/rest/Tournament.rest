@@ -1,0 +1,11 @@
+### Get Time Preview
+GET http://localhost:8000/tournament/time-preview HTTP/1.1
+content-type: application/json
+
+### Get Table
+GET http://localhost:8000/tournament/table HTTP/1.1
+content-type: application/json
+
+### Get Table Preview
+GET http://localhost:8000/tournament/preview HTTP/1.1
+content-type: application/json

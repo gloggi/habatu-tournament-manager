@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createGame as create, getGames as gets, updateGames as update, getGame as get, deleteGame as remove, getGamesPreview as getsPreview } from "../services/game.service";
+import { createGame as create, getGames as gets, updateGames as update, getGame as get, deleteGame as remove } from "../services/game.service";
 
 export const createGame = async (req: Request, res: Response) => {
     const game = await create(req.body)
@@ -22,7 +22,3 @@ export const deleteGame = async (req: Request, res: Response) => {
     res.json(game)
 }
 
-export const getGamesPreview = async (req: Request, res: Response) => {
-    const games = await getsPreview()
-    res.json(games)
-}
