@@ -1,6 +1,6 @@
 <template>
   <div class="flex h-screen w-full items-stretch justify-center">
-    <div class="w-1/3 h-full flex flex-col justify-center"><p class="font-black text-4xl">
+    <div class="w-1/3 h-full flex flex-col justify-center"><p class="font-black px-5 mb-2 text-center text-4xl">
       {{login? "Login": "Register"}}
     </p>
     <LoginOrRegister @switch="handleSwitch" :login="login" />

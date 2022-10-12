@@ -4,6 +4,7 @@
         {{ label }}
       </label>
       <input
+      autocomplete="off"
         v-model="textValue"
         @blur="handleBlur"
         class="
@@ -65,7 +66,6 @@
             
         },
         textValue(newVal){
-          console.log("watch")
           if(this.options.map(o=>o.name).indexOf(newVal)>-1){
             this.$emit('update:modelValue', this.options.find(o=>o.name==newVal)._id)
                 this.select = []
@@ -77,6 +77,14 @@
             this.selectKey++
 
         }
+    },
+    mounted(){
+      if(this.modelValue&& typeof this.modelValue != "string"){
+       if(this.modelValue._id){
+        this.$emit('update:modelValue', this.modelValue._id)
+       }
+      }
+      
     }
   };
   </script>
