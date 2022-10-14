@@ -4,9 +4,9 @@ content-type: application/json
 
 {
     "tournamentName": "HaBaTu",
-    "startTime": "2022/09/04  10:00",
-    "gameDuration": "2022/09/04  00:10",
-    "breakDuration": "2022/09/04  00:05"
+    "startTime": "12:00",
+    "gameDuration": "00:10",
+    "breakDuration": "00:05"
 }
 ### Get one Option
 GET http://localhost:8000/options/id HTTP/1.1

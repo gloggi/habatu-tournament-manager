@@ -5,7 +5,7 @@ import { ITeam } from "../interfaces/team.interface";
 import { ICategory } from "../interfaces/category.interface";
 import { IOption } from "../interfaces/option.interface";
 import { ITimeslot } from "../interfaces/timeslot.interface";
-import {format} from "date-fns"
+import {format, isWithinInterval, addMinutes, getMinutes} from "date-fns"
 
 export const getGamesPreview = async () => {
    
@@ -28,12 +28,16 @@ export const getGamesPreview = async () => {
 
 export const getTournamentTable = async () => {
     const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
+    const option :IOption = await Option.findOne().orFail().lean();
     const ts = await Timeslot.find({})
     const games = await Game.find({}).populate<{hall: IHall}>("hall").populate<{timeslot: ITimeslot}>("timeslot")
     const output :any = {}
+    console.log(ts[0].startTime)
+    console.log(new Date())
     for(let timeslot of ts){
         output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`] = {}
         output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`]["id"] = timeslot._id
+        output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`]["isNow"] = isWithinInterval(new Date(), {start:timeslot.startTime, end: addMinutes(timeslot.endTime, parseInt(option.breakDuration.split(":")[1])) })
         output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`]["items"] = {}
         for(let hall of halls){
             output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`]["items"][`${hall.name}`] = {id: hall._id, items: games.filter(g=>g.timeslot!._id!.toString()==timeslot._id!.toString()&&g.hall!._id!.toString()==hall._id!.toString())}

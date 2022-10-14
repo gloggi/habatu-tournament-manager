@@ -5,6 +5,7 @@ import { IHall } from "../interfaces/hall.interface"
 import { IOption } from "../interfaces/option.interface"
 import { Document, HydratedDocument, Types } from 'mongoose';
 import { flattenDeep, zip } from "lodash"
+import { setTimeOnDate } from "./helper"
 import {addMinutes, getMinutes} from "date-fns"
 import { ITimeslot } from "../interfaces/timeslot.interface"
 
@@ -13,7 +14,6 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
     for (let category of categories) {
         teamsByCategory[category._id.toString()] = teams.filter((team) => team.category == category._id.toString())
     }
-    console.log("Option: ", option.breakDuration.getMinutes())
     const gamesByCategory: Record<string, IGame[]> = {}
     for (let category in teamsByCategory) {
         gamesByCategory[category] =[]
@@ -57,13 +57,14 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
 export const generateTimeslots = (games: IGame[], halls: IHall[], option: IOption) :ITimeslot[]=>{
     const nslots = Math.ceil(games.length/halls.length)+3
     const timeSlots : ITimeslot[] = []
-    let startTime = option.startTime
+    let startTime = setTimeOnDate(new Date(),option.startTime)
+    console.log(startTime)
     for(let i=0;i<nslots;i++){
         timeSlots.push({
             startTime: startTime,
-            endTime: addMinutes(startTime,getMinutes(option.gameDuration)),
+            endTime: addMinutes(startTime,parseInt(option.gameDuration.split(":")[1])),
         })
-        startTime = addMinutes(startTime, getMinutes(option.gameDuration)+getMinutes(option.breakDuration))
+        startTime = addMinutes(startTime, parseInt(option.gameDuration.split(":")[1])+parseInt(option.breakDuration.split(":")[1]))
     }
     return timeSlots
 }

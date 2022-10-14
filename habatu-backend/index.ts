@@ -4,6 +4,9 @@ import "express-async-errors";
 import { connect } from 'mongoose';
 import dotenv from 'dotenv';
 import { router } from './routes/index';
+process.env.TZ ='Europe/Zurich'
+console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
+
 dotenv.config();
 connect('mongodb://mongo:27017');
 const app: Express = express();
