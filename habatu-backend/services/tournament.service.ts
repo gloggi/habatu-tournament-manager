@@ -60,3 +60,45 @@ export const getTimePreview= async () => {
     }
 
 }
+
+export const getRanking = async () => {
+    await getGamesPreview()
+    const teams :ITeam[] = await Team.find({},{},).lean()
+    const categories : ICategory[] = await Category.find({}).lean();
+    const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
+    const option :IOption = await Option.findOne().orFail().lean();
+    const games = await Game.find({})
+    const rankedTeams : any = [...teams]
+    for(let team of rankedTeams){
+        var tournamentPoints = 0
+        var pointsPro = 0
+        var pointsCon = 0
+        for(let game of games){
+            if(game.teamA== team.id){
+                pointsPro+= game.pointsTeamA
+                pointsCon+= game.pointsTeamB
+                if(game.pointsTeamA>game.pointsTeamB){
+                    tournamentPoints+=2
+                }if(game.pointsTeamA==game.pointsTeamB){
+                    tournamentPoints+=1
+                }
+            }
+            if(game.teamB== team.id){
+                pointsPro+= game.pointsTeamB
+                pointsCon+= game.pointsTeamA
+                if(game.pointsTeamA<game.pointsTeamB){
+                    tournamentPoints+=2
+                }if(game.pointsTeamA==game.pointsTeamB){
+                    tournamentPoints+=1
+                }
+            }
+        }
+        team.tournamentPoints = tournamentPoints
+        team.pointsPro = pointsPro
+        team.pointsCon = pointsCon
+        
+    }
+
+    return rankedTeams
+
+}
