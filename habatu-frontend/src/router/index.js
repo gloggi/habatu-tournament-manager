@@ -6,6 +6,7 @@ import CreateView from '../views/CreateView'
 import CreateSections from '../views/CreateSections'
 import CreateCategories from '../views/CreateCategories'
 import CreateTeams from '../views/CreateTeams'
+import CreateOptions from '../views/CreateOptions'
 
 const routes = [
   {
@@ -42,7 +43,13 @@ const routes = [
     path: '/teams',
     name: 'teams',
     component: CreateTeams
+  },
+  {
+    path: '/options',
+    name: 'options',
+    component: CreateOptions
   }
+
 ]
 
 const router = createRouter({

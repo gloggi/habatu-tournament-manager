@@ -9,6 +9,7 @@
         class="
           appearance-none
           border
+          border-black
           rounded
           w-full
           py-2

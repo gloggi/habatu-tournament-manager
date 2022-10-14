@@ -15,7 +15,7 @@ export default {
         return {
             name: "Teams",
             state: "teams",
-            nextRoute: "home",
+            nextRoute: "options",
             backRoute: "categories",
         }
     },

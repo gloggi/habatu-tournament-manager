@@ -22,7 +22,7 @@
 >
  HaBaTu
 </h1>
-<img class="h-64 w-64 mt-10" src="@/assets/rotating_ball.gif" />
+<img class="h-72 w-72 mt-10" src="@/assets/rotating_ball_a.png" />
 </div>
 
   </div>

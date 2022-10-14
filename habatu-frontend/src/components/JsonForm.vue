@@ -3,7 +3,7 @@
         <div class="w-full flex justify-between space-x-2">
             <template v-for="(col, j) in row" :key="j">
                 <TextInput v-if="col.component=='TextField'" class="w-full" v-model="item[col.model]"
-                    :label="col.label" />
+                    :label="col.label" :type="col.type" />
                 <SelectField v-if="col.component=='SelectField'" :options="col.options" class="w-full"
                     v-model="item[col.model]" :label="col.label" />
             </template>

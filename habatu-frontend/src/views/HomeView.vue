@@ -4,9 +4,9 @@
       <div class="w-1/2"></div>
       <div v-for="hall in halls" :key="hall._id" class="w-full text-xl">{{hall.name}}</div>
     </div>
-    <div :class="`flex flex-row space-x-4 justify-center items-baseline ${i==5?'ring-2 ring-red-400 ring-offset-1 ring-opacity-75 rounded-lg':''}`" v-for="(timeslot, i) in Object.keys(timeslots)" :key="timeslot">
+    <div :class="`flex flex-row space-x-4 justify-center items-baseline ${timeslots[timeslot].isNow?'ring-2 ring-red-400 ring-offset-1 ring-opacity-75 rounded-lg':''}`" v-for="timeslot in Object.keys(timeslots)" :key="timeslot">
      <div class="w-1/2 self-center">{{timeslot}}</div>
-     <DragSlot class="w-full self-stretch" @reload="handleReload" :hall="hall.id" :timeslot="timeslot.id" v-for="(hall) in Object.keys(timeslots[timeslot].items)"  :key="hall.name">
+     <DragSlot class="w-full self-stretch" @reload="handleReload" :hall="timeslots[timeslot].items[hall].id" :timeslot="timeslots[timeslot].id" v-for="(hall) in Object.keys(timeslots[timeslot].items)"  :key="hall.name">
       <GameField :games="timeslots[timeslot].items[hall].items"  />
     </DragSlot>
     </div>
@@ -33,7 +33,8 @@ export default {
     return {
       timeslots: undefined,
       halls: undefined,
-      tableKey: 0
+      tableKey: 0,
+      timeslotNow: undefined
 
     }
   },
@@ -43,9 +44,16 @@ export default {
     GameModal
 },
   methods:{
+    checkCurrentTimeSLot(){
+      const times = Object.keys(this.timeslots)
+      for(let time of times){
+        console.log(time)
+        //do nothing
+      }
+    },
     async getTimeslots(){
       console.log(this)
-      const timeslots = await this.callApi("get","/tournament/preview")
+      const timeslots = await this.callApi("get","/tournament/table")
       this.timeslots = timeslots.data
       console.log("reload")
       this.tableKey++

@@ -1,5 +1,5 @@
 <template>
-  <div @click="()=>{openGameModal(game)}" draggable="true" @dragstart="evt=>dragStartHandler(evt, game._id)" v-for="(game, i) in games" :style="`background: ${game.category.color};`" :key="i" class="p-2 border font-bold rounded-md w-full cursor-pointer">
+  <div class="p-2 border font-normal text-center rounded-md w-full cursor-pointer" @click="()=>{openGameModal(game)}" draggable="true" @dragstart="evt=>dragStartHandler(evt, game._id)" v-for="(game, i) in games" :style="`background: ${game.category.color};`" :key="i" >
        {{game.teamA.name}} {{game.pointsTeamA}} : {{game.pointsTeamB}} {{game.teamB.name}}
       </div>
 </template>
