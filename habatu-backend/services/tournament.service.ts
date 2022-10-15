@@ -6,6 +6,7 @@ import { ICategory } from "../interfaces/category.interface";
 import { IOption } from "../interfaces/option.interface";
 import { ITimeslot } from "../interfaces/timeslot.interface";
 import {format, isWithinInterval, addMinutes, getMinutes} from "date-fns"
+import { ISection } from "../interfaces/section.interface";
 
 export const getGamesPreview = async () => {
    
@@ -32,8 +33,6 @@ export const getTournamentTable = async () => {
     const ts = await Timeslot.find({})
     const games = await Game.find({}).populate<{hall: IHall}>("hall").populate<{timeslot: ITimeslot}>("timeslot")
     const output :any = {}
-    console.log(ts[0].startTime)
-    console.log(new Date())
     for(let timeslot of ts){
         output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`] = {}
         output[`${format(timeslot.startTime, "HH:mm")} - ${format(timeslot.endTime, "HH:mm")}`]["id"] = timeslot._id
@@ -61,20 +60,19 @@ export const getTimePreview= async () => {
 
 }
 
-export const getRanking = async () => {
-    await getGamesPreview()
-    const teams :ITeam[] = await Team.find({},{},).lean()
+export const getTournamentRanking = async () => {
+    const teams = await Team.find({},{},).lean().populate<{section: ISection}>("section")
     const categories : ICategory[] = await Category.find({}).lean();
     const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
     const option :IOption = await Option.findOne().orFail().lean();
-    const games = await Game.find({})
+    const games = await Game.find({}).lean({ autopopulate: false })
     const rankedTeams : any = [...teams]
     for(let team of rankedTeams){
         var tournamentPoints = 0
         var pointsPro = 0
         var pointsCon = 0
         for(let game of games){
-            if(game.teamA== team.id){
+            if(game.teamA.toString()== team._id.toString()){
                 pointsPro+= game.pointsTeamA
                 pointsCon+= game.pointsTeamB
                 if(game.pointsTeamA>game.pointsTeamB){
@@ -83,7 +81,7 @@ export const getRanking = async () => {
                     tournamentPoints+=1
                 }
             }
-            if(game.teamB== team.id){
+            if(game.teamB.toString()== team._id.toString()){
                 pointsPro+= game.pointsTeamB
                 pointsCon+= game.pointsTeamA
                 if(game.pointsTeamA<game.pointsTeamB){
@@ -98,7 +96,28 @@ export const getRanking = async () => {
         team.pointsCon = pointsCon
         
     }
+    const comparefunction =(a: any, b: any) : number =>{
+        if(a.tournamentPoints>b.tournamentPoints){
+            return -1
+        }else if(b.tournamentPoints>a.tournamentPoints){
+            return 1
+        }else if(a.pointsPro>b.pointsPro){
+            return -1
+        }else if(b.pointsPro>a.pointsPro){
+            return 1
+        }else if (a.pointsCon<b.pointsCon){
+            return -1
+        }else if (b.pointsCon<a.pointsCon){
+            return 1
+        }else {
+            return 0
+        }
+    }
+    const rankedTeamsByCategory : Record<string, any> = {}
+    for(let category of categories){
+        rankedTeamsByCategory[category.name] =  rankedTeams.filter((t: any)=>t.category==category._id.toString()).sort(comparefunction)
+    }
 
-    return rankedTeams
+    return rankedTeamsByCategory
 
 }
