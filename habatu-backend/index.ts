@@ -8,7 +8,7 @@ process.env.TZ ='Europe/Zurich'
 console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
 
 dotenv.config();
-connect('mongodb://mongo:27017');
+connect('mongodb://localhost:27018');
 const app: Express = express();
 const port = process.env.PORT;
 app.use(json())
