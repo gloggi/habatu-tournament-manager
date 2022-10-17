@@ -1,16 +1,21 @@
 <template>
-  <div v-if="timeslots&&halls" :key="tableKey" class="space-y-4 mt-3 px-2 h-full w-full" >
-    <div class="flex flex-row space-x-4 justify-center items-baseline">
-      <div class="w-1/2"></div>
-      <div v-for="hall in halls" :key="hall._id" class="w-full text-xl">{{hall.name}}</div>
+  <TableHeader />
+  <div class="mt-2 rounded-md border bg-white">
+  <div v-if="timeslots&&halls" :key="tableKey" class="space-y-4 mt-3 px-2 mb-3 h-full w-full" >
+    <div class="md:flex md:flex-row  hidden space-x-4 justify-center items-baseline">
+      <div class="2xl:w-1/4 w-1/2"></div>
+      <div v-for="hall in halls" :key="hall._id" class="w-full text-xl font-light">{{hall.name}}</div>
     </div>
-    <div :class="`flex flex-row space-x-4 justify-center items-baseline ${timeslots[timeslot].isNow?'ring-2 ring-red-400 ring-offset-1 ring-opacity-75 rounded-lg':''}`" v-for="timeslot in Object.keys(timeslots)" :key="timeslot">
-     <div class="w-1/2 self-center">{{timeslot}}</div>
+    <div :class="`flex md:flex-row flex-col md:space-x-4 space-y-2 justify-center items-baseline ${timeslots[timeslot].isNow?'ring-2 ring-red-400 ring-offset-1 ring-opacity-75 rounded-lg':''}`" v-for="timeslot in Object.keys(timeslots)" :key="timeslot">
+     <div class="2xl:w-1/4 w-1/2 self-center text-center text-xl font-light">{{timeslot}}</div>
      <DragSlot class="w-full self-stretch" @reload="handleReload" :hall="timeslots[timeslot].items[hall].id" :timeslot="timeslots[timeslot].id" v-for="(hall) in Object.keys(timeslots[timeslot].items)"  :key="hall.name">
+      <div class="md:hidden">{{hall}}</div>
       <GameField :games="timeslots[timeslot].items[hall].items"  />
     </DragSlot>
     </div>
   </div>
+</div>
+
   <GameModal />
 </template>
 
@@ -26,6 +31,7 @@ import {format} from "date-fns"
 import DragSlot from "@/components/DragSlot.vue"
 import GameField from "@/components/GameField.vue"
 import GameModal from "@/components/GameModal.vue"
+import TableHeader from "@/components/TableHeader.vue"
 
 export default {
   name: 'HomeView',
@@ -41,7 +47,8 @@ export default {
   components: {
     DragSlot,
     GameField,
-    GameModal
+    GameModal,
+    TableHeader
 },
   methods:{
     checkCurrentTimeSLot(){

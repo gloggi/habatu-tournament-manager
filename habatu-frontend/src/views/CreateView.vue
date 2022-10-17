@@ -1,8 +1,8 @@
 <template>
-    <div class="p-3 h-screen shadow-lg">
-        <router-link v-if="backRoute" :to="{name: backRoute}"><BasicButton class="absolute w-1/12 left-3 bottom-3 rounded-tl-none rounded-br-none">back</BasicButton></router-link>
-        <router-link v-if="nextRoute" :to="{name: nextRoute}"><BasicButton @click="$router.push({to: nextRoute })" class="absolute w-1/12 right-3 bottom-3 rounded-tr-none rounded-bl-none">next</BasicButton></router-link>
-  <div class="w-full h-full  rounded-lg border flex flex-row text-left">
+    <div class="p-3 h-screen">
+        <router-link v-if="backRoute" :to="{name: backRoute}"><BasicButton class="absolute w-1/12 left-5 bottom-1 rounded-tl-none rounded-br-none">back</BasicButton></router-link>
+        <router-link v-if="nextRoute" :to="{name: nextRoute}"><BasicButton @click="$router.push({to: nextRoute })" class="absolute w-1/12 right-5 bottom-1 rounded-tr-none rounded-bl-none">next</BasicButton></router-link>
+  <div class="w-full h-full shadow-lg bg-white  rounded-md border flex flex-row text-left">
     
     <form @submit.prevent="createItem" :key="formKey" class="w-full flex flex-col space-y-3 border-r p-5 ">
         <h1 class="text-2xl font-bold pb-3">{{name}}</h1>

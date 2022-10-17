@@ -1,6 +1,6 @@
 <template>
 
-    <div v-if="rank" class="flex w-full space-x-2 p-3">
+    <div v-if="rank" class="flex md:flex-row flex-col w-full md:space-x-2 md:space-y-0 space-y-2 p-3">
     <div class="w-full rounded-md border flex flex-col p-3"  v-for="(category, i) in Object.keys(rank)" :key="i">
     <div class="flex font-bold">
         <div class="w-1/2">{{category}}</div>

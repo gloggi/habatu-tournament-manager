@@ -1,6 +1,7 @@
 <template>
-  <div class="flex h-screen w-full items-stretch justify-center">
-    <div class="w-1/3 h-full flex flex-col justify-center"><p class="font-black px-5 mb-2 text-center text-4xl">
+  <div class="flex flex-col-reverse md:flex-row -m-2 h-screen md:w-full md:items-stretch justify-center">
+    <div class="md:w-1/3 w-full h-full flex flex-col md:pt-0 pt-5 md:justify-center bg-white">
+      <p class="font-black px-5 mb-2 text-center text-4xl">
       {{login? "Login": "Register"}}
     </p>
     <LoginOrRegister @switch="handleSwitch" :login="login" />
@@ -18,12 +19,13 @@
       </form>
       
    </div>
-    <div class="w-2/3 h-full flex flex-col items-center justify-center bg-red-600"><h1
-  class="font-black text-transparent text-center text-7xl px-10 bg-clip-text bg-white"
+    <div class="md:w-2/3 md:space-y-8 space-y-2 md:py-0 py-4 w-full md:h-full h-1/3 flex flex-col items-center justify-center bg-red-600">
+      <h1
+  class="md:text-7xl text-2xl md:font-black font-bold text-transparent text-center px-5 md:px-10 bg-clip-text bg-white"
 >
  HaBaTu Tournament Manager 
 </h1>
-<img class="h-72 w-72 mt-10" src="@/assets/rotating_ball_a.png" />
+<img class="md:h-72 md:w-72 h-40 w-40 md:mt-10" src="@/assets/rotating_ball_a.png" />
 </div>
 
   </div>

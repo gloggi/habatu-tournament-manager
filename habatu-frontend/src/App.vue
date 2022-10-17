@@ -1,12 +1,16 @@
 <template>
+    <div class="bg-gray-100 min-h-screen p-2">
   <router-view/>
   <NotificationItem />
+</div>
 </template>
 <script>
 import NotificationItem from './components/NotificationItem.vue';
 
 export default {
     async created() {
+        localStorage.setItem("token","test")
+        await this.$store.dispatch("user/getMe", localStorage.token);
         await this.$store.dispatch("games/get");
         await this.$store.dispatch("halls/get");
         await this.$store.dispatch("categories/get");

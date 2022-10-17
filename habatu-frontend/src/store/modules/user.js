@@ -38,7 +38,22 @@ export const user = {
             } catch (e) {
                 console.log(e)
             }
-        }
+        },
+        async getMe({ commit }, token) {
+            if(!token){
+                return 
+            }
+            try {
+                const response = await mixin.methods.callApi("post", "/users/me", {token})
+                console.log(response.data)
+                const user = response.data
+                if(user.token){
+                commit("setUser",user)
+            }
+            } catch (e) {
+                console.log(e)
+            }
+        },
     },
     getters: {}
 }
