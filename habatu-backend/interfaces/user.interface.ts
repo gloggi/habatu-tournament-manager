@@ -1,5 +1,8 @@
+import { Role } from "./role";
 export interface IUser {
     nickname: string;
     password: string;
-    token: string;
+    roles: Role[];
+    group: string;
+    token?: string;
   }

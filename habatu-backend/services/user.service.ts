@@ -16,6 +16,10 @@ export const getUsers = async () => {
     const users = await User.find({});
     return users
 }
+export const getUserByNickname = async (nickname: string) => {
+    const users = await User.findOne({nickname});
+    return users
+}
 
 export const updateUsers = async (_id: String, newUser: IUser) => {
     const user = await User.findOneAndUpdate({ _id }, newUser, { new: true });
