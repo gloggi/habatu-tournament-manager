@@ -37,9 +37,10 @@ export const categories = {
                 console.log(e)
             }
         },
-        async update({ dispatch }, category) {
+        async update({ dispatch, commit }, category) {
             try {
                 await mixin.methods.callApi("put", `/categories/${category._id}`,category)
+                commit("notifications/showNotification", "Category got updated!", {root: true})
                 dispatch("get")
             } catch (e) {
                 console.log(e)

@@ -4,23 +4,24 @@
       {{login? "Login": "Register"}}
     </p>
     <LoginOrRegister @switch="handleSwitch" :login="login" />
-      <div v-if="login" class="px-5 text-left space-y-2">
-        <TextInput label="Username" type="text" />
-        <TextInput label="Password" type="password" />
+    
+      <form @submit.prevent="loginUser" v-if="login" class="px-5 text-left space-y-2">
+        <TextInput v-model="loginForm.nickname" label="Username" type="text" />
+        <TextInput v-model="loginForm.password" label="Password" type="password" />
         <BasicButton>Login</BasicButton>
-      </div>
-      <div v-if="!login" class="px-5 text-left space-y-2">
-        <TextInput label="Username" type="text" />
-        <TextInput label="Password" type="password" />
-        <TextInput label="Confirm Password" type="password" />
+      </form>
+      <form @submit.prevent="registerUser" v-if="!login" class="px-5 text-left space-y-2">
+        <TextInput v-model="registerForm.nickname" label="Username" type="text" />
+        <TextInput v-model="registerForm.password" label="Password" type="password" />
+        <TextInput v-model="registerForm.confirmPassword" label="Confirm Password" type="password" />
         <BasicButton>Register</BasicButton>
-      </div>
+      </form>
       
    </div>
     <div class="w-2/3 h-full flex flex-col items-center justify-center bg-red-600"><h1
-  class="font-black text-transparent text-7xl bg-clip-text bg-white"
+  class="font-black text-transparent text-center text-7xl px-10 bg-clip-text bg-white"
 >
- HaBaTu
+ HaBaTu Tournament Manager 
 </h1>
 <img class="h-72 w-72 mt-10" src="@/assets/rotating_ball_a.png" />
 </div>
@@ -36,12 +37,34 @@ export default {
     components: { TextInput, BasicButton, LoginOrRegister },
     data(){
       return {
-        login: true
+        login: true,
+        registerForm: {
+          nickname: undefined,
+          password: undefined,
+          confirmPassword: undefined
+        },
+        loginForm: {
+          nickname: undefined,
+          password: undefined
+        }
       }
     },
     methods:{
       handleSwitch(evt){
         this.login = evt
+      },
+      async loginUser(){
+        await this.$store.dispatch("user/login", this.loginForm)
+        if(localStorage.token){
+          this.$router.push({name: "home"})
+        }
+      },
+      async registerUser(){
+        await this.$store.dispatch("user/register", this.registerForm)
+        if(localStorage.token){
+          this.$router.push({name: "home"})
+        }
+
       }
     }
 }

@@ -9,7 +9,6 @@ const api = axios.create({
 export const mixin = {
     methods:{
         async callApi(method, url, data){
-            console.log(data)
             try{
                 const response = await api({method,url,data  })
                 return response

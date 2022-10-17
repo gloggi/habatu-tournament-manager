@@ -7,6 +7,7 @@ import CreateSections from '../views/CreateSections'
 import CreateCategories from '../views/CreateCategories'
 import CreateTeams from '../views/CreateTeams'
 import CreateOptions from '../views/CreateOptions'
+import RankingView from '../views/RankingView'
 
 const routes = [
   {
@@ -48,6 +49,11 @@ const routes = [
     path: '/options',
     name: 'options',
     component: CreateOptions
+  },
+  {
+    path: '/ranking',
+    name: 'ranking',
+    component: RankingView
   }
 
 ]

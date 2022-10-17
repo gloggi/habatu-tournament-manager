@@ -1,5 +1,5 @@
 <template>
-  <div dropzone="true" @dragenter="dragging=true" @dragleave="dragging=false" :class="`${dragging? 'bg-red-500': ''}`" @drop="dropHandler" @dragover="evt=>evt.preventDefault()">
+  <div dropzone="true" @dragenter="dragging=true" @dragleave="dragging=false" :class="`rounded-md ${dragging? 'bg-red-500': ''} hover:bg-red-300`" @drop="dropHandler" @dragover="evt=>evt.preventDefault()">
     <slot></slot>
   </div>
 </template>

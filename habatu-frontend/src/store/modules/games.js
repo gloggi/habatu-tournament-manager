@@ -37,9 +37,11 @@ export const games = {
                 console.log(e)
             }
         },
-        async update({ dispatch }, game) {
+        async update({ dispatch, commit }, game) {
             try {
                 await mixin.methods.callApi("put", `/games/${game._id}`,game)
+                commit("notifications/showNotification", "Game got updated!", {root: true})
+                console.log(this)
                 dispatch("get")
             } catch (e) {
                 console.log(e)

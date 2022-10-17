@@ -29,9 +29,10 @@ export const timeslots = {
                 console.log(e)
             }
         },
-        async update({ dispatch }, timeslot) {
+        async update({ dispatch, commit }, timeslot) {
             try {
                 await mixin.methods.callApi("put", `/timeslots/${timeslot._id}`,timeslot)
+                commit("notifications/showNotification", "Timeslot got updated!", {root: true})
                 dispatch("get")
             } catch (e) {
                 console.log(e)

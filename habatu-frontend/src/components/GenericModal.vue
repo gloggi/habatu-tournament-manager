@@ -1,5 +1,5 @@
 <template>
-  <div class="absolute top-36 bottom-36 right-1/4 left-1/4 z-50 p-5 pt-20  bg-white border drop-shadow-lg rounded-md">
+  <div class="sticky bottom-1/4 left-1/4 self-center w-1/2 z-50 p-5 pt-20  bg-white border drop-shadow-lg rounded-md">
     <div class="absolute top-5 r-2 text-2xl font-black">
         {{title}}
     </div>

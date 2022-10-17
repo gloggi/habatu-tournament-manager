@@ -7,6 +7,8 @@ import { options } from './modules/options'
 import { sections } from './modules/sections'
 import { teams } from './modules/teams'
 import { timeslots } from './modules/timeslots'
+import { notifications } from './modules/notifications'
+import { user } from './modules/user'
 
 export default createStore({
   modules: {
@@ -17,7 +19,9 @@ export default createStore({
     options,
     sections,
     teams,
-    timeslots
+    timeslots,
+    notifications,
+    user
 
   }
 })

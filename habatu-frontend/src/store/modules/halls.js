@@ -37,9 +37,10 @@ export const halls = {
                 console.log(e)
             }
         },
-        async update({ dispatch }, hall) {
+        async update({ dispatch, commit }, hall) {
             try {
                 await mixin.methods.callApi("put", `/halls/${hall._id}`,hall)
+                commit("notifications/showNotification", "Halls got updated!", {root: true})
                 dispatch("get")
             } catch (e) {
                 console.log(e)
