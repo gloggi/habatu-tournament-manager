@@ -1,0 +1,9 @@
+{
+	"useTabs": true,
+	"semi": false,
+	"singleQuote": false,
+	"bracketSameLine": true,
+	"arrowParens": "avoid",
+	"pluginSearchDirs": ["./node_modules"],
+	"plugins": ["prettier-plugin-tailwindcss"]
+}
