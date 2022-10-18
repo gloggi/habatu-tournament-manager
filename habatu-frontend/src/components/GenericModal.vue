@@ -1,8 +1,9 @@
 <template>
+	<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"></div>
 	<div
-		class="sticky bottom-1/4 left-1/4 z-50 w-1/2 self-center rounded-md border bg-white p-5 pt-20 drop-shadow-lg">
-		<div class="r-2 absolute top-5 text-2xl font-black">
-			{{ title }}
+		class="fixed inset-28 z-50 rounded-md border bg-white p-5 pt-20 drop-shadow-lg">
+		<div class="r-2 absolute top-5 text-4xl font-medium">
+			{{title}}
 		</div>
 		<button
 			@click="close"

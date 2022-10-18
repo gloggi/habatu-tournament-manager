@@ -4,7 +4,7 @@
 		<div
 			v-if="timeslots && halls"
 			:key="tableKey"
-			class="mt-3 mb-3 h-full w-full space-y-4 px-2">
+			class="mt-3 mb-3 h-full w-full space-y-2 px-2">
 			<div
 				class="hidden items-baseline justify-center space-x-4 md:flex md:flex-row">
 				<div class="w-1/2 2xl:w-1/4"></div>
@@ -16,7 +16,7 @@
 				</div>
 			</div>
 			<div
-				:class="`flex flex-col items-baseline justify-center space-y-2 md:flex-row md:space-x-4 ${
+				:class="`flex flex-col items-baseline justify-center space-y-0 md:flex-row md:space-x-4 ${
 					timeslots[timeslot].isNow
 						? 'rounded-lg ring-2 ring-red-400 ring-opacity-75 ring-offset-1'
 						: ''
@@ -44,13 +44,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
-/*
-
-
-
-*/
 import { format } from "date-fns"
 import DragSlot from "@/components/DragSlot.vue"
 import GameField from "@/components/GameField.vue"
@@ -58,7 +51,7 @@ import GameModal from "@/components/GameModal.vue"
 import TableHeader from "@/components/TableHeader.vue"
 
 export default {
-	name: "HomeView",
+	name: "TableView",
 	data() {
 		return {
 			timeslots: undefined,
@@ -74,22 +67,12 @@ export default {
 		TableHeader,
 	},
 	methods: {
-		checkCurrentTimeSLot() {
-			const times = Object.keys(this.timeslots)
-			for (let time of times) {
-				console.log(time)
-				//do nothing
-			}
-		},
 		async getTimeslots() {
-			console.log(this)
 			const timeslots = await this.callApi("get", "/tournament/table")
 			this.timeslots = timeslots.data
-			console.log("reload")
 			this.tableKey++
 		},
 		async getHalls() {
-			console.log(this)
 			const halls = await this.callApi("get", "/halls")
 			this.halls = halls.data
 		},

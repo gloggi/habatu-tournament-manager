@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"
-import HomeView from "../views/HomeView.vue"
+import TableView from "../views/TableView.vue"
 import LoginView from "../views/LoginView.vue"
 import TestView from "../views/TestView"
 import CreateView from "../views/CreateView"
@@ -8,12 +8,18 @@ import CreateCategories from "../views/CreateCategories"
 import CreateTeams from "../views/CreateTeams"
 import CreateOptions from "../views/CreateOptions"
 import RankingView from "../views/RankingView"
+import MenuView from "../views/MenuView"
 
 const routes = [
 	{
 		path: "/",
-		name: "home",
-		component: HomeView,
+		name: "menu",
+		component: MenuView,
+	},
+	{
+		path: "/table",
+		name: "table",
+		component: TableView,
 	},
 	{
 		path: "/login",

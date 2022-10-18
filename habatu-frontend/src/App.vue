@@ -9,7 +9,6 @@ import NotificationItem from "./components/NotificationItem.vue"
 
 export default {
 	async created() {
-		
 		await this.$store.dispatch("user/getMe", localStorage.token)
 		await this.$store.dispatch("games/get")
 		await this.$store.dispatch("halls/get")

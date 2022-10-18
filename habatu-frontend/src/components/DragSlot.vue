@@ -28,9 +28,6 @@ export default {
 				hall: this.hall,
 			})
 			this.$emit("reload", true)
-			console.log(
-				`Game: ${gameId}, Timeslot: ${this.timeslot}, Hal: ${this.hall}`
-			)
 			this.dragging = false
 		},
 	},

@@ -78,13 +78,13 @@ export default {
 		async loginUser() {
 			await this.$store.dispatch("user/login", this.loginForm)
 			if (localStorage.token) {
-				this.$router.push({ name: "home" })
+				this.$router.push({ name: "menu" })
 			}
 		},
 		async registerUser() {
 			await this.$store.dispatch("user/register", this.registerForm)
 			if (localStorage.token) {
-				this.$router.push({ name: "home" })
+				this.$router.push({ name: "menu" })
 			}
 		},
 	},

@@ -9,7 +9,7 @@ router.beforeEach((to, from, next) => {
 	else next()
 })
 router.beforeEach((to, from, next) => {
-	if (to.name == "login" && localStorage.token) next({ name: "home" })
+	if (to.name == "login" && localStorage.token) next({ name: "menu" })
 	else next()
 })
 

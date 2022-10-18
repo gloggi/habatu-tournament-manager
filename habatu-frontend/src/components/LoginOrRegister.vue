@@ -31,7 +31,6 @@ export default {
 	methods: {
 		handleSwitch() {
 			this.$emit("switch", !this.login)
-			console.log("switch")
 		},
 	},
 }

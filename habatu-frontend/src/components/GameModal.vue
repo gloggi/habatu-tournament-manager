@@ -2,7 +2,7 @@
 	<GenericModal
 		v-if="isOpen"
 		:close="close"
-		:title="`${game.teamA.name} vs ${game.teamB.name}`">
+		title="Spiel bearbeite">
 		<form @submit.prevent="updateGame">
 			<JsonForm
 				@changeForm="handleMainFormChange"
@@ -46,16 +46,12 @@ export default {
 			return [
 				[
 					{
-						label: "Team A",
 						model: "teamA",
-						options: this.$store.state.teams.teams,
-						component: "SelectField",
+						class: "w-full"
 					},
 					{
-						label: "Team B",
 						model: "teamB",
-						options: this.$store.state.teams.teams,
-						component: "SelectField",
+						class: "w-full"
 					},
 				],
 				[

@@ -4,7 +4,7 @@ export const user = {
 	namespaced: true,
 	state() {
 		return {
-			user: undefined,
+			user: {nickname: undefined},
 		}
 	},
 	mutations: {

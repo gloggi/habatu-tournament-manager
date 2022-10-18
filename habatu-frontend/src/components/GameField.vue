@@ -26,7 +26,6 @@ export default {
 			evt.dataTransfer.setData("gameId", gameId)
 		},
 		openGameModal(game) {
-			console.log("open")
 			this.$store.commit("gameModal/openModal", game)
 		},
 	},

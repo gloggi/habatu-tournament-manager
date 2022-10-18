@@ -1,19 +1,19 @@
 <template>
-	<div class="h-screen p-3 shadow-lg">
+	<div class="h-screen p-3">
 		<router-link v-if="backRoute" :to="{ name: backRoute }"
 			><BasicButton
-				class="absolute left-3 bottom-3 w-1/12 rounded-tl-none rounded-br-none"
+				class="absolute left-5 bottom-1 w-1/12 rounded-tl-none rounded-br-none"
 				>back</BasicButton
 			></router-link
 		>
 		<router-link v-if="nextRoute" :to="{ name: nextRoute }"
 			><BasicButton
 				@click="$router.push({ to: nextRoute })"
-				class="absolute right-3 bottom-3 w-1/12 rounded-tr-none rounded-bl-none"
+				class="absolute right-5 bottom-1 w-1/12 rounded-tr-none rounded-bl-none"
 				>next</BasicButton
 			></router-link
 		>
-		<div class="flex h-full w-full flex-row rounded-lg border text-left">
+		<div class="flex h-full w-full flex-row rounded-lg border text-left shadow-lg bg-white">
 			<form
 				@submit.prevent="setOptions"
 				:key="formKey"
@@ -62,7 +62,7 @@ export default {
 			formKey: 0,
 			toUpdateItems: {},
 			backRoute: "teams",
-			nextRoute: "home",
+			nextRoute: "table",
 			timePreview: undefined,
 			form: [
 				[

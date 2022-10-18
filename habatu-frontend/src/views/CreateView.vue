@@ -32,7 +32,7 @@
 						:title="item.name"
 						:key="item._id">
 						<div class="flex flex-col">
-							<div class="w-full">
+							<div class="w-full space-y-3">
 								<JsonForm
 									@changeForm="handleSideFormChange"
 									:form="form"

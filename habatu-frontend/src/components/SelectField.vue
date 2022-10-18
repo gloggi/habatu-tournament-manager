@@ -74,7 +74,6 @@ export default {
 			this.select = this.options.filter(o =>
 				o.name.toLowerCase().includes(newVal.toLowerCase())
 			)
-			console.log(this.select[0])
 			this.selectKey++
 		},
 	},
