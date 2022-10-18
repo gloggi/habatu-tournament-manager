@@ -3,6 +3,15 @@ POST http://localhost:8000/users HTTP/1.1
 content-type: application/json
 
 {
+    "nickname": "Archim",
+    "password": "Test"
+}
+
+### Login User
+POST http://localhost:8000/users/login HTTP/1.1
+content-type: application/json
+
+{
     "nickname": "Archi",
     "password": "Test"
 }
@@ -10,18 +19,20 @@ content-type: application/json
 GET http://localhost:8000/users/id HTTP/1.1
 content-type: application/json
 
+
 ### Get all Users
 GET http://localhost:8000/users HTTP/1.1
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM0ZDBmYzA4M2E1MTZhZDJjNGNkNjAwIiwibmlja25hbWUiOiJBcmNoaSIsInJvbGVzIjpbIkFkbWluIl0sImlhdCI6MTY2NTk5OTA0NywiZXhwIjoxNjY2MDQyMjQ3fQ.1zkgeCRjirJ2h4ahOdx8v7dXw8FELsv9SnpQQHeEGyY
 
 ### Update a User
-POST http://localhost:8000/users HTTP/1.1
+PUT http://localhost:8000/users/634d0fc083a516ad2c4cd600 HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Wildert"
+    "roles": ["Admin"]
 }
 
 ### Delete one User
-Delete http://localhost:8000/users/63304763e11fb347d0dbfff8 HTTP/1.1
+Delete http://localhost:8000/users/634d0bdc356a4ea482a302d3 HTTP/1.1
 content-type: application/json

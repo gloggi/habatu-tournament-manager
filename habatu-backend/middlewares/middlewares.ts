@@ -13,7 +13,7 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
         const user : JwtPayload = jwt.verify(token, process.env.TOKEN_KEY) as JwtPayload
         res.locals.user = user
         if(!user.roles.includes("Admin")){
-            res.sendStatus(401)
+            res.sendStatus(401).json({message: "Finger wäg!"})
             return
         }
         next()

@@ -1,17 +1,17 @@
 version: "3"
 services:
-       habatu-backend:
-           build: ./habatu-backend
-           volumes:
-            - ./habatu-backend:/usr/app
-            - /usr/app/node_modules
-           command: npm run dev
-           environment:
-            - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
-           ports:
-             - "8000:8000"
-           links:
-             - mongo
+#       habatu-backend:
+#           build: ./habatu-backend
+#           volumes:
+#            - ./habatu-backend:/usr/app
+#            - /usr/app/node_modules
+#           command: npm run dev
+#           environment:
+#            - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
+#           ports:
+#             - "8000:8000"
+#           links:
+#             - mongo
        mongo:
              container_name: mongo
              image: mongo

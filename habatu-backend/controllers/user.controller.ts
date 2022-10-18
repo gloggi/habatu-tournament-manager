@@ -1,20 +1,23 @@
 import { Request, Response } from 'express';
 import { createUser as create, getUsers as gets, updateUsers as update, getUser as get, deleteUser as remove, getUserByNickname } from "../services/user.service";
 import bcrypt from "bcryptjs"
-import jwt from "jsonwebtoken"
+import jwt, { JwtPayload } from "jsonwebtoken"
+import { Role } from '../interfaces/role';
 
 export const createUser = async (req: Request, res: Response) => {
     try {
     
         const encryptedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = encryptedPassword
+        // Only for testing
+        req.body.roles = [Role.Admin]
     
 
         const user = await create(req.body)
     
 
         const token = jwt.sign(
-          { user_id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+          { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
@@ -39,17 +42,35 @@ export const loginUser = async (req: Request, res: Response) => {
     res.status(403).json({message: "User credentials are wrong"})
     return
   }
-    const token = jwt.sign(
-      { user_id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
-      process.env.TOKEN_KEY,
-      {
-        expiresIn: "12h",
-      }
-    );
+  const token = jwt.sign(
+    { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+    process.env.TOKEN_KEY,
+    {
+      expiresIn: "12h",
+    }
+  );
     res.status(201).json({_id: user._id, roles: user.roles, nickname, token});
+  
+}
 
-  
-  
+export const getMe = async (req: Request, res: Response) => {
+      const {token} = req.body
+      const tokenUser : JwtPayload = jwt.verify(token,  process.env.TOKEN_KEY) as JwtPayload
+      const user = await get(tokenUser._id)
+      console.log(user)
+      if(user){
+        const token = jwt.sign(
+          { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+          process.env.TOKEN_KEY,
+          {
+            expiresIn: "12h",
+          }
+        );
+      res.status(200).json({_id: user._id, roles: user.roles, nickname: user.nickname, token});
+    }else{
+      res.status(404)
+    }
+
 }
 
 export const getUser = async (req: Request, res: Response) => {
