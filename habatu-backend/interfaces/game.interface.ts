@@ -7,6 +7,7 @@ export interface IGame {
     category: string;
     hall?: string;
     timeslot?: string;
+    type: string;
     pointsTeamA: number;
     pointsTeamB: number;
   }

@@ -7,6 +7,8 @@ import { IOption } from "../interfaces/option.interface";
 import { ITimeslot } from "../interfaces/timeslot.interface";
 import {format, isWithinInterval, addMinutes, getMinutes} from "date-fns"
 import { ISection } from "../interfaces/section.interface";
+import { IGame } from "../interfaces/game.interface";
+import { IRankedTeam } from "../interfaces/rankedTeam.interface";
 
 export const getGamesPreview = async () => {
    
@@ -44,6 +46,16 @@ export const getTournamentTable = async () => {
     }
     return output
 }
+export const getTableByGroupId = async (_id: string) => {
+    const games = await Game.find({$or:[{teamA: _id}, {teamB: _id}]}).populate<{hall: IHall}>("hall").populate<{timeslot: ITimeslot}>("timeslot").populate<{teams: ITeam}>("teamA").populate<{teams: ITeam}>("teamB")
+    const output : Record<string,any> = {}
+    for(let game of games){
+        output[`${format(game.timeslot.startTime, "HH:mm")} - ${format(game.timeslot.endTime, "HH:mm")}`] = game
+    }
+    return output
+
+}
+
 
 export const getTimePreview= async () => {
     await getGamesPreview()
@@ -60,13 +72,11 @@ export const getTimePreview= async () => {
 
 }
 
-export const getTournamentRanking = async () => {
+export const getTournamentRanking = async () : Promise<Record<string, IRankedTeam[]>> => {
     const teams = await Team.find({},{},).lean().populate<{section: ISection}>("section")
     const categories : ICategory[] = await Category.find({}).lean();
-    const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
-    const option :IOption = await Option.findOne().orFail().lean();
     const games = await Game.find({}).lean({ autopopulate: false })
-    const rankedTeams : any = [...teams]
+    const rankedTeams : IRankedTeam[] = [...teams]
     for(let team of rankedTeams){
         var tournamentPoints = 0
         var pointsPro = 0
@@ -113,11 +123,55 @@ export const getTournamentRanking = async () => {
             return 0
         }
     }
-    const rankedTeamsByCategory : Record<string, any> = {}
+    const rankedTeamsByCategory : Record<string, IRankedTeam[]> = {}
     for(let category of categories){
         rankedTeamsByCategory[category.name] =  rankedTeams.filter((t: any)=>t.category==category._id.toString()).sort(comparefunction)
     }
 
     return rankedTeamsByCategory
 
+}
+export const createFinals = async () => {
+    const halls: IHall[] = await Hall.find({}).lean({ autopopulate: true });
+    const timeslots: ITimeslot[] = await Timeslot.find({}).sort({startTime: 1});
+    const games = await Game.find({}).populate<{timeslot: ITimeslot}>("timeslot").sort({"timeslot.startTime": -1})
+    const lastGameSlotId = games[games.length-1].timeslot._id!
+    console.log(timeslots.map(t=>t.startTime))
+    var slotIndex : number = timeslots.map(t=>t._id?.toString()).indexOf(lastGameSlotId.toString())+1
+    const rankedTeamsByCategory = await getTournamentRanking()
+    const finals : IGame[] = []
+    for(let category in rankedTeamsByCategory){
+        const teams : IRankedTeam[] =rankedTeamsByCategory[category]
+        finals.push({
+            teamA: teams[0]._id.toString(),
+            teamB: teams[1]._id.toString(),
+            category: teams[0].category!.toString(),
+            type: "grandFinale",
+            pointsTeamA: 0,
+            pointsTeamB: 0
+        })
+        finals.push({
+            teamA: teams[2]._id.toString(),
+            teamB: teams[3]._id.toString(),
+            category: teams[2].category!.toString(),
+            type: "petiteFinale",
+            pointsTeamA: 0,
+            pointsTeamB: 0
+        })
+        
+    }
+    for(let [i, game] of finals.entries()){
+        if(slotIndex<timeslots.length-1&&i%halls.length==0){
+            slotIndex++;
+        }
+        
+            game.timeslot = timeslots[slotIndex]._id!.toString()
+            console.log(slotIndex)
+        
+        game.hall = halls[i%halls.length]._id.toString()
+    }
+    
+
+    await Game.insertMany(finals)
+    
 }

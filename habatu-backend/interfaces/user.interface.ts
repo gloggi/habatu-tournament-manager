@@ -3,6 +3,6 @@ export interface IUser {
     nickname: string;
     password: string;
     roles: Role[];
-    group: string;
+    team: string;
     token?: string;
   }

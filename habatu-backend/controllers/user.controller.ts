@@ -9,8 +9,6 @@ export const createUser = async (req: Request, res: Response) => {
     
         const encryptedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = encryptedPassword
-        // Only for testing
-        req.body.roles = [Role.Admin]
     
 
         const user = await create(req.body)
@@ -60,13 +58,13 @@ export const getMe = async (req: Request, res: Response) => {
       console.log(user)
       if(user){
         const token = jwt.sign(
-          { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+          { _id: user._id, nickname: user.nickname, roles: user.roles, team: user.team },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
           }
         );
-      res.status(200).json({_id: user._id, roles: user.roles, nickname: user.nickname, token});
+      res.status(200).json({_id: user._id, roles: user.roles, team: user.team, nickname: user.nickname, token});
     }else{
       res.status(404)
     }

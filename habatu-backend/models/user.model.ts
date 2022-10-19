@@ -7,7 +7,7 @@ import { Role} from '../interfaces/role'
     nickname: {type: String, unique: true, required: true},
     password: {type: String},
     roles: [{type: String}],
-    group: {type: Schema.Types.ObjectId , ref: "Group", autopopulate: true}
+    team: {type: Schema.Types.ObjectId , ref: "Team", autopopulate: true}
   });
   schema.plugin(autopopulate);
 export const User = model<IUser>('User', schema);

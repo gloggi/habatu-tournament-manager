@@ -6,7 +6,8 @@ content-type: application/json
     "tournamentName": "HaBaTu",
     "startTime": "12:00",
     "gameDuration": "00:10",
-    "breakDuration": "00:05"
+    "breakDuration": "00:05",
+    "additionalSlots": 4,
 }
 ### Get one Option
 GET http://localhost:8000/options/id HTTP/1.1

@@ -1,3 +1,5 @@
+@authToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzRkMGZjMDgzYTUxNmFkMmM0Y2Q2MDAiLCJuaWNrbmFtZSI6IkFyY2hpIiwicm9sZXMiOlsiQWRtaW4iXSwiaWF0IjoxNjY2MTczOTI1LCJleHAiOjE2NjYyMTcxMjV9.-ZWrMaLJ-Aw12dA5MeiIwiALJv-Wjofl5uDfH4gtU5I
+
 ### Post a User
 POST http://localhost:8000/users HTTP/1.1
 content-type: application/json
@@ -23,16 +25,17 @@ content-type: application/json
 ### Get all Users
 GET http://localhost:8000/users HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjM0ZDBmYzA4M2E1MTZhZDJjNGNkNjAwIiwibmlja25hbWUiOiJBcmNoaSIsInJvbGVzIjpbIkFkbWluIl0sImlhdCI6MTY2NTk5OTA0NywiZXhwIjoxNjY2MDQyMjQ3fQ.1zkgeCRjirJ2h4ahOdx8v7dXw8FELsv9SnpQQHeEGyY
+Authorization: Bearer {{authToken}}
 
 ### Update a User
 PUT http://localhost:8000/users/634d0fc083a516ad2c4cd600 HTTP/1.1
 content-type: application/json
+Authorization: Bearer {{authToken}}
 
 {
-    "roles": ["Admin"]
+    "team": "63504a8ba0a3e05ca333459d"
 }
 
 ### Delete one User
-Delete http://localhost:8000/users/634d0bdc356a4ea482a302d3 HTTP/1.1
+Delete http://localhost:8000/users/634fce9358d0a3a11767a262 HTTP/1.1
 content-type: application/json

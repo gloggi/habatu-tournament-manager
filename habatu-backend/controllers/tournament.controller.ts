@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getGamesPreview as getsPreview, getTimePreview as timePreview, getTournamentTable as getTable, getTournamentRanking as getRanking } from "../services/tournament.service";
+import { getGamesPreview as getsPreview, getTimePreview as timePreview, getTournamentTable as getTable, getTournamentRanking as getRanking, createFinals, getTableByGroupId } from "../services/tournament.service";
 export const getGamesPreview = async (req: Request, res: Response) => {
     const games = await getsPreview()
     res.json(games)
@@ -18,4 +18,12 @@ export const getTournamentTable = async (req: Request, res: Response) => {
 export const getTournamentRanking = async (req: Request, res: Response) => {
     const ranking = await getRanking()
     res.json(ranking)
+}
+export const createTournamentFinals = async (req: Request, res: Response) => {
+    await createFinals()
+    res.json({message: "Finals Created"})
+}
+export const getGroupTable = async (req: Request, res: Response) => {
+    const table = await getTableByGroupId(req.params.id)
+    res.json(table)
 }

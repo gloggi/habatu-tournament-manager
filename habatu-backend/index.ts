@@ -20,7 +20,6 @@ app.get('/', (req: Request, res: Response) => {
   res.json({ message: "Alles guet :)" })
 });
 app.use(function (err: Error, req: Request, res: Response, next: any) {
-  console.log("Handler called")
   console.error(err.stack);
   res.status(500).json({ message: "An Error occured" });
   next()

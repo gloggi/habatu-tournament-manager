@@ -33,6 +33,7 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
                     teamA: pivotTeam._id.toString(),
                     teamB: endTeam._id.toString(),
                     category: category,
+                    type: "roundGame",
                     pointsTeamA: 0,
                     pointsTeamB: 0
                 })
@@ -44,6 +45,7 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
                     teamA: teamA._id.toString(),
                     teamB: teamB._id.toString(),
                     category: category,
+                    type: "roundGame",
                     pointsTeamA: 0,
                     pointsTeamB: 0
                 })
@@ -64,7 +66,7 @@ export const gamesGenerator = (teams: ITeam[], categories: ICategory[], halls: I
     return games
 }
 export const generateTimeslots = (games: IGame[], halls: IHall[], option: IOption): ITimeslot[] => {
-    const nslots = Math.ceil(games.length / halls.length) + 3
+    const nslots = Math.ceil(games.length / halls.length) + option.additionalSlots
     const timeSlots: ITimeslot[] = []
     let startTime = setTimeOnDate(new Date(), option.startTime)
     console.log(startTime)

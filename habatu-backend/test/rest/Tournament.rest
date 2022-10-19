@@ -13,3 +13,7 @@ content-type: application/json
 ### Get Ranking
 GET http://localhost:8000/tournament/ranking HTTP/1.1
 content-type: application/json
+
+### Create Finals
+GET http://localhost:8000/tournament/create-finals HTTP/1.1
+content-type: application/json

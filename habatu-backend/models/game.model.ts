@@ -8,6 +8,7 @@ import autopopulate from 'mongoose-autopopulate';
     category: {type: Schema.Types.ObjectId, ref: "Category", autopopulate: true},
     hall: {type: Schema.Types.ObjectId , ref: "Hall", autopopulate: true},
     timeslot: {type: Schema.Types.ObjectId, ref: "Timeslot", autopopulate: true},
+    type: {type: String},
     pointsTeamA: { type: Number },
     pointsTeamB: { type: Number },
   });
