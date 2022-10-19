@@ -13,7 +13,7 @@
 				>next</BasicButton
 			></router-link
 		>
-		<div class="flex h-full w-full flex-row rounded-lg border text-left shadow-lg bg-white">
+		<div class="flex h-full w-full flex-row rounded-lg border text-left drop-shadow-lg bg-white">
 			<form
 				@submit.prevent="setOptions"
 				:key="formKey"

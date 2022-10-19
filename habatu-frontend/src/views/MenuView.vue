@@ -15,13 +15,13 @@
     <MenuItem name="Grüchtli" to="rumours">
             <ChatHeartIcon class="h-full w-full" />
     </MenuItem>
-    <MenuItem name="Nie ohne mein Team" to="teamtable">
+    <MenuItem name="Nie ohne mein Team" to="team">
             <PeopleIcon class="h-full w-full" />
     </MenuItem>
-    <MenuItem name="Schiri" to="referee">
+    <MenuItem v-if="userIsReferee()" name="Schiri" to="referee">
             <EyeglassesIcon class="h-full w-full" />
     </MenuItem>
-    <MenuItem name="Stürig" to="dahsboard">
+    <MenuItem v-if="userIsAdmin()" name="Stürig" to="dahsboard">
             <SpeedometerIcon class="h-full w-full" />
     </MenuItem>
 

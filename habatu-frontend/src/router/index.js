@@ -9,6 +9,7 @@ import CreateTeams from "../views/CreateTeams"
 import CreateOptions from "../views/CreateOptions"
 import RankingView from "../views/RankingView"
 import MenuView from "../views/MenuView"
+import TeamView from "../views/TeamView"
 
 const routes = [
 	{
@@ -61,11 +62,26 @@ const routes = [
 		name: "ranking",
 		component: RankingView,
 	},
+	{
+		path: "/team",
+		name: "team",
+		component: TeamView,
+	},
+
 ]
 
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
+})
+
+router.beforeEach((to, from, next) => {
+	if (to.name !== "login" && !localStorage.token) next({ name: "login" })
+	else next()
+})
+router.beforeEach((to, from, next) => {
+	if (to.name == "login" && localStorage.token) next({ name: "menu" })
+	else next()
 })
 
 export default router

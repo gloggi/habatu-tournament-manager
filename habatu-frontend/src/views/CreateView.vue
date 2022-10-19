@@ -14,7 +14,7 @@
 			></router-link
 		>
 		<div
-			class="flex h-full w-full flex-row rounded-md border bg-white text-left shadow-lg">
+			class="flex h-full w-full flex-row rounded-md border bg-white text-left drop-shadow-lg">
 			<form
 				@submit.prevent="createItem"
 				:key="formKey"
@@ -97,6 +97,11 @@ export default {
 			this.toUpdateItems[item._id] = item
 		},
 	},
+	created(){
+		if(!this.userIsAdmin()){
+			//this.$router.push({name: "menu"})
+		}
+	}
 }
 </script>
 

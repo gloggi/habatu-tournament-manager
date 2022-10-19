@@ -4,7 +4,7 @@
 			<div class="flex w-full justify-end p-3">
 				<div
 					v-if="show"
-					class="bottom-3 left-3 right-3 flex w-1/4 items-center space-x-3 rounded-lg border bg-white p-3 shadow-lg">
+					class="bottom-3 left-3 right-3 flex w-1/4 items-center space-x-3 rounded-lg border bg-white p-3 drop-shadow-lg">
 					<CheckIcon class="text-green-600" />
 					<div class="text font-bold">{{ message }}</div>
 				</div>

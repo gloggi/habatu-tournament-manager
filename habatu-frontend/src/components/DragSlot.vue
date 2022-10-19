@@ -1,5 +1,5 @@
 <template>
-	<div
+	<div v-if="userIsAdmin()"
 		dropzone="true"
 		@dragenter="dragging = true"
 		@dragleave="dragging = false"
@@ -8,6 +8,7 @@
 		@dragover="evt => evt.preventDefault()">
 		<slot></slot>
 	</div>
+	<div v-else><slot></slot></div>
 </template>
 
 <script>
