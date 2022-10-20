@@ -4,10 +4,7 @@ export const user = {
 	namespaced: true,
 	state() {
 		return {
-			user: {nickname: undefined,
-			roles: [],
-			team: undefined
-		},
+			user: { nickname: undefined, roles: [], team: undefined },
 		}
 	},
 	mutations: {

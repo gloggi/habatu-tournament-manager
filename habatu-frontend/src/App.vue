@@ -38,22 +38,22 @@ body {
 }
 /* Firefox */
 * {
-    scrollbar-width: auto;
-    scrollbar-color: #b8b8b8 transparent;
-  }
+	scrollbar-width: auto;
+	scrollbar-color: #b8b8b8 transparent;
+}
 
-  /* Chrome, Edge, and Safari */
-  *::-webkit-scrollbar {
-    width: 10px;
-  }
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+	width: 10px;
+}
 
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
 
-  *::-webkit-scrollbar-thumb {
-    background-color: #b8b8b8;
-    border-radius: 10px;
-    border: 3px solid #ffffff;
-  }
+*::-webkit-scrollbar-thumb {
+	background-color: #b8b8b8;
+	border-radius: 10px;
+	border: 3px solid #ffffff;
+}
 </style>

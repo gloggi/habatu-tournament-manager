@@ -21,9 +21,7 @@ export default {
 	methods: {},
 	computed: {
 		form() {
-			return [
-				[{ label: "Hallenname", model: "name", component: "TextField" }]
-			]
+			return [[{ label: "Hallenname", model: "name", component: "TextField" }]]
 		},
 	},
 }

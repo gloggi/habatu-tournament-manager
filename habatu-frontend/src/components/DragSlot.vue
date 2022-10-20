@@ -1,5 +1,6 @@
 <template>
-	<div v-if="userIsAdmin()"
+	<div
+		v-if="userIsAdmin()"
 		dropzone="true"
 		@dragenter="dragging = true"
 		@dragleave="dragging = false"

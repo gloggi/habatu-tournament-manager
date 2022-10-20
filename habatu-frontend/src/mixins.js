@@ -14,21 +14,26 @@ export const mixin = {
 					method,
 					url,
 					data,
-					headers: { authorization: `Bearer: ${localStorage.getItem("token")}` },
+					headers: {
+						authorization: `Bearer: ${localStorage.getItem("token")}`,
+					},
 				})
 				return response
 			} catch (e) {
 				return JSON.stringify(e, Object.getOwnPropertyNames(e))
 			}
 		},
-		userIsAdmin(){
+		userIsAdmin() {
 			return this.$store.state.user.user.roles.includes("Admin")
 		},
-		userIsReferee(){
-			return this.$store.state.user.user.roles.includes("Admin") || this.$store.state.user.user.roles.includes("Referee")
+		userIsReferee() {
+			return (
+				this.$store.state.user.user.roles.includes("Admin") ||
+				this.$store.state.user.user.roles.includes("Referee")
+			)
 		},
-		userTeam(){
+		userTeam() {
 			return this.$store.state.user.user.team
-		}
+		},
 	},
 }

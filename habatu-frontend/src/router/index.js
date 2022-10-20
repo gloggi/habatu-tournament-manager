@@ -84,46 +84,39 @@ const routes = [
 		path: "/dashboard",
 		name: "dashboard",
 		component: DashboardView,
-		children:[
+		children: [
 			{
 				path: "users",
 				name: "usersDashboard",
 				component: UserDashboard,
-
 			},
 			{
 				path: "halls",
 				name: "hallsDashboard",
 				component: HallDashboard,
-
 			},
 			{
 				path: "sections",
 				name: "sectionsDashboard",
 				component: SectionDashboard,
-
 			},
 			{
 				path: "teams",
 				name: "teamsDashboard",
 				component: TeamDashboard,
-
 			},
 			{
 				path: "categories",
 				name: "categoriesDashboard",
 				component: CategoryDashboard,
-
 			},
 			{
 				path: "options",
 				name: "optionsDashboard",
 				component: OptionDashboard,
-
 			},
-		]
+		],
 	},
-
 ]
 
 const router = createRouter({

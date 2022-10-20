@@ -1,14 +1,12 @@
 <template>
-  <DashboardTable state="halls" name="Halls" />
+	<DashboardTable state="halls" name="Halls" />
 </template>
 
 <script>
-import DashboardTable from '@/components/DashboardTable.vue';
+import DashboardTable from "@/components/DashboardTable.vue"
 export default {
-    components: { DashboardTable }
+	components: { DashboardTable },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>

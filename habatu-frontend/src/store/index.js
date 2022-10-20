@@ -23,6 +23,6 @@ export default createStore({
 		timeslots,
 		notifications,
 		user,
-		users
+		users,
 	},
 })

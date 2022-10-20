@@ -17,8 +17,10 @@ export default {
 			state: "categories",
 			nextRoute: "teams",
 			backRoute: "sections",
-			form: [[{ label: "Kategorie", model: "name", component: "TextField" }],
-			[{ label: "Gruppenfarbe", model: "color", component: "ColorPicker" }]],
+			form: [
+				[{ label: "Kategorie", model: "name", component: "TextField" }],
+				[{ label: "Gruppenfarbe", model: "color", component: "ColorPicker" }],
+			],
 		}
 	},
 	methods: {},

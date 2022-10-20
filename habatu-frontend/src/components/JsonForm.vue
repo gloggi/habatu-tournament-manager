@@ -14,12 +14,13 @@
 					class="w-full"
 					v-model="item[col.model]"
 					:label="col.label" />
-					<ColorPicker 
+				<ColorPicker
 					v-if="col.component == 'ColorPicker'"
 					v-model="item[col.model]"
-					:label="col.label"
-					/>
-					<div v-if="!col.component" :class="`text-2xl font-medium ${col.class}`">{{item[col.model].name?item[col.model].name: item[col.model]}}</div>
+					:label="col.label" />
+				<div v-if="!col.component" :class="`text-2xl font-medium ${col.class}`">
+					{{ item[col.model].name ? item[col.model].name : item[col.model] }}
+				</div>
 			</template>
 		</div>
 	</div>

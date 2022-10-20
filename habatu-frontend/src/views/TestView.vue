@@ -5,21 +5,21 @@
 </template>
 
 <script>
-import ColorPicker from '@/components/ColorPicker.vue';
+import ColorPicker from "@/components/ColorPicker.vue"
 export default {
-    data() {
-        return {
-            value: 0,
+	data() {
+		return {
+			value: 0,
 			color: "#123456",
-            options: [
-                { _id: 0, name: "Max Mustermann" },
-                { _id: 1, name: "John Doe" },
-                { _id: 3, name: "Jane Doe" },
-                { _id: 3, name: "Erika Mustermann" },
-            ],
-        };
-    },
-    components: { ColorPicker }
+			options: [
+				{ _id: 0, name: "Max Mustermann" },
+				{ _id: 1, name: "John Doe" },
+				{ _id: 3, name: "Jane Doe" },
+				{ _id: 3, name: "Erika Mustermann" },
+			],
+		}
+	},
+	components: { ColorPicker },
 }
 </script>
 

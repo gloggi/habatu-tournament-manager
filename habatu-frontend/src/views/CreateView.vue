@@ -2,19 +2,19 @@
 	<div class="h-screen p-3">
 		<router-link v-if="backRoute" :to="{ name: backRoute }"
 			><BasicButton
-				class="absolute left-5 z-50 bottom-1 w-1/12 rounded-tl-none rounded-br-none"
+				class="absolute left-5 bottom-1 z-50 w-1/12 rounded-tl-none rounded-br-none"
 				>back</BasicButton
 			></router-link
 		>
 		<router-link v-if="nextRoute" :to="{ name: nextRoute }"
 			><BasicButton
 				@click="$router.push({ to: nextRoute })"
-				class="absolute right-5 z-50 bottom-1 w-1/12 rounded-tr-none rounded-bl-none"
+				class="absolute right-5 bottom-1 z-50 w-1/12 rounded-tr-none rounded-bl-none"
 				>next</BasicButton
 			></router-link
 		>
 		<div
-			class="flex h-full w-full  flex-row rounded-md border bg-white text-left drop-shadow-lg">
+			class="flex h-full w-full flex-row rounded-md border bg-white text-left drop-shadow-lg">
 			<form
 				@submit.prevent="createItem"
 				:key="formKey"
@@ -62,7 +62,14 @@ import JsonForm from "@/components/JsonForm.vue"
 import RefreshIcon from "@/components/icons/RefreshIcon.vue"
 import TitleItem from "@/components/TitleItem.vue"
 export default {
-	components: { BasicButton, CollapseItem, TrashIcon, JsonForm, RefreshIcon, TitleItem },
+	components: {
+		BasicButton,
+		CollapseItem,
+		TrashIcon,
+		JsonForm,
+		RefreshIcon,
+		TitleItem,
+	},
 	props: ["name", "form", "state", "nextRoute", "backRoute"],
 	data() {
 		return {
@@ -98,11 +105,11 @@ export default {
 			this.toUpdateItems[item._id] = item
 		},
 	},
-	created(){
-		if(!this.userIsAdmin()){
+	created() {
+		if (!this.userIsAdmin()) {
 			//this.$router.push({name: "menu"})
 		}
-	}
+	},
 }
 </script>
 

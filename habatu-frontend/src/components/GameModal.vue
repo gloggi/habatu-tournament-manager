@@ -1,28 +1,23 @@
 <template>
-	<GenericModal
-		v-if="isOpen"
-		:close="close"
-		title="Spiel bearbeite">
+	<GenericModal v-if="isOpen" :close="close" title="Spiel bearbeite">
 		<div class="flex-flex-col space-y-4">
-		<form @submit.prevent="updateGame">
-			<JsonForm
-				@changeForm="handleMainFormChange"
-				:form="form"
-				:values="game" />
-			<BasicButton class="mt-2">Update</BasicButton>
-		</form>
-		<div class="flex justify-center">
-			<div class="w-1/4">
-			<CollapseItem title="Referee Code">
-				<div class="flex justify-center">
-				<QrcodeVue :value="gameLink" :size="150" />
+			<form @submit.prevent="updateGame">
+				<JsonForm
+					@changeForm="handleMainFormChange"
+					:form="form"
+					:values="game" />
+				<BasicButton class="mt-2">Update</BasicButton>
+			</form>
+			<div class="flex justify-center">
+				<div class="w-1/4">
+					<CollapseItem title="Referee Code">
+						<div class="flex justify-center">
+							<QrcodeVue :value="gameLink" :size="150" />
+						</div>
+					</CollapseItem>
+				</div>
 			</div>
-			
-			</CollapseItem>
 		</div>
-		</div>
-	</div>
-
 	</GenericModal>
 </template>
 
@@ -57,7 +52,7 @@ export default {
 		game() {
 			return { ...this.$store.state.gameModal.game }
 		},
-		gameLink(){
+		gameLink() {
 			return `http://${process.env.VUE_APP_FRONTEND_HOST}/referee/${this.$store.state.gameModal.game._id}`
 		},
 		form() {
@@ -65,11 +60,11 @@ export default {
 				[
 					{
 						model: "teamA",
-						class: "w-full"
+						class: "w-full",
 					},
 					{
 						model: "teamB",
-						class: "w-full"
+						class: "w-full",
 					},
 				],
 				[

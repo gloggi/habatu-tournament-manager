@@ -33,7 +33,7 @@
 					:timeslot="timeslots[timeslot].id"
 					v-for="hall in Object.keys(timeslots[timeslot].items)"
 					:key="hall.name">
-					<div class="md:hidden text-center">{{ hall }}</div>
+					<div class="text-center md:hidden">{{ hall }}</div>
 					<GameField :games="timeslots[timeslot].items[hall].items" />
 				</DragSlot>
 			</div>
