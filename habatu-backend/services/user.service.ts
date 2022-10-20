@@ -13,7 +13,7 @@ export const getUser = async (_id: string) => {
     return user
 }
 export const getUsers = async () => {
-    const users = await User.find({});
+    const users = await User.find({},{password:0});
     return users
 }
 export const getUserByNickname = async (nickname: string) => {
