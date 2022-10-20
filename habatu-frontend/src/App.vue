@@ -17,6 +17,7 @@ export default {
 		await this.$store.dispatch("sections/get")
 		await this.$store.dispatch("teams/get")
 		await this.$store.dispatch("timeslots/get")
+		await this.$store.dispatch("users/get")
 	},
 	components: { NotificationItem },
 }
@@ -35,4 +36,24 @@ body {
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
 }
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #b8b8b8 transparent;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #b8b8b8;
+    border-radius: 10px;
+    border: 3px solid #ffffff;
+  }
 </style>

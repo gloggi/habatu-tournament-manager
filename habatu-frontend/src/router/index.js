@@ -10,6 +10,14 @@ import CreateOptions from "../views/CreateOptions"
 import RankingView from "../views/RankingView"
 import MenuView from "../views/MenuView"
 import TeamView from "../views/TeamView"
+import CreateHalls from "../views/CreateHalls"
+import DashboardView from "../views/DashboardView"
+import UserDashboard from "../views/UserDashboard"
+import HallDashboard from "../views/HallDashboard"
+import SectionDashboard from "../views/SectionDashboard"
+import TeamDashboard from "../views/TeamDashboard"
+import CategoryDashboard from "../views/CategoryDashboard"
+import OptionDashboard from "../views/OptionDashboard"
 
 const routes = [
 	{
@@ -36,6 +44,11 @@ const routes = [
 		path: "/create",
 		name: "create",
 		component: CreateView,
+	},
+	{
+		path: "/halls",
+		name: "halls",
+		component: CreateHalls,
 	},
 	{
 		path: "/sections",
@@ -66,6 +79,49 @@ const routes = [
 		path: "/team",
 		name: "team",
 		component: TeamView,
+	},
+	{
+		path: "/dashboard",
+		name: "dashboard",
+		component: DashboardView,
+		children:[
+			{
+				path: "users",
+				name: "usersDashboard",
+				component: UserDashboard,
+
+			},
+			{
+				path: "halls",
+				name: "hallsDashboard",
+				component: HallDashboard,
+
+			},
+			{
+				path: "sections",
+				name: "sectionsDashboard",
+				component: SectionDashboard,
+
+			},
+			{
+				path: "teams",
+				name: "teamsDashboard",
+				component: TeamDashboard,
+
+			},
+			{
+				path: "categories",
+				name: "categoriesDashboard",
+				component: CategoryDashboard,
+
+			},
+			{
+				path: "options",
+				name: "optionsDashboard",
+				component: OptionDashboard,
+
+			},
+		]
 	},
 
 ]

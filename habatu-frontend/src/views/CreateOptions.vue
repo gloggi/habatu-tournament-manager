@@ -29,12 +29,12 @@
 			</form>
 			<div class="mb-10 w-full p-3">
 				<div v-if="timePreview">
-					<h1 class="text-4xl font-black">Game Facts</h1>
-					<h1 class="text-2xl font-bold">
+					<TitleItem>Game Facts</TitleItem>
+					<h1 class="text-2xl font-medium">
 						Anzahl Spiele:
 						<span class="font-normal">{{ timePreview.amountOfGames }}</span>
 					</h1>
-					<h1 class="text-2xl font-bold">
+					<h1 class="text-2xl font-medium">
 						Letztes reguläres Spiel endet um:
 						<span class="font-normal">{{
 							formatDate(new Date(timePreview.lastGame), "HH:mm")
@@ -50,8 +50,9 @@
 import BasicButton from "@/components/BasicButton.vue"
 import JsonForm from "@/components/JsonForm.vue"
 import { format } from "date-fns"
+import TitleItem from "@/components/TitleItem.vue"
 export default {
-	components: { BasicButton, JsonForm },
+	components: { BasicButton, JsonForm, TitleItem },
 	data() {
 		return {
 			item: {

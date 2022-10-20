@@ -13,14 +13,19 @@ export default {
 	components: { CreateView },
 	data() {
 		return {
-			name: "Abteilungen",
-			state: "sections",
-			nextRoute: "categories",
-			backRoute: "halls",
-			form: [[{ label: "Abteilung", model: "name", component: "TextField" }]],
+			name: "Hallen",
+			state: "halls",
+			nextRoute: "sections",
 		}
 	},
 	methods: {},
+	computed: {
+		form() {
+			return [
+				[{ label: "Hallenname", model: "name", component: "TextField" }]
+			]
+		},
+	},
 }
 </script>
 

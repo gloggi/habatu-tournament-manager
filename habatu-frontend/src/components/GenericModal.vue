@@ -2,8 +2,8 @@
 	<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"></div>
 	<div
 		class="fixed inset-28 z-50 rounded-md border bg-white p-5 pt-20 drop-shadow-lg">
-		<div class="r-2 absolute top-5 text-4xl font-medium">
-			{{title}}
+		<div class=" absolute top-5">
+			<TitleItem>{{title}}</TitleItem>
 		</div>
 		<button
 			@click="close"
@@ -20,8 +20,9 @@
 
 <script>
 import XIcon from "./icons/XIcon.vue"
+import TitleItem from "./TitleItem.vue";
 export default {
-	components: { XIcon },
+	components: { XIcon, TitleItem },
 	props: ["title", "close"],
 }
 </script>

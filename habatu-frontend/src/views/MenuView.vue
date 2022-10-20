@@ -12,7 +12,7 @@
     <MenuItem name="Ranglischtä" to="ranking">
             <TrophyIcon class="h-full w-full" />
     </MenuItem>
-    <MenuItem name="Grüchtli" to="rumours">
+    <MenuItem name="Grüchtli" to="rumors">
             <ChatHeartIcon class="h-full w-full" />
     </MenuItem>
     <MenuItem name="Nie ohne mein Team" to="team">
@@ -21,7 +21,7 @@
     <MenuItem v-if="userIsReferee()" name="Schiri" to="referee">
             <EyeglassesIcon class="h-full w-full" />
     </MenuItem>
-    <MenuItem v-if="userIsAdmin()" name="Stürig" to="dahsboard">
+    <MenuItem v-if="userIsAdmin()" name="Stürig" to="dashboard">
             <SpeedometerIcon class="h-full w-full" />
     </MenuItem>
 
