@@ -28,7 +28,6 @@
 				</div>
 				<DragSlot
 					class="w-full self-stretch"
-					@reload="handleReload"
 					:hall="timeslots[timeslot].items[hall].id"
 					:timeslot="timeslots[timeslot].id"
 					v-for="hall in Object.keys(timeslots[timeslot].items)"
@@ -54,8 +53,6 @@ export default {
 	name: "TableView",
 	data() {
 		return {
-			timeslots: undefined,
-			halls: undefined,
 			tableKey: 0,
 			timeslotNow: undefined,
 		}
@@ -66,16 +63,15 @@ export default {
 		GameModal,
 		TableHeader,
 	},
+	computed: {
+		timeslots(){
+			return this.$store.state.tournament.table
+		},
+		halls(){
+			return this.$store.state.halls.halls
+		}
+	},
 	methods: {
-		async getTimeslots() {
-			const timeslots = await this.callApi("get", "/tournament/table")
-			this.timeslots = timeslots.data
-			this.tableKey++
-		},
-		async getHalls() {
-			const halls = await this.callApi("get", "/halls")
-			this.halls = halls.data
-		},
 		handleReload() {
 			this.getTimeslots()
 		},
@@ -84,11 +80,12 @@ export default {
 		},
 		format(date, form) {
 			return format(date, form)
-		},
+		}
 	},
 	async created() {
+		await this.$store.dispatch("tournament/getTable")
+		await this.$store.dispatch("halls/get")
 		this.getHalls()
-		this.getTimeslots()
 		await this.$store.dispatch("games/get")
 	},
 }

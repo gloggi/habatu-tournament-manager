@@ -10,6 +10,7 @@ import { timeslots } from "./modules/timeslots"
 import { notifications } from "./modules/notifications"
 import { user } from "./modules/user"
 import { users } from "./modules/users"
+import {tournament} from "./modules/tournament"
 
 export default createStore({
 	modules: {
@@ -24,5 +25,6 @@ export default createStore({
 		notifications,
 		user,
 		users,
+		tournament
 	},
 })

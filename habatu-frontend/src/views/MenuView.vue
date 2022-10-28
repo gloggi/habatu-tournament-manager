@@ -15,10 +15,10 @@
 		<MenuItem name="Ranglischtä" to="ranking">
 			<TrophyIcon class="h-full w-full" />
 		</MenuItem>
-		<MenuItem name="Grüchtli" to="rumors">
+		<MenuItem v-if="false" name="Grüchtli" to="rumors">
 			<ChatHeartIcon class="h-full w-full" />
 		</MenuItem>
-		<MenuItem name="Nie ohne mein Team" to="team">
+		<MenuItem name="Mis Team" to="team">
 			<PeopleIcon class="h-full w-full" />
 		</MenuItem>
 		<MenuItem v-if="userIsReferee()" name="Schiri" to="referee">

@@ -1,6 +1,6 @@
 import axios from "axios"
 const api = axios.create({
-	baseURL: `https://${process.env.VUE_APP_BACKEND_HOST}`,
+	baseURL: `http://${process.env.VUE_APP_BACKEND_HOST}`,
 	headers: {
 		accept: "application/json",
 	},
@@ -9,7 +9,6 @@ const api = axios.create({
 export const mixin = {
 	methods: {
 		async callApi(method, url, data) {
-			try {
 				const response = await api({
 					method,
 					url,
@@ -19,9 +18,6 @@ export const mixin = {
 					},
 				})
 				return response
-			} catch (e) {
-				return JSON.stringify(e, Object.getOwnPropertyNames(e))
-			}
 		},
 		userIsAdmin() {
 			return this.$store.state.user.user.roles.includes("Admin")

@@ -55,12 +55,14 @@ export const user = {
 				const response = await mixin.methods.callApi("post", "/users/me", {
 					token,
 				})
+				console.log(response.status)
 				console.log(response.data)
 				const user = response.data
 				if (user.token) {
 					commit("setUser", user)
 				}
 			} catch (e) {
+				localStorage.removeItem("token")
 				console.log(e)
 			}
 		},

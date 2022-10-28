@@ -18,7 +18,7 @@
 						<SwitchItem label="Are all round Games finished?" v-model="options.endedRoundGames" />
 					</div>
 					<div>
-						<BasicButton :disabled="!storedOptions.endedRoundGames">Generate Finals</BasicButton>
+						<BasicButton :disabled="!storedOptions.endedRoundGames" @click="generateFinals">Generate Finals</BasicButton>
 					</div>
 				</div>
 				<div class="flex justify-end"><BasicButton class="" @click="updateOptions">Save</BasicButton></div>
@@ -49,16 +49,30 @@ export default {
 	methods: {
 		async updateOptions() {
 			await this.$store.dispatch(`options/update`, this.options)
+			await this.$store.dispatch(`options/get`)
 			this.cloneOptions()
 			this.optionsKey++
 		},
 		cloneOptions() {
 			this.options = { ...this.$store.state.options.options }
+			this.optionsKey++
+		},
+		async generateFinals(){
+			try{
+				await this.callApi("get","/tournament/create-finals")
+				this.$store.commit("notifications/showNotification", "Finals were created!")
 
+				
+			}catch(e){
+				console.log(e)
+				
+			}
 		}
 	},
-	created() {
+	async created() {
+		await this.$store.dispatch("options/get")
 		this.cloneOptions()
+		
 	}
 }
 </script>

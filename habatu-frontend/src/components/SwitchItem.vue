@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :key="labelKey">
     <label class="mb-1 block text-sm font-bold text-gray-700" for="username">
 			{{ label }}
 		</label>
@@ -14,6 +14,14 @@
 <script>
 export default {
     props: ["modelValue", "label"],
+    data(){
+        return {
+            labelKey: 0
+
+        }
+    },
+    watch: {
+    },
     methods: {
         handleChange(event) {
             event.target.checked = true
@@ -24,6 +32,8 @@ export default {
     },
     mounted() {
         this.$refs[`checkbox-${this.label}`].checked = this.modelValue
+        console.log("box",this.modelValue)
+       
     }
 
 }

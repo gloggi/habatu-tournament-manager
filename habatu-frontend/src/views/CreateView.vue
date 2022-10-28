@@ -13,8 +13,11 @@
 				>next</BasicButton
 			></router-link
 		>
+		<div class="flex flex-col items-stretch h-full">
+			<StepOverview :steps="steps" class="h-20"/>
 		<div
 			class="flex h-full w-full flex-row rounded-md border bg-white text-left drop-shadow-lg">
+			
 			<form
 				@submit.prevent="createItem"
 				:key="formKey"
@@ -51,6 +54,7 @@
 				</div>
 			</div>
 		</div>
+		</div>
 	</div>
 </template>
 
@@ -61,6 +65,7 @@ import TrashIcon from "../components/icons/TrashIcon.vue"
 import JsonForm from "@/components/JsonForm.vue"
 import RefreshIcon from "@/components/icons/RefreshIcon.vue"
 import TitleItem from "@/components/TitleItem.vue"
+import StepOverview from '@/components/StepOverview.vue'
 export default {
 	components: {
 		BasicButton,
@@ -69,6 +74,7 @@ export default {
 		JsonForm,
 		RefreshIcon,
 		TitleItem,
+StepOverview,
 	},
 	props: ["name", "form", "state", "nextRoute", "backRoute"],
 	data() {
@@ -76,6 +82,13 @@ export default {
 			item: {},
 			formKey: 0,
 			toUpdateItems: {},
+			steps: [
+				{route:"halls", name:"Hallen"}, 
+				{route:"sections", name:"Abteilungen"},
+				{route:"categories", name:"Kategorien"},
+				{route:"teams", name:"Teams"},
+				{route:"options", name:"Einstellungen"},
+			]
 		}
 	},
 	computed: {

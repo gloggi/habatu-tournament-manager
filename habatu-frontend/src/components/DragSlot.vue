@@ -4,7 +4,7 @@
 		dropzone="true"
 		@dragenter="dragging = true"
 		@dragleave="dragging = false"
-		:class="`rounded-md ${dragging ? 'bg-red-500' : ''} hover:bg-red-300`"
+		:class="`rounded-md ${dragging ? 'bg-gray-500' : ''} hover:bg-gray-200`"
 		@drop="dropHandler"
 		@dragover="evt => evt.preventDefault()">
 		<slot></slot>
@@ -15,7 +15,6 @@
 <script>
 export default {
 	props: ["hall", "timeslot"],
-	emits: ["reload"],
 	data() {
 		return {
 			dragging: false,
@@ -29,7 +28,7 @@ export default {
 				timeslot: this.timeslot,
 				hall: this.hall,
 			})
-			this.$emit("reload", true)
+			await this.$store.dispatch("tournament/getTable")
 			this.dragging = false
 		},
 	},

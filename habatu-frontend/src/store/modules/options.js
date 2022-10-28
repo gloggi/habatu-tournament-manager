@@ -24,7 +24,7 @@ export const options = {
 		async delete({ dispatch }, id) {
 			try {
 				await mixin.methods.callApi("delete", `/options/${id}`)
-				dispatch("get")
+				await dispatch("get")
 			} catch (e) {
 				console.log(e)
 			}

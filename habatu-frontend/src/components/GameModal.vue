@@ -8,6 +8,7 @@
 					:values="game" />
 				<BasicButton class="mt-2">Update</BasicButton>
 			</form>
+			<div class="flex justify-end" v-if="game.type!='roundGame'"><button @click="deleteGame"><TrashIcon/></button></div>
 			<div class="flex justify-center">
 				<div class="w-1/4">
 					<CollapseItem title="Referee Code">
@@ -27,8 +28,9 @@ import JsonForm from "./JsonForm.vue"
 import BasicButton from "./BasicButton.vue"
 import CollapseItem from "./CollapseItem.vue"
 import QrcodeVue from "qrcode.vue"
+import TrashIcon from './icons/TrashIcon.vue'
 export default {
-	components: { GenericModal, JsonForm, BasicButton, CollapseItem, QrcodeVue },
+	components: { GenericModal, JsonForm, BasicButton, CollapseItem, QrcodeVue, TrashIcon },
 	data() {
 		return {
 			item: undefined,
@@ -43,7 +45,14 @@ export default {
 		},
 		updateGame() {
 			this.$store.dispatch(`games/update`, this.item)
+			this.$store.dispatch("tournament/getTable")
+			this.close()
 		},
+		deleteGame(){
+			this.$store.dispatch(`games/delete`, this.game._id)
+			this.$store.dispatch("tournament/getTable")
+			this.close()
+		}
 	},
 	computed: {
 		isOpen() {
