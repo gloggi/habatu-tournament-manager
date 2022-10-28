@@ -31,7 +31,7 @@ export const options = {
 		},
 		async update({ dispatch }, option) {
 			try {
-				await mixin.methods.callApi("put", `/options/${option._id}`, option)
+				await mixin.methods.callApi("post", `/options`, option)
 				dispatch("get")
 			} catch (e) {
 				console.log(e)

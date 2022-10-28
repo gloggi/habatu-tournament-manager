@@ -15,7 +15,7 @@ export const createUser = async (req: Request, res: Response) => {
     
 
         const token = jwt.sign(
-          { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+          { _id: user._id, nickname: user.nickname, roles: user.roles },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
@@ -41,7 +41,7 @@ export const loginUser = async (req: Request, res: Response) => {
     return
   }
   const token = jwt.sign(
-    { _id: user._id, nickname: user.nickname, roles: user.roles, group: user.group },
+    { _id: user._id, nickname: user.nickname, roles: user.roles },
     process.env.TOKEN_KEY,
     {
       expiresIn: "12h",

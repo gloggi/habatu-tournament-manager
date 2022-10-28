@@ -6,7 +6,7 @@ import { ITeam } from "../interfaces/team.interface.js"
 import { IOption } from "../interfaces/option.interface.js"
 import { Document, HydratedDocument, Types, ObjectId } from 'mongoose';
 import {Category, Team, Hall, Option} from "../models/index"
-
+/*
 const categories : ICategory[] = [
   {
     "_id": "62824fcc00d8c849809675d3",
@@ -99,3 +99,4 @@ test("Teams dont play at the same Time",()=>{
     expect(times.size).toEqual(gamesByTeam.length)
   }
 })
+*/

@@ -3,15 +3,66 @@
 		<div class="mb-4 rounded-md bg-white p-3">
 			<TitleItem>Options</TitleItem>
 		</div>
-		<div class="w-full rounded-md bg-white p-3"></div>
+		<div class="w-full rounded-md bg-white p-3" :key="optionsKey" v-if="options&&storedOptions">
+			<h2 class="text-2xl font-medium">General Options</h2>
+			<div class="flex flex-col space-y-2">
+				<div class="flex">
+					<TextInput label="Tournament Name" v-model="options.tournamentName" />
+				</div>
+				<h2 class="text-2xl font-medium">Game Specific Options</h2>
+				<div class="flex">
+					<SwitchItem label="Has the tournament started?" v-model="options.startedTournament" />
+				</div>
+				<div class="flex items-end justify between">
+					<div class="w-1/4">
+						<SwitchItem label="Are all round Games finished?" v-model="options.endedRoundGames" />
+					</div>
+					<div>
+						<BasicButton :disabled="!storedOptions.endedRoundGames">Generate Finals</BasicButton>
+					</div>
+				</div>
+				<div class="flex justify-end"><BasicButton class="" @click="updateOptions">Save</BasicButton></div>
+			</div>
+		</div>
 	</div>
 </template>
 
 <script>
 import TitleItem from "@/components/TitleItem.vue"
+import TextInput from "@/components/TextInput.vue";
+import SwitchItem from "@/components/SwitchItem.vue";
+import BasicButton from "@/components/BasicButton.vue";
 export default {
-	components: { TitleItem },
+	components: { TitleItem, TextInput, SwitchItem, BasicButton },
+	data() {
+		return {
+			options: undefined,
+			optionsKey: 0
+		}
+	},
+	computed: {
+		storedOptions() {
+			return this.$store.state.options.options
+		}
+
+	},
+	methods: {
+		async updateOptions() {
+			await this.$store.dispatch(`options/update`, this.options)
+			this.cloneOptions()
+			this.optionsKey++
+		},
+		cloneOptions() {
+			this.options = { ...this.$store.state.options.options }
+
+		}
+	},
+	created() {
+		this.cloneOptions()
+	}
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

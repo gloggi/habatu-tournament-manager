@@ -5,11 +5,11 @@ services:
 #           volumes:
 #            - ./habatu-backend:/usr/app
 #            - /usr/app/node_modules
-#           command: npm run dev
+#           command: node run index.js
 #           environment:
 #            - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
 #           ports:
-#             - "8000:8000"
+#             - "80:8000"
 #           links:
 #             - mongo
        mongo:

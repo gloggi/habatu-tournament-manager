@@ -1,12 +1,24 @@
 <template>
 	<button
-		class="w-full rounded-md bg-gray-900 p-2 text-white hover:bg-gray-700">
+	@click="handleClick"
+		:class="`w-full rounded-md ${disabled?'bg-gray-700 cursor-not-allowed':'bg-gray-900'} p-2 text-white hover:bg-gray-700`">
 		<slot></slot>
 	</button>
 </template>
 
 <script>
-export default {}
+export default {
+	props: ["disabled"],
+	methods: {
+		handleClick(evt){
+			if(this.disabled){
+				evt.preventDefault()
+			}
+			
+
+		}
+	}
+}
 </script>
 
 <style></style>

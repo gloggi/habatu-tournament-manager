@@ -3,7 +3,7 @@ export interface IOption {
     startTime: string,
     gameDuration: string,
     breakDuration: string,
-    startedGame: boolean,
+    startedTournament: boolean,
     endedRoundGames: boolean,
     additionalSlots: number
   }

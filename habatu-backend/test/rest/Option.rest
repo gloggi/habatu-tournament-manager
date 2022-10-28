@@ -8,6 +8,8 @@ content-type: application/json
     "gameDuration": "00:10",
     "breakDuration": "00:05",
     "additionalSlots": 4,
+   "startedTournament": true,
+    "endedRoundGames": false
 }
 ### Get one Option
 GET http://localhost:8000/options/id HTTP/1.1

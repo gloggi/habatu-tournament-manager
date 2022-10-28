@@ -6,6 +6,8 @@ import {IOption} from '../interfaces/option.interface';
     startTime: { type: String},
     gameDuration: { type: String},
     breakDuration: { type: String},
-    additionalSlots: {type: Number}
+    additionalSlots: {type: Number},
+    startedTournament: {type: Boolean},
+    endedRoundGames: {type: Boolean},
   });
 export const Option = model<IOption>('Option', schema);
