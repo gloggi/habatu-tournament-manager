@@ -18,6 +18,8 @@ import SectionDashboard from "../views/SectionDashboard"
 import TeamDashboard from "../views/TeamDashboard"
 import CategoryDashboard from "../views/CategoryDashboard"
 import OptionDashboard from "../views/OptionDashboard"
+import MeView from "../views/MeView"
+import UserDashboardEdit from "../views/UserDashboardEdit"
 
 const routes = [
 	{
@@ -81,6 +83,11 @@ const routes = [
 		component: TeamView,
 	},
 	{
+		path: "/me",
+		name: "me",
+		component: MeView,
+	},
+	{
 		path: "/dashboard",
 		name: "dashboard",
 		component: DashboardView,
@@ -89,6 +96,11 @@ const routes = [
 				path: "users",
 				name: "usersDashboard",
 				component: UserDashboard,
+			},
+			{
+				path: "users/:id",
+				name: "usersEdit",
+				component: UserDashboardEdit,
 			},
 			{
 				path: "halls",

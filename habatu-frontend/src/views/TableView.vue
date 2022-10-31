@@ -85,7 +85,6 @@ export default {
 	async created() {
 		await this.$store.dispatch("tournament/getTable")
 		await this.$store.dispatch("halls/get")
-		this.getHalls()
 		await this.$store.dispatch("games/get")
 	},
 }

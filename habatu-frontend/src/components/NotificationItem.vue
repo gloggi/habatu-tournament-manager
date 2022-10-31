@@ -5,7 +5,8 @@
 				<div
 					v-if="show"
 					class="bottom-3 left-3 right-3 flex w-1/4 items-center space-x-3 rounded-lg border bg-white p-3 drop-shadow-lg">
-					<CheckIcon class="text-green-600" />
+					<CheckIcon v-if="type" class="text-green-600" />
+					<XCircleFillIcon v-else class="text-red-600" />
 					<div class="text font-bold">{{ message }}</div>
 				</div>
 			</div>
@@ -15,8 +16,9 @@
 
 <script>
 import CheckIcon from "./icons/CheckIcon.vue"
+import XCircleFillIcon from "./icons/XCircleFillIcon.vue"
 export default {
-	components: { CheckIcon },
+	components: { CheckIcon, XCircleFillIcon },
 	data() {
 		return {}
 	},
@@ -26,6 +28,9 @@ export default {
 		},
 		message() {
 			return this.$store.state.notifications.message
+		},
+		type() {
+			return this.$store.state.notifications.type
 		},
 	},
 }

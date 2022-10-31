@@ -40,7 +40,7 @@ export const halls = {
 		async update({ dispatch, commit }, hall) {
 			try {
 				await mixin.methods.callApi("put", `/halls/${hall._id}`, hall)
-				commit("notifications/showNotification", "Halls got updated!", {
+				commit("notifications/showNotification", {message: "Halls got updated!", type: true}, {
 					root: true,
 				})
 				dispatch("get")

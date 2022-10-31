@@ -4,12 +4,14 @@ export const notifications = {
 		return {
 			show: false,
 			message: undefined,
+			type: undefined
 		}
 	},
 	mutations: {
-		showNotification(state, message) {
+		showNotification(state, notification) {
 			state.show = true
-			state.message = message
+			state.message = notification.message
+			state.type = notification.type
 			setTimeout(() => {
 				state.show = false
 				state.message = undefined

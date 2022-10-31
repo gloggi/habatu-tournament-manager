@@ -60,7 +60,7 @@ export default {
 		async generateFinals(){
 			try{
 				await this.callApi("get","/tournament/create-finals")
-				this.$store.commit("notifications/showNotification", "Finals were created!")
+				this.$store.commit("notifications/showNotification", {message: "Finals were created!", type: true})
 
 				
 			}catch(e){

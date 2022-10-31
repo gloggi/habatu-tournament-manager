@@ -16,6 +16,7 @@ export default {
 			name: "Hallen",
 			state: "halls",
 			nextRoute: "sections",
+			backRoute: "menu"
 		}
 	},
 	methods: {},

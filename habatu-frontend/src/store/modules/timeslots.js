@@ -36,7 +36,7 @@ export const timeslots = {
 					`/timeslots/${timeslot._id}`,
 					timeslot
 				)
-				commit("notifications/showNotification", "Timeslot got updated!", {
+				commit("notifications/showNotification", {message: "Timeslot got updated!", type: true}, {
 					root: true,
 				})
 				dispatch("get")

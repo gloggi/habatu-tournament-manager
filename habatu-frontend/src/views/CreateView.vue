@@ -1,59 +1,56 @@
 <template>
-	<div class="h-screen p-3">
-		<router-link v-if="backRoute" :to="{ name: backRoute }"
+	<div class=" p-3">
+
+		<div class="flex flex-col items-stretch h-full">
+			<StepOverview :steps="steps" class="h-20" />
+			<div class="flex flex-col h-full w-full rounded-md border bg-white text-left drop-shadow-lg">
+				<div class="flex" style="height: 70vh">
+					<form @submit.prevent="createItem" :key="formKey"
+						class="flex w-full flex-col space-y-3 border-r p-5">
+						<TitleItem class="pb-3">{{ name }}</TitleItem>
+						<JsonForm @changeForm="handleMainFormChange" :form="form" />
+
+						<BasicButton>Create</BasicButton>
+					</form>
+					<div class="mb-10 w-full p-3">
+						<div class="no-scrollbar h-full overflow-scroll rounded-lg border bg-gray-100">
+							<CollapseItem v-for="item in items" :title="item.name" :key="item._id">
+								<div class="flex flex-col">
+									<div class="w-full space-y-3">
+										<JsonForm @changeForm="handleSideFormChange" :form="form" :values="item" />
+									</div>
+									<div class="flex justify-end space-x-2 self-end">
+										<div class="mt-2">
+											<button @click="updateItem(item._id)">
+												<RefreshIcon />
+											</button>
+										</div>
+										<div class="mt-2">
+											<button @click="deleteItem(item._id)">
+												<TrashIcon />
+											</button>
+										</div>
+									</div>
+								</div>
+							</CollapseItem>
+						</div>
+					</div>
+				</div>
+				<div class="flex justify-between">
+					<router-link v-if="backRoute" :to="{ name: backRoute }"
 			><BasicButton
-				class="absolute left-5 bottom-1 z-50 w-1/12 rounded-tl-none rounded-br-none"
+				class=" rounded-tl-none rounded-br-none"
 				>back</BasicButton
 			></router-link
 		>
 		<router-link v-if="nextRoute" :to="{ name: nextRoute }"
 			><BasicButton
 				@click="$router.push({ to: nextRoute })"
-				class="absolute right-5 bottom-1 z-50 w-1/12 rounded-tr-none rounded-bl-none"
+				class="rounded-tr-none rounded-bl-none"
 				>next</BasicButton
 			></router-link
-		>
-		<div class="flex flex-col items-stretch h-full">
-			<StepOverview :steps="steps" class="h-20"/>
-		<div
-			class="flex h-full w-full flex-row rounded-md border bg-white text-left drop-shadow-lg">
-			
-			<form
-				@submit.prevent="createItem"
-				:key="formKey"
-				class="flex w-full flex-col space-y-3 border-r p-5">
-				<TitleItem class="pb-3">{{ name }}</TitleItem>
-				<JsonForm @changeForm="handleMainFormChange" :form="form" />
-
-				<BasicButton>Create</BasicButton>
-			</form>
-			<div class="mb-10 w-full p-3">
-				<div
-					class="no-scrollbar h-full overflow-scroll rounded-lg border bg-gray-100">
-					<CollapseItem
-						v-for="item in items"
-						:title="item.name"
-						:key="item._id">
-						<div class="flex flex-col">
-							<div class="w-full space-y-3">
-								<JsonForm
-									@changeForm="handleSideFormChange"
-									:form="form"
-									:values="item" />
-							</div>
-							<div class="flex justify-end space-x-2 self-end">
-								<div class="mt-2">
-									<button @click="updateItem(item._id)"><RefreshIcon /></button>
-								</div>
-								<div class="mt-2">
-									<button @click="deleteItem(item._id)"><TrashIcon /></button>
-								</div>
-							</div>
-						</div>
-					</CollapseItem>
-				</div>
+		></div>
 			</div>
-		</div>
 		</div>
 	</div>
 </template>
@@ -74,7 +71,7 @@ export default {
 		JsonForm,
 		RefreshIcon,
 		TitleItem,
-StepOverview,
+		StepOverview,
 	},
 	props: ["name", "form", "state", "nextRoute", "backRoute"],
 	data() {
@@ -83,11 +80,11 @@ StepOverview,
 			formKey: 0,
 			toUpdateItems: {},
 			steps: [
-				{route:"halls", name:"Hallen"}, 
-				{route:"sections", name:"Abteilungen"},
-				{route:"categories", name:"Kategorien"},
-				{route:"teams", name:"Teams"},
-				{route:"options", name:"Einstellungen"},
+				{ route: "halls", name: "Hallen" },
+				{ route: "sections", name: "Abteilungen" },
+				{ route: "categories", name: "Kategorien" },
+				{ route: "teams", name: "Teams" },
+				{ route: "options", name: "Einstellungen" },
 			]
 		}
 	},
@@ -126,4 +123,6 @@ StepOverview,
 }
 </script>
 
-<style></style>
+<style>
+
+</style>

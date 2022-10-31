@@ -4,7 +4,7 @@ export const user = {
 	namespaced: true,
 	state() {
 		return {
-			user: { nickname: undefined, roles: [], team: undefined },
+			user: { nickname: undefined, role: "", team: undefined },
 		}
 	},
 	mutations: {
@@ -30,6 +30,9 @@ export const user = {
 				}
 			} catch (e) {
 				console.log(e)
+				commit("notifications/showNotification", {message: e.response.data.message, type: false}, {
+					root: true,
+				})
 			}
 		},
 		async register({ commit }, credentials) {
@@ -45,6 +48,9 @@ export const user = {
 				}
 			} catch (e) {
 				console.log(e)
+				commit("notifications/showNotification", {message: e.response.data.message, type: false}, {
+					root: true,
+				})
 			}
 		},
 		async getMe({ commit }, token) {
@@ -63,6 +69,17 @@ export const user = {
 				}
 			} catch (e) {
 				localStorage.removeItem("token")
+				console.log(e)
+			}
+		},
+		async update({ dispatch, commit }, user) {
+			try {
+				await mixin.methods.callApi("put", `/users/${user._id}`, user)
+				commit("notifications/showNotification", {message: "User got updated!", type: true}, {
+					root: true,
+				})
+				await dispatch("getMe", user.token)
+			} catch (e) {
 				console.log(e)
 			}
 		},

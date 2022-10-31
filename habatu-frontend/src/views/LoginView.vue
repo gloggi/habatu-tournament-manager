@@ -31,10 +31,6 @@
 					v-model="registerForm.password"
 					label="Password"
 					type="password" />
-				<TextInput
-					v-model="registerForm.confirmPassword"
-					label="Confirm Password"
-					type="password" />
 				<BasicButton>Register</BasicButton>
 			</form>
 		</div>
@@ -63,7 +59,6 @@ export default {
 			registerForm: {
 				nickname: undefined,
 				password: undefined,
-				confirmPassword: undefined,
 			},
 			loginForm: {
 				nickname: undefined,
@@ -72,16 +67,36 @@ export default {
 		}
 	},
 	methods: {
+		sendError(msg){
+			this.$store.commit("notifications/showNotification", {message: msg, type: false})
+		},
 		handleSwitch(evt) {
 			this.login = evt
 		},
 		async loginUser() {
+			if(!this.loginForm.nickname){
+				this.sendError("The nickname can't be empty");
+				return
+			}
+			if(!this.loginForm.password){
+				this.sendError("The password can't be empty");
+				return
+			}
+
 			await this.$store.dispatch("user/login", this.loginForm)
 			if (localStorage.token) {
 				this.$router.push({ name: "menu" })
 			}
 		},
 		async registerUser() {
+			if(!this.registerForm.nickname){
+				this.sendError("The nickname can't be empty");
+				return
+			}
+			if(!this.registerForm.password){
+				this.sendError("The password can't be empty");
+				return
+			}
 			await this.$store.dispatch("user/register", this.registerForm)
 			if (localStorage.token) {
 				this.$router.push({ name: "menu" })

@@ -6,4 +6,4 @@ export const router: Router = express.Router();
 router.route('/').post(createUser).get(adminMiddleware, getUsers)
 router.route('/login').post(loginUser)
 router.route('/me').post(getMe)
-router.route('/:id').put(adminMiddleware,updateUser).get(adminMiddleware,getUser).delete(adminMiddleware,deleteUser)
+router.route('/:id').put(updateUser).get(adminMiddleware,getUser).delete(adminMiddleware,deleteUser)

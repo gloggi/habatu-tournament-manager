@@ -12,7 +12,7 @@ export const adminMiddleware = (req: Request, res: Response, next: NextFunction)
     try {
         const user : JwtPayload = jwt.verify(token, process.env.TOKEN_KEY) as JwtPayload
         res.locals.user = user
-        if(!user.roles.includes(Role.Admin)){
+        if(user.role != Role.Admin){
             res.sendStatus(401).json({message: "Finger wäg!"})
             return
         }
@@ -32,7 +32,7 @@ export const refereeMiddleware = (req: Request, res: Response, next: NextFunctio
     try {
         const user : JwtPayload = jwt.verify(token, process.env.TOKEN_KEY) as JwtPayload
         res.locals.user = user
-        if(!user.roles.includes(Role.Referee)||!user.roles.includes(Role.Admin)){
+        if(user.role !=Role.Referee||user.role!=Role.Admin){
             res.sendStatus(401).json({message: "Finger wäg!"})
             return
         }

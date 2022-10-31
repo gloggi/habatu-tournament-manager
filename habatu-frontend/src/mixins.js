@@ -20,12 +20,12 @@ export const mixin = {
 				return response
 		},
 		userIsAdmin() {
-			return this.$store.state.user.user.roles.includes("Admin")
+			return this.$store.state.user.user.role=="Admin"
 		},
 		userIsReferee() {
 			return (
-				this.$store.state.user.user.roles.includes("Admin") ||
-				this.$store.state.user.user.roles.includes("Referee")
+				this.$store.state.user.user.role=="Admin" ||
+				this.$store.state.user.user.role=="Referee"
 			)
 		},
 		userTeam() {

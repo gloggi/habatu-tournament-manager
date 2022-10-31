@@ -9,20 +9,23 @@ export const createUser = async (req: Request, res: Response) => {
     
         const encryptedPassword = await bcrypt.hash(req.body.password, 10);
         req.body.password = encryptedPassword
-    
+        const existingUser = await getUserByNickname(req.body.nickname)
+        if(existingUser){
+          res.status(409).json({message: "Nickname already exists!"})
+        }
 
         const user = await create(req.body)
     
 
         const token = jwt.sign(
-          { _id: user._id, nickname: user.nickname, roles: user.roles },
+          { _id: user._id, nickname: user.nickname, role: user.role },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
           }
         );
     
-        res.status(201).json({_id: user._id, nickname: user.nickname, roles: user.roles, token});
+        res.status(201).json({_id: user._id, nickname: user.nickname, role: user.role, token});
       } catch (err) {
         console.log(err);
       }
@@ -41,13 +44,13 @@ export const loginUser = async (req: Request, res: Response) => {
     return
   }
   const token = jwt.sign(
-    { _id: user._id, nickname: user.nickname, roles: user.roles },
+    { _id: user._id, nickname: user.nickname, role: user.role },
     process.env.TOKEN_KEY,
     {
       expiresIn: "12h",
     }
   );
-    res.status(201).json({_id: user._id, roles: user.roles, nickname, token});
+    res.status(201).json({_id: user._id, role: user.role, nickname, token});
   
 }
 
@@ -55,16 +58,15 @@ export const getMe = async (req: Request, res: Response) => {
       const {token} = req.body
       const tokenUser : JwtPayload = jwt.verify(token,  process.env.TOKEN_KEY) as JwtPayload
       const user = await get(tokenUser._id)
-      console.log(user)
       if(user){
         const token = jwt.sign(
-          { _id: user._id, nickname: user.nickname, roles: user.roles, team: user.team },
+          { _id: user._id, nickname: user.nickname, role: user.role, team: user.team },
           process.env.TOKEN_KEY,
           {
             expiresIn: "12h",
           }
         );
-      res.status(200).json({_id: user._id, roles: user.roles, team: user.team, nickname: user.nickname, token});
+      res.status(200).json({_id: user._id, role: user.role, team: user.team, nickname: user.nickname, token});
     }else{
       res.status(404)
     }
@@ -81,7 +83,6 @@ export const getUsers = async (req: Request, res: Response) => {
 }
 export const updateUser = async (req: Request, res: Response) => {
     const user = await update(req.params.id, req.body)
-    console.log(user)
     res.json(user)
 }
 export const deleteUser = async (req: Request, res: Response) => {

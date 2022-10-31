@@ -13,7 +13,7 @@
 				</div>
 			</template>
 		</div>
-		<router-link v-for="item in items" :key="item._id" :to="item._id">
+		<router-link v-for="item in items" :key="item._id" :to="{name: `${state}Edit` ,params: {id: item._id}}" >
 			<div
 				class="justyfy-start flex cursor-pointer rounded-md border bg-white p-3 hover:bg-gray-50">
 				<template v-for="(key, i) in Object.keys(item)" :key="i">
