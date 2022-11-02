@@ -20,6 +20,10 @@ import CategoryDashboard from "../views/CategoryDashboard"
 import OptionDashboard from "../views/OptionDashboard"
 import MeView from "../views/MeView"
 import UserDashboardEdit from "../views/UserDashboardEdit"
+import RefereeView from "../views/RefereeView"
+import AddGameToRefereeView from "../views/AddGameToRefereeView"
+import GameRefereeingView from "../views/GameRefereeingView"
+
 
 const routes = [
 	{
@@ -86,6 +90,21 @@ const routes = [
 		path: "/me",
 		name: "me",
 		component: MeView,
+	},
+	{
+		path: "/referee",
+		name: "referee",
+		component: RefereeView,
+	},
+	{
+		path: "/referee/add/:id",
+		name: "addReferee",
+		component: AddGameToRefereeView,
+	},
+	{
+		path: "/referee/:id",
+		name: "gameRefereeingView",
+		component: GameRefereeingView,
 	},
 	{
 		path: "/dashboard",

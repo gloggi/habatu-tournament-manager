@@ -1,4 +1,4 @@
-@authToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzVmODlkNjU0MTNlZmQ3NTk1OGI1OWUiLCJuaWNrbmFtZSI6ImFkbWluIiwicm9sZXMiOlsiQWRtaW4iXSwiaWF0IjoxNjY3MjA1NjY0LCJleHAiOjE2NjcyNDg4NjR9.fC_ECpYy79clV4esJL4bL0ueoBt4pVbliRxW0IvIMU0
+@authToken= eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzYwMWI0ZmRlOTkxZWNlMDQ1NTdkZTQiLCJuaWNrbmFtZSI6ImFkbWluIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjY3MzkwMDk2LCJleHAiOjE2Njc0MzMyOTZ9.i7HVA3N15FAGDS0zc7brr5-ScoIjX8RdTOrieD6VCz4
 
 ### Post a User
 POST http://localhost:8000/users HTTP/1.1
@@ -14,7 +14,7 @@ POST http://localhost:8000/users/login HTTP/1.1
 content-type: application/json
 
 {
-    "nickname": "Archi",
+    "nickname": "admin",
     "password": "Test"
 }
 ### Get one User

@@ -19,6 +19,10 @@ services:
           environment:
           - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
           - NODE_ENV=production
+          - ADMIN_NICKNAME=archi
+          - ADMIN_PASSWORD=*6y!1XIt73%7
+          - ALLOWED_HOST=https://habatu.wildert.ch
+          - PORT=8000
           links:
             - mongo
       mongo:

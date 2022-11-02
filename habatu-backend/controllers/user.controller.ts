@@ -66,7 +66,7 @@ export const getMe = async (req: Request, res: Response) => {
             expiresIn: "12h",
           }
         );
-      res.status(200).json({_id: user._id, role: user.role, team: user.team, nickname: user.nickname, token});
+      res.status(200).json({_id: user._id, role: user.role, team: user.team, nickname: user.nickname, token, refereeGames: user.refereeGames});
     }else{
       res.status(404)
     }

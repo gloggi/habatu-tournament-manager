@@ -1,4 +1,4 @@
-import { Category, Game, Hall, Option, Team, Timeslot } from "../models";
+import { Category, Game, Hall, Option, Team, Timeslot, User } from "../models";
 import { allocateSlots, gamesGenerator, generateTimeslots } from "../utils/roundRobin";
 import { IHall } from "../interfaces/hall.interface";
 import { ITeam } from "../interfaces/team.interface";
@@ -174,4 +174,11 @@ export const createFinals = async () => {
 
     await Game.insertMany(finals)
     
+}
+
+export const specifyReferee = async (gameId: string, userId: string) => {
+    const user =await User.findOneAndUpdate({ id: userId }, {$push: {
+        refereeGames: gameId
+    }});
+    console.log(user)
 }

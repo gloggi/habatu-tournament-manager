@@ -62,7 +62,7 @@ export default {
 			return { ...this.$store.state.gameModal.game }
 		},
 		gameLink() {
-			return `http://${process.env.VUE_APP_FRONTEND_HOST}/referee/${this.$store.state.gameModal.game._id}`
+			return `${process.env.VUE_APP_FRONTEND_HOST}/referee/add/${this.$store.state.gameModal.game._id}`
 		},
 		form() {
 			return [

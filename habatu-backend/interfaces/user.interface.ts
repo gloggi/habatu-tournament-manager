@@ -5,4 +5,5 @@ export interface IUser {
     role: Role;
     team: string;
     token?: string;
+    refereeGames: string[];
   }
