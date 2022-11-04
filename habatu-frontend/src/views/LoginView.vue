@@ -67,19 +67,22 @@ export default {
 		}
 	},
 	methods: {
-		sendError(msg){
-			this.$store.commit("notifications/showNotification", {message: msg, type: false})
+		sendError(msg) {
+			this.$store.commit("notifications/showNotification", {
+				message: msg,
+				type: false,
+			})
 		},
 		handleSwitch(evt) {
 			this.login = evt
 		},
 		async loginUser() {
-			if(!this.loginForm.nickname){
-				this.sendError("The nickname can't be empty");
+			if (!this.loginForm.nickname) {
+				this.sendError("The nickname can't be empty")
 				return
 			}
-			if(!this.loginForm.password){
-				this.sendError("The password can't be empty");
+			if (!this.loginForm.password) {
+				this.sendError("The password can't be empty")
 				return
 			}
 
@@ -89,12 +92,12 @@ export default {
 			}
 		},
 		async registerUser() {
-			if(!this.registerForm.nickname){
-				this.sendError("The nickname can't be empty");
+			if (!this.registerForm.nickname) {
+				this.sendError("The nickname can't be empty")
 				return
 			}
-			if(!this.registerForm.password){
-				this.sendError("The password can't be empty");
+			if (!this.registerForm.password) {
+				this.sendError("The password can't be empty")
 				return
 			}
 			await this.$store.dispatch("user/register", this.registerForm)

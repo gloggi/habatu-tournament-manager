@@ -40,9 +40,13 @@ export const teams = {
 		async update({ dispatch, commit }, team) {
 			try {
 				await mixin.methods.callApi("put", `/teams/${team._id}`, team)
-				commit("notifications/showNotification", {message: "Team got updated!", type: true}, {
-					root: true,
-				})
+				commit(
+					"notifications/showNotification",
+					{ message: "Team got updated!", type: true },
+					{
+						root: true,
+					}
+				)
 				dispatch("get")
 			} catch (e) {
 				console.log(e)

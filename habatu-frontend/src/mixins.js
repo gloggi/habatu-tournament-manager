@@ -9,23 +9,23 @@ const api = axios.create({
 export const mixin = {
 	methods: {
 		async callApi(method, url, data) {
-				const response = await api({
-					method,
-					url,
-					data,
-					headers: {
-						authorization: `Bearer: ${localStorage.getItem("token")}`,
-					},
-				})
-				return response
+			const response = await api({
+				method,
+				url,
+				data,
+				headers: {
+					authorization: `Bearer: ${localStorage.getItem("token")}`,
+				},
+			})
+			return response
 		},
 		userIsAdmin() {
-			return this.$store.state.user.user.role=="Admin"
+			return this.$store.state.user.user.role == "Admin"
 		},
 		userIsReferee() {
 			return (
-				this.$store.state.user.user.role=="Admin" ||
-				this.$store.state.user.user.role=="Referee"
+				this.$store.state.user.user.role == "Admin" ||
+				this.$store.state.user.user.role == "Referee"
 			)
 		},
 		userTeam() {

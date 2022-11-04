@@ -64,12 +64,12 @@ export default {
 		TableHeader,
 	},
 	computed: {
-		timeslots(){
+		timeslots() {
 			return this.$store.state.tournament.table
 		},
-		halls(){
+		halls() {
 			return this.$store.state.halls.halls
-		}
+		},
 	},
 	methods: {
 		handleReload() {
@@ -80,7 +80,7 @@ export default {
 		},
 		format(date, form) {
 			return format(date, form)
-		}
+		},
 	},
 	async created() {
 		await this.$store.dispatch("tournament/getTable")

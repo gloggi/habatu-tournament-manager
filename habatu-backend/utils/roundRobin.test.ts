@@ -1,11 +1,11 @@
-import { gamesGenerator } from "./roundRobin.js"
-import { ICategory } from "../interfaces/category.interface.js"
-import { IHall } from "../interfaces/hall.interface.js"
-import { IGame } from "../interfaces/game.interface.js"
-import { ITeam } from "../interfaces/team.interface.js"
-import { IOption } from "../interfaces/option.interface.js"
-import { Document, HydratedDocument, Types, ObjectId } from 'mongoose';
-import {Category, Team, Hall, Option} from "../models/index"
+import { gamesGenerator } from "./roundRobin.js";
+import { ICategory } from "../interfaces/category.interface.js";
+import { IHall } from "../interfaces/hall.interface.js";
+import { IGame } from "../interfaces/game.interface.js";
+import { ITeam } from "../interfaces/team.interface.js";
+import { IOption } from "../interfaces/option.interface.js";
+import { Document, HydratedDocument, Types, ObjectId } from "mongoose";
+import { Category, Team, Hall, Option } from "../models/index";
 /*
 const categories : ICategory[] = [
   {

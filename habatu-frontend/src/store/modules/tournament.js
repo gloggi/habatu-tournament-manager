@@ -13,15 +13,17 @@ export const tournament = {
 		},
 	},
 	actions: {
-		
 		async getTable({ commit }) {
 			try {
-				const tournamentTable = await mixin.methods.callApi("get", "/tournament/table")
+				const tournamentTable = await mixin.methods.callApi(
+					"get",
+					"/tournament/table"
+				)
 				commit("saveTournamentTable", tournamentTable.data)
 			} catch (e) {
 				console.log(e)
 			}
-		}
+		},
 	},
 	getters: {},
 }

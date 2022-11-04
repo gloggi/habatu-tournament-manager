@@ -11,54 +11,45 @@ import { Router } from "express";
 
 export const router: Router = Router();
 
-const routes: {path: string, route:Router}[] = [
-    {
-        path: "/sections",
-        route: sectionRoute
+const routes: { path: string; route: Router }[] = [
+  {
+    path: "/sections",
+    route: sectionRoute,
+  },
+  {
+    path: "/teams",
+    route: teamRoute,
+  },
+  {
+    path: "/categories",
+    route: categoryRoute,
+  },
+  {
+    path: "/games",
+    route: gameRoute,
+  },
+  {
+    path: "/halls",
+    route: hallRouter,
+  },
+  {
+    path: "/options",
+    route: optionRouter,
+  },
+  {
+    path: "/timeslots",
+    route: timeslotRouter,
+  },
+  {
+    path: "/users",
+    route: userRouter,
+  },
+  {
+    path: "/tournament",
+    route: tournamentRouter,
+  },
+];
 
-    },
-    {
-        path: "/teams",
-        route: teamRoute
-
-    },
-    {
-        path: "/categories",
-        route: categoryRoute
-
-    },
-    {
-        path: "/games",
-        route: gameRoute
-
-    },
-    {
-        path: "/halls",
-        route: hallRouter
-
-    },
-    {
-        path: "/options",
-        route: optionRouter
-
-    },
-    {
-        path: "/timeslots",
-        route: timeslotRouter
-
-    },
-    {
-        path: "/users",
-        route: userRouter
-
-    },
-    {
-        path: "/tournament",
-        route: tournamentRouter
-
-    }
-]
-
-for(let route of routes){
-    router.use(route.path, route.route)
+for (let route of routes) {
+  router.use(route.path, route.route);
 }

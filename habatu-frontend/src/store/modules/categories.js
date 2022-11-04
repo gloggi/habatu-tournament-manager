@@ -44,9 +44,13 @@ export const categories = {
 					`/categories/${category._id}`,
 					category
 				)
-				commit("notifications/showNotification", {message: "Category got updated!", type: true}, {
-					root: true,
-				})
+				commit(
+					"notifications/showNotification",
+					{ message: "Category got updated!", type: true },
+					{
+						root: true,
+					}
+				)
 				dispatch("get")
 			} catch (e) {
 				console.log(e)

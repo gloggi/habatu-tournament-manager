@@ -1,5 +1,5 @@
 <template>
-	<div class="min-h-screen h-full bg-gray-100 p-2">
+	<div class="h-full min-h-screen bg-gray-100 p-2">
 		<router-view />
 		<NotificationItem />
 	</div>

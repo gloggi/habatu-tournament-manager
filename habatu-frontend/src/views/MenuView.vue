@@ -1,13 +1,16 @@
 <template>
 	<div class="grid grid-cols-2 gap-4 md:grid-cols-5">
 		<div
-			class="col-span-2 rounded-md border flex justify-between bg-white p-3 drop-shadow-lg md:col-span-5">
+			class="col-span-2 flex justify-between rounded-md border bg-white p-3 drop-shadow-lg md:col-span-5">
 			<h1 v-if="nickname" class="text-2xl font-semibold">
 				Hoi, {{ nickname }}
 			</h1>
 			<button @click="logout">Logout</button>
 		</div>
-		<MenuItem name="Spiel erstellen" v-if="!gameStarted&&userIsAdmin()" to="halls">
+		<MenuItem
+			name="Spiel erstellen"
+			v-if="!gameStarted && userIsAdmin()"
+			to="halls">
 			<JoystickIcon class="h-full w-full" />
 		</MenuItem>
 		<MenuItem name="Spielplan" to="table">
@@ -50,31 +53,31 @@ import JoystickIcon from "../components/icons/JoystickIcon.vue"
 import PersonCircleIcon from "@/components/icons/PersonCircleIcon.vue"
 export default {
 	components: {
-    MenuItem,
-    MapIcon,
-    TrophyIcon,
-    SpeedometerIcon,
-    ChatHeartIcon,
-    PeopleIcon,
-    BookIcon,
-    EyeglassesIcon,
-    JoystickIcon,
-    PersonCircleIcon
-},
+		MenuItem,
+		MapIcon,
+		TrophyIcon,
+		SpeedometerIcon,
+		ChatHeartIcon,
+		PeopleIcon,
+		BookIcon,
+		EyeglassesIcon,
+		JoystickIcon,
+		PersonCircleIcon,
+	},
 	computed: {
 		nickname() {
 			return this.$store.state.user.user.nickname
 		},
-		gameStarted(){
+		gameStarted() {
 			return this.$store.state.options.options?.startedTournament
-		}
+		},
 	},
 	methods: {
-		logout(){
+		logout() {
 			localStorage.removeItem("token")
 			this.$router.push("login")
-		}
-	}
+		},
+	},
 }
 </script>
 

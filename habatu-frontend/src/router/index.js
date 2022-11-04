@@ -24,7 +24,6 @@ import RefereeView from "../views/RefereeView"
 import AddGameToRefereeView from "../views/AddGameToRefereeView"
 import GameRefereeingView from "../views/GameRefereeingView"
 
-
 const routes = [
 	{
 		path: "/",

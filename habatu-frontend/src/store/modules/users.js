@@ -40,9 +40,13 @@ export const users = {
 		async update({ dispatch, commit }, user) {
 			try {
 				await mixin.methods.callApi("put", `/users/${user._id}`, user)
-				commit("notifications/showNotification", {message: "User got updated!", type: true}, {
-					root: true,
-				})
+				commit(
+					"notifications/showNotification",
+					{ message: "User got updated!", type: true },
+					{
+						root: true,
+					}
+				)
 				console.log(this)
 				dispatch("get")
 			} catch (e) {

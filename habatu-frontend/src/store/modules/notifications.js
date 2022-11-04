@@ -4,7 +4,7 @@ export const notifications = {
 		return {
 			show: false,
 			message: undefined,
-			type: undefined
+			type: undefined,
 		}
 	},
 	mutations: {
