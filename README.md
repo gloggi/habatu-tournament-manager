@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="https://github.com/gloggi/habatu-manager/blob/master/habatu-frontend/src/assets/rotating_ball_a.png"></p>
+<p align="center"><img width="100" src="https://github.com/gloggi/habatu-tournament-manager/blob/master/habatu-frontend/src/assets/rotating_ball_a.png"></p>
 
 # HaBaTu Tournament Manager
 
