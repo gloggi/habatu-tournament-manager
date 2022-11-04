@@ -1,21 +1,36 @@
 version: "3"
 services:
-#       habatu-backend:
-#           build: ./habatu-backend
-#           volumes:
-#            - ./habatu-backend:/usr/app
-#            - /usr/app/node_modules
-#           command: node run index.js
-#           environment:
-#            - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
-#           ports:
-#             - "80:8000"
-#           links:
-#             - mongo
-       mongo:
-             container_name: mongo
-             image: mongo
-             volumes:
-               - ./data:/data/db
-             ports:
-               - '27018:27017'
+      frontend:
+          build: 
+            context: ./habatu-frontend
+            dockerfile: Dockerfile.dev
+          volumes:
+          - ./habatu-frontend:/usr/app
+          - /usr/app/node_modules
+          environment:
+            - VUE_APP_FRONTEND_HOST=http://localhost:8080
+            - VUE_APP_BACKEND_HOST=http://localhost:8000
+          ports:
+            - '8080:8080'
+      habatu-backend:
+           build: ./habatu-backend
+           volumes:
+            - ./habatu-backend:/usr/app
+            - /usr/app/node_modules
+           command: npm run dev
+           environment:
+            - TOKEN_KEY=<top secret>
+            - NODE_ENV=production
+            - PORT=8000
+            - ALLOWED_HOST=*
+           ports:
+             - "8000:8000"
+           links:
+             - mongo
+      mongo:
+            container_name: mongo
+            image: mongo
+            volumes:
+              - ./data:/data/db
+            ports:
+              - '27018:27017'

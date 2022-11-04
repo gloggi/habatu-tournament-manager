@@ -133,6 +133,10 @@ dist
 *.docx
 /data
 
+# Transpiled files
 habatu-backend/*.js
 habatu-backend/*/*.js
+
+# mongodb data
+data/*
 
