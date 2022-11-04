@@ -34,7 +34,7 @@ http://localhost
 git clone https://github.com/tobifra/habatu-tournament-manager.git
 cd habatu-tournament-manager
 ```
-2. Passe im Ordner ```habatu-frontend``` das ```.env``` file an
+2. Passe im Ordner ```habatu-frontend``` das ```.env``` file an.
 
 3. Erstelle die Images für die Container:
 ```
@@ -49,13 +49,13 @@ docker-compose up -d
 http://localhost:8080
 ```
 
-## Datenbank Backups
+## Datenbank Backup
 
-Erstellen eines Datenbank Backups:
+Erstellen eines Datenbank Backup:
 ```
 docker-compose exec -T mongo sh -c 'mongodump --archive' > db.dump
 ```
-Laden eines Datenbank Backups:
+Laden eines Datenbank Backup:
 ```
 docker-compose exec -T mongo sh -c 'mongorestore --archive' < db.dump
 ```
