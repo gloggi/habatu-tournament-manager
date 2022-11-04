@@ -1,3 +1,5 @@
+<p align="center"><img width="100" src="https://github.com/tobifra/habatu-manager/blob/master/habatu-frontend/src/assets/rotating_ball_a.png" alt="Vue logo"></p>
+
 # HaBaTu Tournament Manager
 
 WebApp für das jährliche Handballturnier des Pfadikorps Glockenhof. Der HaBaTu Tournament Manager ermöglicht es, automatisch einen Spielplan und Finalspiele zu generieren.
