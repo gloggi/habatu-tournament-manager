@@ -7,14 +7,14 @@
 			autocomplete="off"
 			v-model="textValue"
 			@blur="handleBlur"
-			class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
+			class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight border-black text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
 			:id="label"
 			:type="type"
 			:placeholder="label" />
 		<div
 			id="dropdown"
 			v-if="select.length > 0"
-			class="absolute left-0 right-0 z-50 rounded-b-lg bg-gray-100 p-3 text-left">
+			class="absolute left-0 right-0 z-50 rounded-b-lg bg-gray-100 p-3 text-left drop-shadow-sm">
 			<button
 				id="dropdown"
 				@click="handleSelect(item.name)"

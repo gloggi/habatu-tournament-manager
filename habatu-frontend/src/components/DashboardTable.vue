@@ -68,7 +68,7 @@ export default {
 			return this.items.length > 0
 				? Object.keys(this.items[0]).filter(i =>
 						this.formatValue(this.items[0][i])
-				  ).length
+				).length
 				: undefined
 		},
 	},

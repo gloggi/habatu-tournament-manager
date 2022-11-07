@@ -3,7 +3,6 @@
 		<TitleItem>User</TitleItem>
 		<form @submit.prevent="updateUser" v-if="user">
 			<JsonForm
-				@changeForm="handleMainFormChange"
 				:form="form"
 				:values="user" />
 			<BasicButton class="mt-2">Update</BasicButton>
@@ -26,6 +25,9 @@ export default {
 		async getUser() {
 			try {
 				const response = await this.callApi("get", `/users/${this.routeId}`)
+				if(response.data.role){
+					response.data.role = {_id: response.data.role, name: response.data.role}
+				}
 				this.user = response.data
 			} catch (e) {
 				console.log(e)
@@ -43,7 +45,12 @@ export default {
 		form() {
 			return [
 				[{ label: "Nickname", model: "nickname", component: "TextField" }],
-				[{ label: "Rolle", model: "role", component: "TextField" }],
+				[{ label: "Rolle", model: "role", component: "SelectField", 
+				options:[
+					{_id:"Admin",name:"Admin"},
+					{_id:"Referee",name:"Referee"},
+					{_id:"Teammember",name:"Teammember"},
+				] }],
 			]
 		},
 	},
