@@ -5,7 +5,7 @@
 			<h1 v-if="nickname" class="text-2xl font-semibold">
 				Hoi, {{ nickname }}
 			</h1>
-			<button @click="logout">Logout</button>
+			<button @click="logout">Uslogge</button>
 		</div>
 		<MenuItem
 			name="Spiel erstellen"

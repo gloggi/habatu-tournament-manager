@@ -13,13 +13,13 @@ export default {
 	components: { CreateView },
 	data() {
 		return {
-			name: "Kategorien",
+			name: "Kategorie",
 			state: "categories",
 			nextRoute: "teams",
 			backRoute: "sections",
 			form: [
 				[{ label: "Kategorie", model: "name", component: "TextField" }],
-				[{ label: "Gruppenfarbe", model: "color", component: "ColorPicker" }],
+				[{ label: "Gruppenfarb", model: "color", component: "ColorPicker" }],
 			],
 		}
 	},

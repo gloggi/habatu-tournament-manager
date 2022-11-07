@@ -16,17 +16,17 @@
 							:form="form"
 							:values="items" />
 
-						<BasicButton>Set</BasicButton>
+						<BasicButton>Speichere</BasicButton>
 					</form>
 					<div class="mb-10 w-full p-3">
 						<div v-if="timePreview">
-							<TitleItem class="mb-2">Game Facts</TitleItem>
+							<TitleItem class="mb-2">Spielinformatione</TitleItem>
 							<h1 class="text-2xl font-medium">
-								Anzahl Spiele:
+								Ahzahl Spiel:
 								<span class="font-normal">{{ timePreview.amountOfGames }}</span>
 							</h1>
 							<h1 class="text-2xl font-medium">
-								Letztes reguläres Spiel endet um:
+								S letschte reguläre Spiel endet am:
 								<span class="font-normal">{{
 									formatDate(new Date(timePreview.lastGame), "HH:mm")
 								}}</span>
@@ -76,7 +76,7 @@ export default {
 			form: [
 				[
 					{
-						label: "Startzeit",
+						label: "Startziit",
 						model: "startTime",
 						component: "TextField",
 						type: "time",
@@ -84,7 +84,7 @@ export default {
 				],
 				[
 					{
-						label: "Spielzeit",
+						label: "Spielziit",
 						model: "gameDuration",
 						component: "TextField",
 						type: "time",
@@ -92,7 +92,7 @@ export default {
 				],
 				[
 					{
-						label: "Pausenzeit",
+						label: "Pauseziit",
 						model: "breakDuration",
 						component: "TextField",
 						type: "time",
@@ -100,11 +100,11 @@ export default {
 				],
 			],
 			steps: [
-				{ route: "halls", name: "Hallen" },
-				{ route: "sections", name: "Abteilungen" },
-				{ route: "categories", name: "Kategorien" },
+				{ route: "halls", name: "Halle" },
+				{ route: "sections", name: "Abteilige" },
+				{ route: "categories", name: "Kategorie" },
 				{ route: "teams", name: "Teams" },
-				{ route: "options", name: "Einstellungen" },
+				{ route: "options", name: "Ihstellige" },
 			],
 		}
 	},

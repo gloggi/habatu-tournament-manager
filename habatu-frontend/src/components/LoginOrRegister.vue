@@ -7,7 +7,7 @@
 					? 'bg-gray-900 text-white'
 					: 'border hover:bg-gray-900 hover:text-white'
 			} `">
-			Login
+			Ihlogge
 		</button>
 		<button
 			@click="handleSwitch"
@@ -16,7 +16,7 @@
 					? 'bg-gray-900 text-white'
 					: 'border hover:bg-gray-900 hover:text-white'
 			} `">
-			Register
+			Registriere
 		</button>
 	</div>
 </template>

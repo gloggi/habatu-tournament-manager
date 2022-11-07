@@ -48,14 +48,14 @@
 				<div class="flex justify-between">
 					<router-link v-if="backRoute" :to="{ name: backRoute }"
 						><BasicButton class="rounded-tl-none rounded-br-none"
-							>back</BasicButton
+							>zrugg</BasicButton
 						></router-link
 					>
 					<router-link v-if="nextRoute" :to="{ name: nextRoute }"
 						><BasicButton
 							@click="$router.push({ to: nextRoute })"
 							class="rounded-tr-none rounded-bl-none"
-							>next</BasicButton
+							>nächscht</BasicButton
 						></router-link
 					>
 				</div>
@@ -89,11 +89,11 @@ export default {
 			formKey: 0,
 			toUpdateItems: {},
 			steps: [
-				{ route: "halls", name: "Hallen" },
-				{ route: "sections", name: "Abteilungen" },
-				{ route: "categories", name: "Kategorien" },
+			{ route: "halls", name: "Halle" },
+				{ route: "sections", name: "Abteilige" },
+				{ route: "categories", name: "Kategorie" },
 				{ route: "teams", name: "Teams" },
-				{ route: "options", name: "Einstellungen" },
+				{ route: "options", name: "Ihstellige" },
 			],
 		}
 	},

@@ -26,7 +26,7 @@ export default {
 				[{ label: "Teamname", model: "name", component: "TextField" }],
 				[
 					{
-						label: "Abteilung",
+						label: "Abteilig",
 						model: "section",
 						options: this.$store.state.sections.sections,
 						component: "SelectField",

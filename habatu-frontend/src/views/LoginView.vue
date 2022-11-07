@@ -4,7 +4,7 @@
 		<div
 			class="flex h-full w-full flex-col bg-white pt-5 md:w-1/3 md:justify-center md:pt-0">
 			<p class="mb-2 px-5 text-center text-4xl font-black">
-				{{ login ? "Login" : "Register" }}
+				{{ login ? "Ihlogge" : "Registriere" }}
 			</p>
 			<LoginOrRegister @switch="handleSwitch" :login="login" />
 
@@ -12,12 +12,12 @@
 				@submit.prevent="loginUser"
 				v-if="login"
 				class="space-y-2 px-5 text-left">
-				<TextInput v-model="loginForm.nickname" label="Username" type="text" />
+				<TextInput v-model="loginForm.nickname" label="Pfadiname" type="text" />
 				<TextInput
 					v-model="loginForm.password"
-					label="Password"
+					label="Passwort"
 					type="password" />
-				<BasicButton>Login</BasicButton>
+				<BasicButton>Ihlogge</BasicButton>
 			</form>
 			<form
 				@submit.prevent="registerUser"
@@ -25,13 +25,13 @@
 				class="space-y-2 px-5 text-left">
 				<TextInput
 					v-model="registerForm.nickname"
-					label="Username"
+					label="Pfadiname"
 					type="text" />
 				<TextInput
 					v-model="registerForm.password"
-					label="Password"
+					label="Passwort"
 					type="password" />
-				<BasicButton>Register</BasicButton>
+				<BasicButton>Registriere</BasicButton>
 			</form>
 		</div>
 		<div

@@ -13,7 +13,7 @@ export default {
 	components: { CreateView },
 	data() {
 		return {
-			name: "Hallen",
+			name: "Halle",
 			state: "halls",
 			nextRoute: "sections",
 			backRoute: "menu",

@@ -13,7 +13,7 @@
 			</div>
 			<div class="flex justify-center">
 				<div class="w-1/4">
-					<CollapseItem title="Referee Code">
+					<CollapseItem title="Schiri Code">
 						<div class="flex justify-center">
 							<QrcodeVue :value="gameLink" :size="150" />
 						</div>
@@ -87,12 +87,12 @@ export default {
 				],
 				[
 					{
-						label: `Punkte Team A`,
+						label: `Pünkt Team A`,
 						model: "pointsTeamA",
 						component: "TextField",
 					},
 					{
-						label: `Punkte Team B`,
+						label: `Pünkt Team B`,
 						model: "pointsTeamB",
 						component: "TextField",
 					},

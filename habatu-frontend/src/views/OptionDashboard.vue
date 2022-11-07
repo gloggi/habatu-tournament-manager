@@ -1,39 +1,39 @@
 <template>
 	<div class="flex h-full w-full flex-col items-stretch">
 		<div class="mb-4 rounded-md bg-white p-3">
-			<TitleItem>Options</TitleItem>
+			<TitleItem>Ihstellige</TitleItem>
 		</div>
 		<div
 			class="w-full rounded-md bg-white p-3"
 			:key="optionsKey"
 			v-if="options && storedOptions">
-			<h2 class="text-2xl font-medium">General Options</h2>
+			<h2 class="text-2xl font-medium">Allgemeini Ihstelige</h2>
 			<div class="flex flex-col space-y-2">
 				<div class="flex">
 					<TextInput label="Tournament Name" v-model="options.tournamentName" />
 				</div>
-				<h2 class="text-2xl font-medium">Game Specific Options</h2>
+				<h2 class="text-2xl font-medium">Spielspezifischi ihstellige</h2>
 				<div class="flex">
 					<SwitchItem
-						label="Has the tournament started?"
+						label="Het s Turnier ahgfange?"
 						v-model="options.startedTournament" />
 				</div>
 				<div class="justify between flex items-end">
 					<div class="w-1/4">
 						<SwitchItem
-							label="Are all round Games finished?"
+							label="Sind alli Rundspiel gspielt?"
 							v-model="options.endedRoundGames" />
 					</div>
 					<div>
 						<BasicButton
 							:disabled="!storedOptions.endedRoundGames"
 							@click="generateFinals"
-							>Generate Finals</BasicButton
+							>Finalspiel generiere</BasicButton
 						>
 					</div>
 				</div>
 				<div class="flex justify-end">
-					<BasicButton class="" @click="updateOptions">Save</BasicButton>
+					<BasicButton class="" @click="updateOptions">Speichere</BasicButton>
 				</div>
 			</div>
 		</div>

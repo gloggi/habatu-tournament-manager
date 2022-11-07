@@ -8,24 +8,24 @@
 				<DashboardMenuItem title="Teams" to="teamsDashboard"
 					><PeopleIcon
 				/></DashboardMenuItem>
-				<DashboardMenuItem title="Abteilungen" to="sectionsDashboard"
+				<DashboardMenuItem title="Abteilige" to="sectionsDashboard"
 					><GlobeIcon
 				/></DashboardMenuItem>
-				<DashboardMenuItem title="Kategorien" to="categoriesDashboard"
+				<DashboardMenuItem title="Kategorie" to="categoriesDashboard"
 					><TagsIcon
 				/></DashboardMenuItem>
-				<DashboardMenuItem title="Hallen" to="hallsDashboard"
+				<DashboardMenuItem title="Halle" to="hallsDashboard"
 					><BuildingIcon
 				/></DashboardMenuItem>
 				<DashboardMenuItem title="Benutzer" to="usersDashboard"
 					><PersonCircleIcon
 				/></DashboardMenuItem>
-				<DashboardMenuItem title="Optionen" to="optionsDashboard"
+				<DashboardMenuItem title="Ihstellige" to="optionsDashboard"
 					><GearIcon
 				/></DashboardMenuItem>
 			</div>
 			<div class="h-1/6">
-				<DashboardMenuItem title="Back to the Menu" to="menu"
+				<DashboardMenuItem title="Zrugg zum Menü" to="menu"
 					><ListIcon
 				/></DashboardMenuItem>
 			</div>
