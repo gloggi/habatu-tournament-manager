@@ -42,7 +42,7 @@ export const teams = {
 				await mixin.methods.callApi("put", `/teams/${team._id}`, team)
 				commit(
 					"notifications/showNotification",
-					{ message: "Team got updated!", type: true },
+					{ message: "S Team isch updated worde", type: true },
 					{
 						root: true,
 					}

@@ -38,7 +38,7 @@ export const timeslots = {
 				)
 				commit(
 					"notifications/showNotification",
-					{ message: "Timeslot got updated!", type: true },
+					{ message: "S Ziitfänschter isch updated worde", type: true },
 					{
 						root: true,
 					}

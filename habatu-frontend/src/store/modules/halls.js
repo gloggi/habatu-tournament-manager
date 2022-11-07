@@ -42,7 +42,7 @@ export const halls = {
 				await mixin.methods.callApi("put", `/halls/${hall._id}`, hall)
 				commit(
 					"notifications/showNotification",
-					{ message: "Halls got updated!", type: true },
+					{ message: "D Halle sind updated worde", type: true },
 					{
 						root: true,
 					}

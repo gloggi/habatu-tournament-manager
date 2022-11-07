@@ -42,7 +42,7 @@ export const games = {
 				await mixin.methods.callApi("put", `/games/${game._id}`, game)
 				commit(
 					"notifications/showNotification",
-					{ message: "Game got updated!", type: true },
+					{ message: "S Spiel isch updated worde", type: true },
 					{
 						root: true,
 					}

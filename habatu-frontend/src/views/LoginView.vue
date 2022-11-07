@@ -78,11 +78,11 @@ export default {
 		},
 		async loginUser() {
 			if (!this.loginForm.nickname) {
-				this.sendError("The nickname can't be empty")
+				this.sendError("De Pfadiname chan nöd leer si!")
 				return
 			}
 			if (!this.loginForm.password) {
-				this.sendError("The password can't be empty")
+				this.sendError("Du hesch keis Passwort ihgeh")
 				return
 			}
 
@@ -93,11 +93,11 @@ export default {
 		},
 		async registerUser() {
 			if (!this.registerForm.nickname) {
-				this.sendError("The nickname can't be empty")
+				this.sendError("De Pfadiname chan nöd leer si!")
 				return
 			}
 			if (!this.registerForm.password) {
-				this.sendError("The password can't be empty")
+				this.sendError("Du hesch keis Passwort ihgeh")
 				return
 			}
 			await this.$store.dispatch("user/register", this.registerForm)

@@ -42,7 +42,7 @@ export const users = {
 				await mixin.methods.callApi("put", `/users/${user._id}`, user)
 				commit(
 					"notifications/showNotification",
-					{ message: "User got updated!", type: true },
+					{ message: "De Benutzer isch updated worde", type: true },
 					{
 						root: true,
 					}

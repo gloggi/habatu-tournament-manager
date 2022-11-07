@@ -42,7 +42,7 @@ export const sections = {
 				await mixin.methods.callApi("put", `/sections/${section._id}`, section)
 				commit(
 					"notifications/showNotification",
-					{ message: "Sections got updated!", type: true },
+					{ message: "D Abteilige sind updated worde", type: true },
 					{
 						root: true,
 					}

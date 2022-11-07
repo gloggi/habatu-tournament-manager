@@ -73,7 +73,7 @@ export default {
 			try {
 				await this.callApi("get", "/tournament/create-finals")
 				this.$store.commit("notifications/showNotification", {
-					message: "Finals were created!",
+					message: "D Finalspiel sind erstellt worde!",
 					type: true,
 				})
 			} catch (e) {

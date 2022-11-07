@@ -46,7 +46,7 @@ export const categories = {
 				)
 				commit(
 					"notifications/showNotification",
-					{ message: "Category got updated!", type: true },
+					{ message: "D Kategorie sind updated worde", type: true },
 					{
 						root: true,
 					}
