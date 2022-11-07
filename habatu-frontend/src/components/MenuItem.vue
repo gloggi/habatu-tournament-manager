@@ -1,7 +1,7 @@
 <template>
 	<router-link :to="to">
 		<div
-			class="flex aspect-square h-full flex-col justify-end rounded-md border bg-white p-3 text-gray-700 drop-shadow-lg">
+			class="flex aspect-square h-full flex-col justify-end rounded-md border-2 border-gray-300 bg-white p-3 text-gray-700 drop-shadow-lg">
 			<div class="h-2/3">
 				<slot></slot>
 			</div>

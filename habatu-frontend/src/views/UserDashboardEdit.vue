@@ -44,13 +44,16 @@ export default {
 		},
 		form() {
 			return [
-				[{ label: "Nickname", model: "nickname", component: "TextField" }],
+				[{ label: "Pfadiname", model: "nickname", component: "TextField" }],
+				[{ label: "Neus Passwort setze", model: "password", component: "TextField", type:"password" }],
 				[{ label: "Rolle", model: "role", component: "SelectField", 
 				options:[
 					{_id:"Admin",name:"Admin"},
 					{_id:"Referee",name:"Referee"},
 					{_id:"Teammember",name:"Teammember"},
 				] }],
+				[{ label: "Team", model: "team", component: "SelectField", 
+				options: this.$store.state.teams.teams}],
 			]
 		},
 	},

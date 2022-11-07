@@ -95,7 +95,10 @@ export const getMe = async (req: Request, res: Response) => {
 };
 
 export const getUser = async (req: Request, res: Response) => {
-  const user = await get(req.params.id);
+  const user : any = await get(req.params.id);
+  if(user){
+    user.password = undefined
+  }
   res.json(user);
 };
 export const getUsers = async (req: Request, res: Response) => {
@@ -103,6 +106,8 @@ export const getUsers = async (req: Request, res: Response) => {
   res.json(users);
 };
 export const updateUser = async (req: Request, res: Response) => {
+  const encryptedPassword = await bcrypt.hash(req.body.password, 10);
+  req.body.password = encryptedPassword;
   const user = await update(req.params.id, req.body);
   res.json(user);
 };
