@@ -106,8 +106,10 @@ export const getUsers = async (req: Request, res: Response) => {
   res.json(users);
 };
 export const updateUser = async (req: Request, res: Response) => {
+  if(req.body.password){
   const encryptedPassword = await bcrypt.hash(req.body.password, 10);
   req.body.password = encryptedPassword;
+}
   const user = await update(req.params.id, req.body);
   res.json(user);
 };
