@@ -83,6 +83,7 @@ export default {
 		},
 	},
 	async created() {
+		setInterval(()=>{this.$store.dispatch("tournament/getTable")}, 5000)
 		await this.$store.dispatch("tournament/getTable")
 		await this.$store.dispatch("halls/get")
 		await this.$store.dispatch("games/get")
