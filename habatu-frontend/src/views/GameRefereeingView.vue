@@ -175,7 +175,7 @@ export default {
 			parseInt(this.$store.state.options.options.gameDuration.split(":")[1]) *
 			60 *
 			1000
-		this.milliseconds = 2000
+		this.milliseconds = this.gameDuration
 		await this.getGame()
 		var pointsTeamA = localStorage.getItem(`${this.game._id}:pointsTeamA`)
 		var pointsTeamB = localStorage.getItem(`${this.game._id}:pointsTeamB`)
