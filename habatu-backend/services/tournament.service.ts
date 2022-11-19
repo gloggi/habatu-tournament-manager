@@ -235,10 +235,10 @@ export const createFinals = async () => {
 };
 
 export const specifyReferee = async (gameId: string, userId: string) => {
-  const user = await User.findOneAndUpdate(
-    { id: userId },
+  const user = await User.findByIdAndUpdate(
+    userId,
     {
-      $push: {
+      $addToSet: {
         refereeGames: gameId,
       },
     }

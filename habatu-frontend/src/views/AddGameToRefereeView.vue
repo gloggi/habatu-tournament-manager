@@ -5,7 +5,7 @@
 <script>
 export default {
 	async created() {
-		const userId = this.$store.state.user.user._id
+		const userId = localStorage.userId
 		const gameId = this.$route.params.id
 		try {
 			await this.callApi("post", "/tournament/referee", {

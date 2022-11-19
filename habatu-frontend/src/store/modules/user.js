@@ -12,6 +12,7 @@ export const user = {
 			state.user = user
 			if (user.token) {
 				localStorage.setItem("token", user.token)
+				localStorage.setItem("userId", user._id)
 			}
 		},
 	},
