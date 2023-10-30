@@ -19,8 +19,11 @@ services:
             - /usr/app/node_modules
            command: npm run dev
            environment:
-            - TOKEN_KEY=<top secret>
+            - TOKEN_KEY=MUWU4l!I5#lRN%YPTQJ&2p@9b6E89#fJ
             - NODE_ENV=production
+            - ADMIN_NICKNAME=archi
+            - ADMIN_PASSWORD=*6y!1XIt73%7
+            - CLEAR_ON_STARTUP=cleanup
             - PORT=8000
             - ALLOWED_HOST=*
            ports:

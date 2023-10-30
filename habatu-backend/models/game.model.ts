@@ -3,16 +3,16 @@ import { IGame } from "../interfaces/game.interface";
 import autopopulate from "mongoose-autopopulate";
 
 const schema = new Schema<IGame>({
-  teamA: { type: Schema.Types.ObjectId, ref: "Team", autopopulate: true },
-  teamB: { type: Schema.Types.ObjectId, ref: "Team", autopopulate: true },
+  teamA: { type: String, ref: "Team", autopopulate: true },
+  teamB: { type: String, ref: "Team", autopopulate: true },
   category: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Category",
     autopopulate: true,
   },
-  hall: { type: Schema.Types.ObjectId, ref: "Hall", autopopulate: true },
+  hall: { type: String, ref: "Hall", autopopulate: true },
   timeslot: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Timeslot",
     autopopulate: true,
   },

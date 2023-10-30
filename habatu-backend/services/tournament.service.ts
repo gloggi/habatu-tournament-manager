@@ -116,6 +116,7 @@ export const getTimePreview = async () => {
   const games = await Game.find({})
     .populate<{ hall: IHall }>("hall")
     .populate<{ timeslot: ITimeslot }>("timeslot");
+    
 
   return {
     amountOfGames: games.length,

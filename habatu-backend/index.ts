@@ -2,11 +2,12 @@ import express, { Express, Request, Response, json } from "express";
 import cors from "cors";
 import "express-async-errors";
 import { connect, connection } from "mongoose";
-import { router } from "./routes/index";
+import { router } from "./routes";
 import { Option, User } from "./models";
 import bcrypt from "bcryptjs";
 process.env.TZ = "Europe/Zurich";
 const dropDbOnStartUp = process.env.CLEAR_ON_STARTUP == "cleanup";
+process.env.CLEAR_ON_STARTUP = ""
 if (!process.env.TOKEN_KEY) {
   process.env.TOKEN_KEY = "supersecret";
 }

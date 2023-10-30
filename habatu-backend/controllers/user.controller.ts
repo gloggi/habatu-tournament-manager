@@ -24,7 +24,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     const token = jwt.sign(
       { _id: user._id, nickname: user.nickname, role: user.role },
-      process.env.TOKEN_KEY,
+      process.env.TOKEN_KEY as string,
       {
         expiresIn: "12h",
       }
@@ -51,7 +51,7 @@ export const loginUser = async (req: Request, res: Response) => {
   }
   const token = jwt.sign(
     { _id: user._id, nickname: user.nickname, role: user.role },
-    process.env.TOKEN_KEY,
+    process.env.TOKEN_KEY as string,
     {
       expiresIn: "12h",
     }
@@ -63,7 +63,7 @@ export const getMe = async (req: Request, res: Response) => {
   const { token } = req.body;
   const tokenUser: JwtPayload = jwt.verify(
     token,
-    process.env.TOKEN_KEY
+    process.env.TOKEN_KEY as string
   ) as JwtPayload;
   const user = await get(tokenUser._id);
   if (user) {
@@ -74,7 +74,7 @@ export const getMe = async (req: Request, res: Response) => {
         role: user.role,
         team: user.team,
       },
-      process.env.TOKEN_KEY,
+      process.env.TOKEN_KEY as string,
       {
         expiresIn: "12h",
       }

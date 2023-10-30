@@ -16,7 +16,7 @@ export const adminMiddleware = (
   try {
     const user: JwtPayload = jwt.verify(
       token,
-      process.env.TOKEN_KEY
+      process.env.TOKEN_KEY as string
     ) as JwtPayload;
     res.locals.user = user;
     if (user.role != Role.Admin) {
@@ -42,7 +42,7 @@ export const refereeMiddleware = (
   try {
     const user: JwtPayload = jwt.verify(
       token,
-      process.env.TOKEN_KEY
+      process.env.TOKEN_KEY as string
     ) as JwtPayload;
     res.locals.user = user;
     if (user.role != Role.Referee && user.role != Role.Admin) {
