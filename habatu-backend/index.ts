@@ -19,11 +19,17 @@ connect(
   async () => {
     if (dropDbOnStartUp) {
       connection.db.dropDatabase();
-      User.create({
+    }
+    const existingUser = await User.findOne({ nickname: process.env.ADMIN_NICKNAME! });
+    if (!existingUser) {
+      await User.create({
         nickname: process.env.ADMIN_NICKNAME,
         password: await bcrypt.hash(process.env.ADMIN_PASSWORD!, 10),
         role: "Admin",
       });
+    }
+    const existingOption = await Option.findOne({ tournamentName: "HaBaTu" });
+    if (!existingOption) {
       Option.create({
         tournamentName: "HaBaTu",
         startedTournament: false,
@@ -53,8 +59,7 @@ app.use(function (err: Error, req: Request, res: Response, next: any) {
 });
 app.listen(process.env.NODE_ENV == "production" ? port : 8000, () => {
   console.log(
-    `Server is running at http://localhost:${
-      process.env.NODE_ENV == "production" ? port : 8000
+    `Server is running at http://localhost:${process.env.NODE_ENV == "production" ? port : 8000
     }`
   );
 });

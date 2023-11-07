@@ -120,7 +120,7 @@ export const getTimePreview = async () => {
 
   return {
     amountOfGames: games.length,
-    lastGame: games[games.length - 1].timeslot.endTime,
+    lastGame: games[games.length - 1].timeslot?.endTime,
   };
 };
 

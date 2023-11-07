@@ -23,7 +23,7 @@ services:
             - NODE_ENV=production
             - ADMIN_NICKNAME=archi
             - ADMIN_PASSWORD=*6y!1XIt73%7
-            - CLEAR_ON_STARTUP=cleanup
+            - CLEAR_ON_STARTUP=false
             - PORT=8000
             - ALLOWED_HOST=*
            ports:
