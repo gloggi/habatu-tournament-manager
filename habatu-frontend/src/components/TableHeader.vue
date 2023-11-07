@@ -6,7 +6,7 @@
 				<div class="flex items-center space-x-3">
 					<img src="@/assets/rotating_ball_a.png" class="h-16 w-16" />
 					<h1 class="text-2xl font-black text-gray-800 md:text-3xl">
-						HaBaTu 2022
+						HaBaTu {{new Date().getFullYear()}}
 					</h1>
 				</div>
 			</router-link>
