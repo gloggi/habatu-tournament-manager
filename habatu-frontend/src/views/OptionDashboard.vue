@@ -13,10 +13,19 @@
 					<TextInput label="Tournament Name" v-model="options.tournamentName" />
 				</div>
 				<h2 class="text-2xl font-medium">Spielspezifischi ihstellige</h2>
-				<div class="flex">
+				<div class="justify between flex items-end">
+					<div class="w-1/4">
 					<SwitchItem
 						label="Het s Turnier ahgfange?"
 						v-model="options.startedTournament" />
+						</div>
+						<div>
+						<BasicButton
+							:disabled="!storedOptions.startedTournament"
+							@click="assignReferees"
+							>Schiris zuewiise</BasicButton
+						>
+					</div>
 				</div>
 				<div class="justify between flex items-end">
 					<div class="w-1/4">
@@ -74,6 +83,17 @@ export default {
 				await this.callApi("get", "/tournament/create-finals")
 				this.$store.commit("notifications/showNotification", {
 					message: "D Finalspiel sind erstellt worde!",
+					type: true,
+				})
+			} catch (e) {
+				console.log(e)
+			}
+		},
+		async assignReferees() {
+			try {
+				await this.callApi("post", "/tournament/assign-referees",{})
+				this.$store.commit("notifications/showNotification", {
+					message: "D Schiris sind zuegwise worde!",
 					type: true,
 				})
 			} catch (e) {

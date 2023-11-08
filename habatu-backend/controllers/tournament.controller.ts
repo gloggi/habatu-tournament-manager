@@ -4,6 +4,7 @@ import {
   getTimePreview as timePreview,
   getTournamentTable as getTable,
   getTournamentRanking as getRanking,
+  assignGamesToReferees,
   createFinals,
   getTableByGroupId,
   specifyReferee,
@@ -41,4 +42,8 @@ export const addGameToReferee = async (req: Request, res: Response) => {
   const userId = req.body.userId;
   await specifyReferee(gameId, userId);
   res.status(201).json({ message: "Game has been added" });
+};
+export const assingnReferees = async (req: Request, res: Response) => {
+  await assignGamesToReferees();
+  res.status(201).json({message: "Referees were assigned"});
 };

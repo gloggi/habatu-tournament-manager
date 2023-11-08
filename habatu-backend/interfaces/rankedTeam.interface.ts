@@ -6,6 +6,7 @@ export interface IRankedTeam {
   section?: ISection;
   category?: string;
   tournamentPoints?: number;
+  pointsDifference?: number;
   pointsPro?: number;
   pointsCon?: number;
 }

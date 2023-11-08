@@ -26,3 +26,7 @@ content-type: application/json
     "userId": "63601b4fde991ece04557de4",
     "gameId": "63602551af1e6f3197bec986"
 }
+
+### Assign Referees
+POST http://localhost:8000/tournament/assign-referees HTTP/1.1
+content-type: application/json

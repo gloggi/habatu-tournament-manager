@@ -27,6 +27,7 @@
 					v-model="registerForm.nickname"
 					label="Pfadiname"
 					type="text" />
+				<SelectField label="Nie ohne mein Team, wo heisst ..." v-model="registerForm.team" :options="this.$store.state.teams.teams" />
 				<TextInput
 					v-model="registerForm.password"
 					label="Passwort"
@@ -51,14 +52,16 @@
 import TextInput from "@/components/TextInput.vue"
 import BasicButton from "@/components/BasicButton.vue"
 import LoginOrRegister from "@/components/LoginOrRegister.vue"
+import SelectField from "@/components/SelectField.vue"
 export default {
-	components: { TextInput, BasicButton, LoginOrRegister },
+	components: { TextInput, BasicButton, LoginOrRegister, SelectField },
 	data() {
 		return {
 			login: true,
 			registerForm: {
 				nickname: undefined,
 				password: undefined,
+				team: undefined
 			},
 			loginForm: {
 				nickname: undefined,

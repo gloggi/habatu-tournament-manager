@@ -24,7 +24,9 @@
 		<div class="w-1/2 text-right">{{ game.teamA.name }}</div>
 		<div class="w-1/6">{{ game.pointsTeamA }} : {{ game.pointsTeamB }}</div>
 		<div class="w-1/2 text-left">{{ game.teamB.name }}</div>
+		<!-- Remove this --> {{ game.teamA.section.name }} - {{ game.teamB.section.name }} 
 	</div>
+	
 	<div v-if="games.length == 0" class="p-2">&nbsp;</div>
 </template>
 

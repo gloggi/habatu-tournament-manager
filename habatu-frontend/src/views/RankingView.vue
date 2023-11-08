@@ -9,7 +9,17 @@
 			<div class="flex font-bold">
 				<div class="w-1/2">{{ category }}</div>
 				<div class="w-1/4">Abteilung</div>
-				<div class="w-1/4 text-end">P:GG:GK</div>
+				<div class="w-1/4 text-end">
+					<div class="flex justify-between">
+						<div class="w-1/6">P</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">GD</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">GG</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">GK</div>
+					</div>
+					</div>
 			</div>
 			<div
 				class="flex justify-between"
@@ -18,7 +28,15 @@
 				<div class="w-1/2">{{ k + 1 }}. {{ team.name }}</div>
 				<div class="w-1/4" v-if="team.section">{{ team.section.name }}</div>
 				<div class="w-1/4 text-end">
-					{{ team.tournamentPoints }}:{{ team.pointsPro }}:{{ team.pointsCon }}
+					<div class="flex justify-between">
+						<div class="w-1/6">{{ team.tournamentPoints }}</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">{{ team.pointsDifference }}</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">{{ team.pointsPro }}</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">{{ team.pointsCon }}</div>
+					</div>
 				</div>
 			</div>
 		</div>

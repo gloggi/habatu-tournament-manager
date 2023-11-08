@@ -27,9 +27,11 @@ export default {
 			this.user = { ...this.$store.state.user.user }
 		},
 		async update() {
+			
 			await this.$store.dispatch("user/update", this.user)
 			await this.$store.dispatch("user/getMe", localStorage.getItem("token"))
 			this.cloneUser()
+			this.$router.push({name: "menu"})
 		},
 	},
 	computed: {

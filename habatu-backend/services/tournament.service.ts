@@ -6,6 +6,8 @@ import {
 } from "../utils/roundRobin";
 import { IHall } from "../interfaces/hall.interface";
 import { ITeam } from "../interfaces/team.interface";
+import { Role } from "../interfaces/role";
+import { IUser } from "../interfaces/user.interface";
 import { ICategory } from "../interfaces/category.interface";
 import { IOption } from "../interfaces/option.interface";
 import { ITimeslot } from "../interfaces/timeslot.interface";
@@ -116,13 +118,70 @@ export const getTimePreview = async () => {
   const games = await Game.find({})
     .populate<{ hall: IHall }>("hall")
     .populate<{ timeslot: ITimeslot }>("timeslot");
-    
+
 
   return {
     amountOfGames: games.length,
     lastGame: games[games.length - 1].timeslot?.endTime,
   };
 };
+
+
+export const assignGamesToReferees= async (): Promise<Record<string, IGame[]>>  => {
+    const users = await User.find({}).lean({ autopopulate: false });
+    const teams = await Team.find({}).lean({ autopopulate: false });
+    const games = await Game.find({}).lean({ autopopulate: false });
+    const referees = users.filter(user => user.role === Role.Referee);
+    let assignments: Record<string, IGame[]> = {};
+  
+
+    // Initialize assignment record for each referee
+    referees.forEach(referee => {
+        assignments[referee.nickname] = [];
+    });
+
+    for (const game of games) {
+        for (const referee of referees) {
+            if (isEligibleReferee(referee, game, teams, games)) {
+                assignments[referee.nickname].push(game);
+                referees.push(...referees.splice(referees.indexOf(referee), 1));
+                
+                break;
+            }
+        }
+    }
+    for (const [nickname, games] of Object.entries(assignments)) {
+      await User.findOneAndUpdate({ nickname }, { $set: { refereeGames: games.map(g=>g._id) } });
+  }
+
+    return assignments;
+}
+
+const isEligibleReferee = (referee: IUser, game: IGame, teams: ITeam[], games: IGame[]): boolean => {
+    const refereeTeam = teams.find(team => team._id.toString() == referee.team.toString());
+    //console.log(teams[0])
+    //console.log(referee)
+    if (!refereeTeam) return false;
+  
+    // Check if the referee's team is playing in the game
+    if (game.teamA === referee.team || game.teamB === referee.team) return false;
+
+    // Check for same section constraint
+    const teamA = teams.find(team => team._id.toString() === game.teamA);
+    const teamB = teams.find(team => team._id.toString() === game.teamB);
+
+    if (teamA?.section?.toString() === refereeTeam.section?.toString() || teamB?.section?.toString() === refereeTeam.section?.toString()) return false;
+
+    // Check timeslot constraint
+    const refereeTeamGame = games.find(g => (g.teamA === referee.team || g.teamB === referee.team) && g.timeslot === game.timeslot);
+    if (refereeTeamGame) return false;
+
+    return true;
+  
+}
+
+// Usage: Call `assignGamesToReferees` with users, games, and teams data
+
 
 export const getTournamentRanking = async (): Promise<
   Record<string, IRankedTeam[]>
@@ -131,18 +190,28 @@ export const getTournamentRanking = async (): Promise<
     .lean()
     .populate<{ section: ISection }>("section");
   const categories: ICategory[] = await Category.find({}).lean();
+  const timeslots: ITimeslot[] = await Timeslot.find({})
   const games = await Game.find({}).lean({ autopopulate: false });
   const rankedTeams: IRankedTeam[] = [...teams];
+  // Get only timeslots which have already been played
+  const currentTime = new Date();
+  const currentTimeString = currentTime.toTimeString();
+  const filteredTimeslotsIds = timeslots.filter(timeslot => {
+    return timeslot.endTime.toTimeString() < currentTimeString;
+  }).map(timeslot=>timeslot._id?.toString());
   for (let team of rankedTeams) {
     var tournamentPoints = 0;
     var pointsPro = 0;
     var pointsCon = 0;
     for (let game of games) {
+      if(!filteredTimeslotsIds.includes(game.timeslot?.toString())){
+        continue;
+      }
       if (game.teamA.toString() == team._id.toString()) {
         pointsPro += game.pointsTeamA;
         pointsCon += game.pointsTeamB;
         if (game.pointsTeamA > game.pointsTeamB) {
-          tournamentPoints += 2;
+          tournamentPoints += 3;
         }
         if (game.pointsTeamA == game.pointsTeamB) {
           tournamentPoints += 1;
@@ -162,11 +231,16 @@ export const getTournamentRanking = async (): Promise<
     team.tournamentPoints = tournamentPoints;
     team.pointsPro = pointsPro;
     team.pointsCon = pointsCon;
+    team.pointsDifference = pointsPro - pointsCon;
   }
   const comparefunction = (a: any, b: any): number => {
     if (a.tournamentPoints > b.tournamentPoints) {
       return -1;
     } else if (b.tournamentPoints > a.tournamentPoints) {
+      return 1;
+    } else if (a.pointsDifference > b.pointsDifference) {
+      return -1;
+    } else if (b.pointsDifference > a.pointsDifference) {
       return 1;
     } else if (a.pointsPro > b.pointsPro) {
       return -1;

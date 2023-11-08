@@ -1,9 +1,9 @@
 <template>
-	<div class="justify-stretch flex h-screen flex-col items-center">
+	<div v-if="team" class="justify-stretch flex h-screen flex-col items-center">
 		<div class="mb-2 w-full rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
 			<h1 class="text-3xl font-medium">{{ team.name }}</h1>
 		</div>
-		<div
+		<div v-if="Object.keys(table).length > 0"
 			class="flex h-full w-full flex-col space-y-2 rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
 			<template v-for="time in Object.keys(table)" :key="table[time]._id">
 				{{ time }}
@@ -11,23 +11,37 @@
 			</template>
 		</div>
 	</div>
+	<div v-else class="mb-2 w-full rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
+			<h1 class="text-3xl font-medium pb-3">Tu hesch keis Team</h1>
+			<router-link :to="{name: 'me'}"><BasicButton>Da chasch dis Team uswähle</BasicButton></router-link>
+		</div>
 </template>
 
 <script>
+import BasicButton from "@/components/BasicButton.vue";
 import GameField from "@/components/GameField.vue"
+
 export default {
 	data() {
 		return {
-			table: undefined,
+			table: {},
 		}
 	},
 	methods: {
 		async getGroupTable() {
-			const response = await this.callApi(
-				"get",
-				`/tournament/table/${this.team._id}`
-			)
-			this.table = response.data
+			if(!this.team){
+				return
+			}
+			try {
+				const response = await this.callApi(
+					"get",
+					`/tournament/table/${this.team._id}`
+				);
+				this.table = response.data;
+			} catch (error) {
+				console.error("Error fetching group table:", error);
+				// Handle the error appropriately
+			}
 		},
 	},
 	computed: {
@@ -35,10 +49,19 @@ export default {
 			return this.userTeam()
 		},
 	},
-	created() {
-		this.getGroupTable()
+	watch: {
+		team(newValue) {
+			if (newValue) {
+				console.log(newValue)
+				this.getGroupTable();
+			}
+		}
 	},
-	components: { GameField },
+	created(){
+		this.getGroupTable();
+
+	},
+	components: { GameField, BasicButton },
 }
 </script>
 

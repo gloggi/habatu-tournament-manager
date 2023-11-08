@@ -5,6 +5,9 @@ import { Types } from "mongoose";
 export const createTeam = async (team: ITeam) => {
   return await Team.create(team);
 };
+export const bulkCreateTeam = async (teams: ITeam[]) => {
+  return await Team.insertMany(teams);
+};
 export const getTeam = async (_id: string) => {
   if (!Types.ObjectId.isValid(_id)) {
     throw new Error("");

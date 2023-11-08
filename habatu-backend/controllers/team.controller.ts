@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import {
   createTeam as create,
+  bulkCreateTeam as bulkCreate,
   getTeams as gets,
   updateTeams as update,
   getTeam as get,
@@ -9,9 +10,15 @@ import {
 import { Types } from "mongoose";
 
 export const createTeam = async (req: Request, res: Response) => {
-  const team = await create(req.body);
-  res.json(team);
+  if (Array.isArray(req.body)) {
+    const teams = await bulkCreate(req.body);
+    res.json(teams);
+  } else {
+    const team = await create(req.body);
+    res.json(team);
+  }
 };
+
 export const getTeam = async (req: Request, res: Response) => {
   const team = await get(req.params.id);
   res.json(team);

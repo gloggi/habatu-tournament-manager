@@ -36,15 +36,15 @@
 				</div>
 				<div class="flex justify-between">
 					<router-link v-if="backRoute" :to="{ name: backRoute }"
-						><BasicButton class="rounded-tl-none rounded-br-none"
-							>back</BasicButton
+						><button class="p-3"
+							><ArrowLeft/></button
 						></router-link
 					>
 					<router-link v-if="nextRoute" :to="{ name: nextRoute }"
-						><BasicButton
+						><button
 							@click="$router.push({ to: nextRoute })"
-							class="rounded-tr-none rounded-bl-none"
-							>next</BasicButton
+							class="p-3"
+							><ArrowRight/></button
 						></router-link
 					>
 				</div>
@@ -59,8 +59,10 @@ import JsonForm from "@/components/JsonForm.vue"
 import { format } from "date-fns"
 import TitleItem from "@/components/TitleItem.vue"
 import StepOverview from "@/components/StepOverview.vue"
+import ArrowLeft from "@/components/icons/ArrowLeft.vue"
+import ArrowRight from "@/components/icons/ArrowRight.vue"
 export default {
-	components: { BasicButton, JsonForm, TitleItem, StepOverview },
+	components: { BasicButton, JsonForm, TitleItem, StepOverview, ArrowLeft, ArrowRight },
 	data() {
 		return {
 			item: {
