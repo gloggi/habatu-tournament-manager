@@ -73,6 +73,9 @@ export default {
 		},
 	},
 	components: { TitleItem },
+	created(){
+		this.$store.dispatch(`${this.state}/get`, this.item)
+	}
 }
 </script>
 
