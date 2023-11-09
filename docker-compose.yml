@@ -13,7 +13,9 @@ services:
           ports:
             - '8080:8080'
       habatu-backend:
-           build: ./habatu-backend
+           build:
+            context: ./habatu-backend
+            dockerfile: Dockerfile.dev
            volumes:
             - ./habatu-backend:/usr/app
             - /usr/app/node_modules

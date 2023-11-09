@@ -1,8 +1,14 @@
 <template>
-	<div class="fixed w-1/4">
-		<div class="-m-2 mr-0 flex h-screen flex-col rounded-r-md bg-gray-900">
+	<div :class="`fixed w-1/4 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out md:translate-x-0`">
+		<button 
+      @click="isSidebarOpen = !isSidebarOpen" 
+      class="absolute bottom-0 h-16 w-16 -right-16 bg-gray-900 rounded-r-md  z-30 block md:hidden"
+    >
+     Test
+    </button>
+      <div class="-m-2 mr-0 flex h-screen flex-col rounded-r-md bg-gray-900">
 			<div class="flex h-1/4 items-center justify-center">
-				<h1 class="text-4xl font-bold text-white">Dashboard</h1>
+				<h1 class="text-4xl font-bold text-white hidden md:dis">Dashboard</h1>
 			</div>
 			<div class="flex h-full flex-col">
 				<DashboardMenuItem title="Teams" to="teamsDashboard"
@@ -53,6 +59,11 @@ export default {
 		GearIcon,
 		ListIcon,
 	},
+	data() {
+    return {
+      isSidebarOpen: false,
+    };
+  },
 }
 </script>
 

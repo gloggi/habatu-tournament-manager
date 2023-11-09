@@ -1,5 +1,5 @@
 <template>
-	<div class="justify-stretch flex h-screen flex-col items-center">
+	<div class="justify-stretch flex h-full flex-col items-center">
 		<div class="mb-2 w-full rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
 			<h1 class="text-3xl font-medium">Ich bin Schiri vo:</h1>
 		</div>

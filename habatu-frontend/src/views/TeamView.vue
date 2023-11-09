@@ -1,10 +1,10 @@
 <template>
-	<div v-if="team" class="justify-stretch flex h-screen flex-col items-center">
+	<div v-if="team" class="justify-stretch flex h-full flex-col items-center">
 		<div class="mb-2 w-full rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
 			<h1 class="text-3xl font-medium">{{ team.name }}</h1>
 		</div>
 		<div v-if="Object.keys(table).length > 0"
-			class="flex h-full w-full flex-col space-y-2 rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
+			class="flex flex-1 h-full w-full flex-col space-y-2 rounded-md bg-white p-3 drop-shadow-lg md:w-1/3">
 			<template v-for="time in Object.keys(table)" :key="table[time]._id">
 				{{ time }}
 				<GameField :games="[table[time]]"></GameField>

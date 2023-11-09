@@ -1,18 +1,19 @@
 import requests
 import random
-
+url ="https://habatu.gloggi.ch/api"
+# url = "http://localhost:8000"
 # Server details and token
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNmZjI2MzZiZDEyZjU3OTY1YzkzYTMiLCJuaWNrbmFtZSI6ImFyY2hpIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjk5NDMzMDc2LCJleHAiOjE2OTk0NzYyNzZ9.IXhq-qrgiCmJnenmkQ-wuXIKzpaxX2SoUTHRUltYg1g"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRjYjFiNzE5ZjAwOTgyNzBiMGFkY2UiLCJuaWNrbmFtZSI6ImFyY2hpIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjk5NTI1MTA1LCJleHAiOjE2OTk1NjgzMDV9.h-apO1nfQH8BpHcYEyKrcaXR0Qka7wvVtnM9pUb-NWg"
 headers = {"Authorization": f"Bearer {token}"}
 
 # Delete Teams
-teams = requests.get("http://localhost:8000/teams", headers=headers).json()
+teams = requests.get(f"{url}/timeslots", headers=headers).json()
 for team in teams:
-    requests.delete(f"http://localhost:8000/teams/{team['_id']}", headers=headers)
-
+    requests.delete(f"{url}/timeslots/{team['_id']}", headers=headers)
+"""
 # Fetch categories and sections
-categories_response = requests.get("http://localhost:8000/categories").json()
-sections_response = requests.get("http://localhost:8000/sections").json()
+categories_response = requests.get(f"{url}/categories").json()
+sections_response = requests.get(f"{url}/sections").json()
 
 # Convert responses to dictionaries for easy access
 categories = {category['name']: category['_id'] for category in categories_response}
@@ -44,6 +45,7 @@ for section_name, category_mapping in teams_structure.items():
                 "section": sections[section_name]
             }
             # Post the team to the server
-            requests.post("http://localhost:8000/teams", json=team, headers=headers)
+            requests.post(f"{url}/teams", json=team, headers=headers)
 
 print("Teams created and posted successfully.")
+"""

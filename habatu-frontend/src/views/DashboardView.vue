@@ -1,9 +1,9 @@
 <template>
 	<div class="flex h-full">
-		<div class="w-1/4">
+		<div class="absolut z-30 md:z-0 md:inline md:w-1/4">
 			<DashboardMenu />
 		</div>
-		<div class="w-3/4 pl-2">
+		<div class="w-full md:w-3/4 pl-2">
 			<router-view></router-view>
 		</div>
 	</div>
