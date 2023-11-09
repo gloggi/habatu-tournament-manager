@@ -1,8 +1,12 @@
 import { User } from "../models";
 import { IUser } from "../interfaces/user.interface";
 import { Types } from "mongoose";
+import { Role } from "../interfaces/role";
 
 export const createUser = async (user: IUser) => {
+  if(!user.role){
+    user.role = Role.Default
+  }
   return await User.create(user);
 };
 export const getUser = async (_id: string) => {
@@ -14,6 +18,7 @@ export const getUser = async (_id: string) => {
 };
 export const getUsers = async () => {
   const users = await User.find({}, { password: 0 });
+  console.log(users)
   return users;
 };
 export const getUserByNickname = async (nickname: string) => {
