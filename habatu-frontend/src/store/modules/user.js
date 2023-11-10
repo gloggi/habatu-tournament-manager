@@ -24,7 +24,6 @@ export const user = {
 					"/users/login",
 					credentials
 				)
-				console.log(response.data)
 				const user = response.data
 				if (user.token) {
 					commit("setUser", user)
@@ -70,8 +69,6 @@ export const user = {
 				const response = await mixin.methods.callApi("post", "/users/me", {
 					token,
 				})
-				console.log(response.status)
-				console.log(response.data)
 				const user = response.data
 				if (user.token) {
 					commit("setUser", user)

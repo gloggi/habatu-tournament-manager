@@ -30,14 +30,12 @@ export default {
 	methods: {
 		handleChange(event) {
 			event.target.checked = true
-			console.log(event.target.value)
 			this.$refs[`checkbox-${this.label}`].checked = !this.modelValue
 			this.$emit("update:modelValue", !this.modelValue)
 		},
 	},
 	mounted() {
 		this.$refs[`checkbox-${this.label}`].checked = this.modelValue
-		console.log("box", this.modelValue)
 	},
 }
 </script>

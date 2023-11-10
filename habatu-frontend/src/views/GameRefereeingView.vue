@@ -1,7 +1,8 @@
 <template>
+	<div class="md:flex md:justify-center md:items-center">
 	<div
 		v-if="game"
-		class="-m-2 h-full min-h-screen w-screen text-white"
+		class="-m-2 h-full min-h-screen w-screen md:w-1/3 text-white"
 		:style="`${
 			!gameOver
 				? 'background-color: rgb(34 197 94)'
@@ -30,11 +31,11 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<button class="w-1/2" @click="modifyPoints('TeamA', 1)">
-						<CaretUpFillIcon class="h-20" />
+					<button class="w-1/2 p-4" @click="modifyPoints('TeamA', 1)">
+						<CaretUpFillIcon class="w-full" />
 					</button>
-					<button class="w-1/2" @click="modifyPoints('TeamB', 1)">
-						<CaretUpFillIcon class="h-20" />
+					<button class="w-1/2 p-4" @click="modifyPoints('TeamB', 1)">
+						<CaretUpFillIcon class="w-full" />
 					</button>
 				</div>
 				<div class="flex flex-row">
@@ -46,11 +47,11 @@
 					</div>
 				</div>
 				<div class="flex flex-row">
-					<button class="w-1/2" @click="modifyPoints('TeamA', -1)">
-						<CaretDownFillIcon class="h-20" />
+					<button class="w-1/2 p-4" @click="modifyPoints('TeamA', -1)">
+						<CaretDownFillIcon class="w-full" />
 					</button>
-					<button class="w-1/2" @click="modifyPoints('TeamB', -1)">
-						<CaretDownFillIcon class="h-20" />
+					<button class="w-1/2 p-4" @click="modifyPoints('TeamB', -1)">
+						<CaretDownFillIcon class="w-full" />
 					</button>
 				</div>
 			</div>
@@ -59,13 +60,13 @@
 					class="bg-green-700 hover:bg-green-700"
 					v-if="!started"
 					@click="startTimer"
-					>Start</BasicButton
+					>Timer starte</BasicButton
 				>
 				<BasicButton
 					class="bg-orange-700 hover:bg-orange-700"
 					v-if="!started"
 					@click="clearTimer"
-					>Nomal vo vorne</BasicButton
+					>Timer nomal vo vorne</BasicButton
 				>
 				<BasicButton
 					class="bg-red-500 hover:bg-red-500"
@@ -81,6 +82,7 @@
 			</div>
 		</div>
 	</div>
+</div>
 </template>
 
 <script>
@@ -111,7 +113,7 @@ export default {
 				console.log(e)
 			}
 		},
-		modifyPoints(team, value) {
+		async modifyPoints(team, value) {
 			if (this.game[`points${team}`] + value >= 0) {
 				this.game[`points${team}`] += value
 			}
@@ -123,6 +125,10 @@ export default {
 				`${this.game._id}:pointsTeamB`,
 				this.game.pointsTeamB
 			)
+			await this.callApi("put", `/games/${this.gameId}`, {
+					pointsTeamA: this.game.pointsTeamA,
+					pointsTeamB: this.game.pointsTeamB,
+				})
 		},
 		startTimer() {
 			this.started = true
@@ -180,8 +186,8 @@ export default {
 		var pointsTeamA = localStorage.getItem(`${this.game._id}:pointsTeamA`)
 		var pointsTeamB = localStorage.getItem(`${this.game._id}:pointsTeamB`)
 		if (pointsTeamA && pointsTeamA) {
-			this.game.pointsTeamA = pointsTeamA
-			this.game.pointsTeamB = pointsTeamB
+			this.game.pointsTeamA = parseInt(pointsTeamA)
+			this.game.pointsTeamB = parseInt(pointsTeamB)
 		}
 	},
 	components: { CaretUpFillIcon, CaretDownFillIcon, BasicButton },

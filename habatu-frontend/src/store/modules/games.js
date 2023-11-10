@@ -47,7 +47,6 @@ export const games = {
 						root: true,
 					}
 				)
-				console.log(this)
 				dispatch("get")
 			} catch (e) {
 				console.log(e)

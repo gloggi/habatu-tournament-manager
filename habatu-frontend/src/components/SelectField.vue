@@ -6,6 +6,7 @@
 		<input
 			autocomplete="off"
 			v-model="textValue"
+			@focus="handleFocus"
 			@blur="handleBlur"
 			class="focus:shadow-outline w-full appearance-none rounded border py-2 px-3 leading-tight border-black text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-400"
 			:id="label"
@@ -14,10 +15,10 @@
 		<div
 			id="dropdown"
 			v-if="select.length > 0"
-			class="absolute left-0 right-0 z-50 rounded-b-lg bg-gray-100 p-3 text-left drop-shadow-sm">
+			class="absolute left-0 right-0 z-50 rounded-b-lg bg-gray-100 p-3 text-left drop-shadow-sm overflow-y-scroll max-h-60">
 			<button
-				id="dropdown"
-				@click="handleSelect(item.name)"
+				id="dropdownItem"
+				@mousedown="handleSelect(item.name)"
 				v-for="item in select"
 				class="w-full cursor-pointer rounded-lg bg-gray-100 p-3 hover:bg-gray-300"
 				:key="item.name">
@@ -39,6 +40,13 @@ export default {
 		}
 	},
 	methods: {
+		handleFocus(){
+			const modelValue = this.modelValue || ""
+			this.select = this.options.filter(o =>
+				o.name.toLowerCase().includes(modelValue.toLowerCase())
+			)
+			this.selectKey++
+		},
 		handleSelect(name) {
 			this.$emit(
 				"update:modelValue",
@@ -48,7 +56,7 @@ export default {
 			this.select = []
 		},
 		handleBlur(evt) {
-			if (evt.relatedTarget && evt.relatedTarget.id == "dropdown") {
+			if (evt.relatedTarget && (evt.relatedTarget.id == "dropdown" || evt.relatedTarget.id == "dropdownItem")) {
 				return
 			}
 			this.select = []

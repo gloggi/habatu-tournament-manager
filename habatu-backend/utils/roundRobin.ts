@@ -79,7 +79,6 @@ export const generateTimeslots = (
     Math.ceil(games.length / halls.length) + option.additionalSlots;
   const timeSlots: ITimeslot[] = [];
   let startTime = setTimeOnDate(new Date(), option.startTime);
-  console.log(startTime);
   for (let i = 0; i < nslots; i++) {
     timeSlots.push({
       startTime: startTime,

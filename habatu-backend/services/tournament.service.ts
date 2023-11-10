@@ -158,9 +158,8 @@ export const assignGamesToReferees= async (): Promise<Record<string, IGame[]>>  
 }
 
 const isEligibleReferee = (referee: IUser, game: IGame, teams: ITeam[], games: IGame[]): boolean => {
-    const refereeTeam = teams.find(team => team._id.toString() == referee.team.toString());
-    //console.log(teams[0])
-    //console.log(referee)
+    const refereeTeam = teams.find(team => team._id?.toString() == referee.team?.toString());
+
     if (!refereeTeam) return false;
   
     // Check if the referee's team is playing in the game
@@ -270,7 +269,6 @@ export const createFinals = async () => {
     .populate<{ timeslot: ITimeslot }>("timeslot")
     .sort({ "timeslot.startTime": -1 });
   const lastGameSlotId = games[games.length - 1].timeslot._id!;
-  console.log(timeslots.map((t) => t.startTime));
   var slotIndex: number =
     timeslots.map((t) => t._id?.toString()).indexOf(lastGameSlotId.toString()) +
     1;
@@ -301,7 +299,6 @@ export const createFinals = async () => {
     }
 
     game.timeslot = timeslots[slotIndex]._id!.toString();
-    console.log(slotIndex);
 
     game.hall = halls[i % halls.length]._id.toString();
   }
@@ -318,5 +315,4 @@ export const specifyReferee = async (gameId: string, userId: string) => {
       },
     }
   );
-  console.log(user);
 };

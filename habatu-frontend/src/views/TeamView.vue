@@ -52,7 +52,6 @@ export default {
 	watch: {
 		team(newValue) {
 			if (newValue) {
-				console.log(newValue)
 				this.getGroupTable();
 			}
 		}
