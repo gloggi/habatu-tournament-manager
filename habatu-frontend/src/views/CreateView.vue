@@ -113,6 +113,8 @@ export default {
 		createItem() {
 			this.$store.dispatch(`${this.state}/create`, this.item)
 			this.formKey++
+			setTimeout(()=>document.querySelector('input').focus(),10)
+			
 		},
 		updateItem(itemId) {
 			if (this.toUpdateItems[itemId]) {
