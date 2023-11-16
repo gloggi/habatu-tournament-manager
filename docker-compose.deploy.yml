@@ -16,6 +16,7 @@ services:
           - habatu-backend
       habatu-backend:
            build: ./habatu-backend
+           restart: unless-stopped 
            volumes:
             - ./habatu-backend:/usr/app
             - /usr/app/node_modules
@@ -24,7 +25,6 @@ services:
             - NODE_ENV=production
             - ADMIN_NICKNAME=archi
             - ADMIN_PASSWORD=*6y!1XIt73%7
-            - CLEAR_ON_STARTUP=false
             - PORT=8000
             - ALLOWED_HOST=*
            links:
@@ -35,8 +35,9 @@ services:
       mongo:
             container_name: mongo
             image: mongo
+            restart: unless-stopped 
             volumes:
-              - ./data:/data/db
+              - data:/data/db
             ports:
               - '27018:27017'
       mongo-express:
@@ -46,3 +47,5 @@ services:
               - 8081:8081
             environment:
               ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+volumes:
+  data:

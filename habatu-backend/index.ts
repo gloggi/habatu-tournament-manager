@@ -6,7 +6,6 @@ import { router } from "./routes";
 import { Option, User } from "./models";
 import bcrypt from "bcryptjs";
 process.env.TZ = "Europe/Zurich";
-const dropDbOnStartUp = process.env.CLEAR_ON_STARTUP == "cleanup";
 process.env.CLEAR_ON_STARTUP = ""
 if (!process.env.TOKEN_KEY) {
   process.env.TOKEN_KEY = "supersecret";
@@ -14,12 +13,9 @@ if (!process.env.TOKEN_KEY) {
 
 connect(
   process.env.NODE_ENV == "production"
-    ? "mongodb://mongo:27017"
-    : "mongodb://localhost:27018",
+    ? "mongodb://mongo:27017/production"
+    : "mongodb://localhost:27018/production",
   async () => {
-    if (dropDbOnStartUp) {
-      connection.db.dropDatabase();
-    }
     const existingUser = await User.findOne({ nickname: process.env.ADMIN_NICKNAME! });
     if (!existingUser) {
       await User.create({
