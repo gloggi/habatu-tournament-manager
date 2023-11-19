@@ -48,7 +48,7 @@ services:
             ports:
               - 8081:8081
             environment:
-              ME_CONFIG_MONGODB_URL: mongodb://g3Q3Q4eYreJ2hp6Q2u6e:ghqbVrZbj4zCra2V6rvR@mongo:27017/
+              ME_CONFIG_MONGODB_URL: mongodb://ygbydmzfnfvbxbmqdqmy:bQCrPwf2DTc7Wvm2XFT9@mongo:27017/
               ME_CONFIG_BASICAUTH_USERNAME: AZc8A7es3vNQAmJs5e8c
               ME_CONFIG_BASICAUTH_PASSWORD: HGxTz9juPHuND55h8ztB
 volumes:

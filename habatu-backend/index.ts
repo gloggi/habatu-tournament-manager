@@ -9,7 +9,6 @@ process.env.TZ = "Europe/Zurich";
 process.env.CLEAR_ON_STARTUP = ""
 const mongoUsername = process.env.MONGO_USERNAME
 const mongoPassword = process.env.MONGO_PASSWORD
-console.log(mongoUsername, mongoPassword)
 if (!process.env.TOKEN_KEY) {
   process.env.TOKEN_KEY = "supersecret";
 }
