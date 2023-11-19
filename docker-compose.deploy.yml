@@ -27,6 +27,8 @@ services:
             - ADMIN_PASSWORD=*6y!1XIt73%7
             - PORT=8000
             - ALLOWED_HOST=*
+            - MONGO_USERNAME=ygbydmzfnfvbxbmqdqmy
+            - MONGO_PASSWORD=bQCrPwf2DTc7Wvm2XFT9
            links:
              - mongo
       habatu-frontend:
@@ -35,17 +37,19 @@ services:
       mongo:
             container_name: mongo
             image: mongo
-            restart: unless-stopped 
             volumes:
               - data:/data/db
-            ports:
-              - '27018:27017'
+            environment:
+              MONGO_INITDB_ROOT_USERNAME: ygbydmzfnfvbxbmqdqmy
+              MONGO_INITDB_ROOT_PASSWORD: bQCrPwf2DTc7Wvm2XFT9
       mongo-express:
             image: mongo-express
             restart: always
             ports:
               - 8081:8081
             environment:
-              ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+              ME_CONFIG_MONGODB_URL: mongodb://g3Q3Q4eYreJ2hp6Q2u6e:ghqbVrZbj4zCra2V6rvR@mongo:27017/
+              ME_CONFIG_BASICAUTH_USERNAME: AZc8A7es3vNQAmJs5e8c
+              ME_CONFIG_BASICAUTH_PASSWORD: HGxTz9juPHuND55h8ztB
 volumes:
   data:

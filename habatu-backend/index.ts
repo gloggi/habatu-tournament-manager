@@ -7,14 +7,15 @@ import { Option, User } from "./models";
 import bcrypt from "bcryptjs";
 process.env.TZ = "Europe/Zurich";
 process.env.CLEAR_ON_STARTUP = ""
+const mongoUsername = process.env.MONGO_USERNAME
+const mongoPassword = process.env.MONGO_PASSWORD
+console.log(mongoUsername, mongoPassword)
 if (!process.env.TOKEN_KEY) {
   process.env.TOKEN_KEY = "supersecret";
 }
 
 connect(
-  process.env.NODE_ENV == "production"
-    ? "mongodb://mongo:27017/production"
-    : "mongodb://localhost:27018/production",
+`mongodb://${mongoUsername}:${mongoPassword}@mongo:27017/production?authSource=admin`,
   async () => {
     const existingUser = await User.findOne({ nickname: process.env.ADMIN_NICKNAME! });
     if (!existingUser) {
