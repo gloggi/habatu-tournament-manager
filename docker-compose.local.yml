@@ -16,6 +16,7 @@ services:
           - habatu-backend
       habatu-backend:
            build: ./habatu-backend
+           restart: unless-stopped 
            volumes:
             - ./habatu-backend:/usr/app
             - /usr/app/node_modules
@@ -24,9 +25,10 @@ services:
             - NODE_ENV=production
             - ADMIN_NICKNAME=archi
             - ADMIN_PASSWORD=*6y!1XIt73%7
-            - CLEAR_ON_STARTUP=false
             - PORT=8000
             - ALLOWED_HOST=*
+            - MONGO_USERNAME=ygbydmzfnfvbxbmqdqmy
+            - MONGO_PASSWORD=bQCrPwf2DTc7Wvm2XFT9
            links:
              - mongo
       habatu-frontend:
@@ -36,6 +38,18 @@ services:
             container_name: mongo
             image: mongo
             volumes:
-              - ./data:/data/db
+              - data:/data/db
+            environment:
+              MONGO_INITDB_ROOT_USERNAME: ygbydmzfnfvbxbmqdqmy
+              MONGO_INITDB_ROOT_PASSWORD: bQCrPwf2DTc7Wvm2XFT9
+      mongo-express:
+            image: mongo-express
+            restart: always
             ports:
-              - '27018:27017'
+              - 8081:8081
+            environment:
+              ME_CONFIG_MONGODB_URL: mongodb://ygbydmzfnfvbxbmqdqmy:bQCrPwf2DTc7Wvm2XFT9@mongo:27017/
+              ME_CONFIG_BASICAUTH_USERNAME: AZc8A7es3vNQAmJs5e8c
+              ME_CONFIG_BASICAUTH_PASSWORD: HGxTz9juPHuND55h8ztB
+volumes:
+  data:
