@@ -135,7 +135,6 @@ export default {
 		},
 	},
 	created() {
-		this.getTimePreview()
 	},
 }
 </script>
