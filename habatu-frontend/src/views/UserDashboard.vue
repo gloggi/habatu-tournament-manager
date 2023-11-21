@@ -1,5 +1,5 @@
 <template>
-	<DashboardTable state="users" name="Users" />
+	<DashboardTable state="users" name="Users" keys="nickname,role,team" />
 </template>
 
 <script>
