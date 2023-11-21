@@ -16,7 +16,7 @@
 		<MenuItem name="Spielplan" to="table">
 			<MapIcon class="h-full w-full" />
 		</MenuItem>
-		<MenuItem name="Reglä" to="rules">
+		<MenuItem v-if="false" name="Reglä" to="rules">
 			<BookIcon class="h-full w-full" />
 		</MenuItem>
 		<MenuItem name="Ranglischtä" to="ranking">
