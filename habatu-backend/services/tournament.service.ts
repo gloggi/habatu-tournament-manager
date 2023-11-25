@@ -220,7 +220,7 @@ export const getTournamentRanking = async (): Promise<
         pointsPro += game.pointsTeamB;
         pointsCon += game.pointsTeamA;
         if (game.pointsTeamA < game.pointsTeamB) {
-          tournamentPoints += 2;
+          tournamentPoints += 3;
         }
         if (game.pointsTeamA == game.pointsTeamB) {
           tournamentPoints += 1;
