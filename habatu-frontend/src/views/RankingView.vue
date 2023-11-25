@@ -1,7 +1,7 @@
 <template>
 	<div
 		v-if="rank"
-		class="flex w-full flex-col space-y-2 p-3 md:flex-row md:space-x-2 md:space-y-0">
+		class="flex w-full flex-col space-y-2 p-3">
 		<div
 			class="flex w-full flex-col rounded-md border bg-white p-3 drop-shadow-lg"
 			v-for="(category, i) in Object.keys(rank)"
@@ -59,6 +59,7 @@ export default {
 	computed: {},
 	created() {
 		this.getRanking()
+		setInterval(()=>{this.getRanking()}, 5000)
 	},
 }
 </script>
