@@ -2,6 +2,7 @@ version: "3"
 services:
       nginx:
         image: nginx:latest
+        restart: unless-stopped
         ports:
           - "80:80"
           - "443:443"
@@ -33,10 +34,12 @@ services:
              - mongo
       habatu-frontend:
           build: ./habatu-frontend
+          restart: unless-stopped
           
       mongo:
             container_name: mongo
             image: mongodb-raspberrypi4-unofficial-r7.0.14
+            restart: unless-stopped
             volumes:
               - data:/data/db
             environment:
