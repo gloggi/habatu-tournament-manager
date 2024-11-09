@@ -7,9 +7,11 @@ import {
   deleteUser as remove,
   getUserByNickname,
 } from "../services/user.service";
+import { getGame } from "../services/game.service";
 import bcrypt from "bcryptjs";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { Role } from "../interfaces/role";
+import { ObjectId } from "mongoose";
 
 export const createUser = async (req: Request, res: Response) => {
   try {
@@ -66,6 +68,13 @@ export const getMe = async (req: Request, res: Response) => {
     process.env.TOKEN_KEY as string
   ) as JwtPayload;
   const user = await get(tokenUser._id);
+  // populate refereeGames of user
+  const refereeGames = await Promise.all(
+    (user?.refereeGames || []).map(async (game) => getGame(game))
+  );
+  
+
+
   if (user) {
     const token = jwt.sign(
       {
@@ -87,7 +96,8 @@ export const getMe = async (req: Request, res: Response) => {
         team: user.team,
         nickname: user.nickname,
         token,
-        refereeGames: user.refereeGames,
+        refereeGames: refereeGames,
+
       });
   } else {
     res.status(404);

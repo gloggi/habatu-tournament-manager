@@ -307,6 +307,20 @@ export const createFinals = async () => {
 };
 
 export const specifyReferee = async (gameId: string, userId: string) => {
+  const game = await Game.findById(gameId);
+  if (!game) {
+    throw new Error("Game not found");
+  }
+
+  await Game.findByIdAndUpdate(
+    gameId,
+    {
+      $addToSet: {
+        referees: userId,
+      },
+    }
+  )
+
   const user = await User.findByIdAndUpdate(
     userId,
     {

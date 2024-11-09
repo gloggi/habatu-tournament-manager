@@ -2,7 +2,7 @@
 	<div class="flex w-full flex-col">
 		<button
 			@click="show = !show"
-			class="top-lg w-full cursor-pointer rounded bg-gray-200 p-3 text-left text-lg">
+			class="top-lg w-full cursor-pointer rounded bg-gray-900 text-white p-3 text-left text-lg">
 			{{ title }}
 		</button>
 

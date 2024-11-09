@@ -40,6 +40,7 @@ export const getGroupTable = async (req: Request, res: Response) => {
 export const addGameToReferee = async (req: Request, res: Response) => {
   const gameId = req.body.gameId;
   const userId = req.body.userId;
+
   await specifyReferee(gameId, userId);
   res.status(201).json({ message: "Game has been added" });
 };

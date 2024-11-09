@@ -17,9 +17,18 @@
 						<div class="flex justify-center">
 							<QrcodeVue :value="gameLink" :size="150" />
 						</div>
+						<p><a :href="gameLink">{{ gameLink }}</a></p>
 					</CollapseItem>
 				</div>
 			</div>
+			<div class="flex justify-center">
+				<div class="w-1/4">
+					<h3 class="text-xl">Schiris</h3>
+					<div v-for="referee in game.referees" :key="referee._id">
+							<p>{{ referee.nickname }}</p>
+						</div>
+				</div>
+				</div>	
 		</div>
 	</GenericModal>
 </template>

@@ -9,7 +9,7 @@ const schema = new Schema<IUser>({
   role: { type: String },
   team: { type: String, ref: "Team", autopopulate: true },
   refereeGames: [
-    { type: String, ref: "Game", autopopulate: true },
+    { type: String, ref: "Game", autopopulate: false },
   ],
 });
 schema.plugin(autopopulate);

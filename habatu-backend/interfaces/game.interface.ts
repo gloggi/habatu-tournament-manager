@@ -10,4 +10,5 @@ export interface IGame {
   type: string;
   pointsTeamA: number;
   pointsTeamB: number;
+  referees?: string[];
 }

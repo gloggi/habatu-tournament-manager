@@ -1,16 +1,18 @@
 import requests
 import random
-url ="https://habatu.gloggi.ch/api"
-# url = "http://localhost:8000"
+#url ="https://habatu.gloggi.ch/api"
+url = "http://localhost:8000"
 # Server details and token
-token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTRjYjFiNzE5ZjAwOTgyNzBiMGFkY2UiLCJuaWNrbmFtZSI6ImFyY2hpIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNjk5NTI1MTA1LCJleHAiOjE2OTk1NjgzMDV9.h-apO1nfQH8BpHcYEyKrcaXR0Qka7wvVtnM9pUb-NWg"
+token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzJiNzJkZGE2Y2FlODU0YzE3NWI1OTciLCJuaWNrbmFtZSI6ImFyY2hpIiwicm9sZSI6IkFkbWluIiwiaWF0IjoxNzMwOTkzMzM2LCJleHAiOjE3MzEwMzY1MzZ9.uGj9j01wPAZG5w_j6ZNYiFd3iL3wsYMsMEZbwNdfWlc"
 headers = {"Authorization": f"Bearer {token}"}
 
 # Delete Teams
 teams = requests.get(f"{url}/timeslots", headers=headers).json()
 for team in teams:
     requests.delete(f"{url}/timeslots/{team['_id']}", headers=headers)
-"""
+games = requests.get(f"{url}/games", headers=headers).json()
+for game in games:
+    requests.delete(f"{url}/games/{game['_id']}", headers=headers)
 # Fetch categories and sections
 categories_response = requests.get(f"{url}/categories").json()
 sections_response = requests.get(f"{url}/sections").json()
@@ -21,13 +23,12 @@ sections = {section['name']: section['_id'] for section in sections_response}
 
 # Teams structure
 teams_structure = {
-    "Wildert": {"Gemischt": 2, "Mädchen": 1, "Leitende": 1},
-    "Gryfensee": {"Gemischt": 1, "Mädchen": 1, "Leitende": 1},
-    "Hadlaub": {"Gemischt": 1, "Mädchen": 1, "Leitende": 1},
-    "Lägern": {"Gemischt": 1, "Mädchen": 0, "Leitende": 1},
-    "Manegg": {"Gemischt": 0, "Mädchen": 2, "Leitende": 1},
-    "See": {"Gemischt": 2, "Mädchen": 1, "Leitende": 1},
-    "Gloggi": {"Gemischt": 0, "Mädchen": 0,"Leitende": 1},
+    "Wildert": {"Pfadis": 2,  "Leitende": 1},
+    "Gryfensee": {"Pfadis": 1,  "Leitende": 1},
+    "Hadlaub": {"Pfadis": 1,  "Leitende": 1},
+    "Lägern": {"Pfadis": 1, "Leitende": 1},
+    "Manegg": {"Pfadis": 2, "Leitende": 1},
+    "See": {"Pfadis": 2,  "Leitende": 1},
 }
 
 # Generate a list of random team names
@@ -48,4 +49,3 @@ for section_name, category_mapping in teams_structure.items():
             requests.post(f"{url}/teams", json=team, headers=headers)
 
 print("Teams created and posted successfully.")
-"""

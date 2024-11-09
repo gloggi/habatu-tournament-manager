@@ -19,6 +19,7 @@ const schema = new Schema<IGame>({
   type: { type: String },
   pointsTeamA: { type: Number },
   pointsTeamB: { type: Number },
+  referees: [{ type: String, ref: "User", autopopulate: true }],
 });
 schema.plugin(autopopulate);
 export const Game = model<IGame>("Game", schema);

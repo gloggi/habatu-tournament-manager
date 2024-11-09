@@ -5,6 +5,8 @@ import { connect, connection } from "mongoose";
 import { router } from "./routes";
 import { Option, User } from "./models";
 import bcrypt from "bcryptjs";
+import dotenv from 'dotenv';
+dotenv.config();
 process.env.TZ = "Europe/Zurich";
 process.env.CLEAR_ON_STARTUP = ""
 const mongoUsername = process.env.MONGO_USERNAME
@@ -12,9 +14,14 @@ const mongoPassword = process.env.MONGO_PASSWORD
 if (!process.env.TOKEN_KEY) {
   process.env.TOKEN_KEY = "supersecret";
 }
-
+var mongo_host = "mongo";
+var mongo_port = "27017";
+if (process.env.RUN_WITHOUT_DOCKER) {
+  mongo_host = "localhost";
+  mongo_port = "27018";
+}
 connect(
-`mongodb://${mongoUsername}:${mongoPassword}@mongo:27017/production?authSource=admin`,
+`mongodb://${mongoUsername}:${mongoPassword}@${mongo_host}:${mongo_port}/production?authSource=admin`,
   async () => {
     const existingUser = await User.findOne({ nickname: process.env.ADMIN_NICKNAME! });
     if (!existingUser) {
