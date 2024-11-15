@@ -22,7 +22,7 @@ import { format } from "date-fns"
 export default {
 	computed: {
 		myGames() {
-			return this.$store.state.user.user?.refereeGames
+			return (this.$store.state.user.user?.refereeGames || []).filter(game => game);
 		},
 	},
 	methods: {

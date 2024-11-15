@@ -18,6 +18,8 @@
 						<div class="w-1/6">GG</div>
 						<div class="w-1/12">:</div>
 						<div class="w-1/6">GK</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">SG</div>
 					</div>
 					</div>
 			</div>
@@ -36,6 +38,8 @@
 						<div class="w-1/6">{{ team.pointsPro }}</div>
 						<div class="w-1/12">:</div>
 						<div class="w-1/6">{{ team.pointsCon }}</div>
+						<div class="w-1/12">:</div>
+						<div class="w-1/6">{{ team.gamesPlayed }}</div>
 					</div>
 				</div>
 			</div>

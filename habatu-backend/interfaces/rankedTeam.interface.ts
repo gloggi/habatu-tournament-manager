@@ -9,4 +9,5 @@ export interface IRankedTeam {
   pointsDifference?: number;
   pointsPro?: number;
   pointsCon?: number;
+  gamesPlayed?: number;
 }

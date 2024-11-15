@@ -202,6 +202,7 @@ export const getTournamentRanking = async (): Promise<
     var tournamentPoints = 0;
     var pointsPro = 0;
     var pointsCon = 0;
+    var gamesPlayed = 0;
     for (let game of games) {
       if(!filteredTimeslotsIds.includes(game.timeslot?.toString())){
         continue;
@@ -215,6 +216,7 @@ export const getTournamentRanking = async (): Promise<
         if (game.pointsTeamA == game.pointsTeamB) {
           tournamentPoints += 1;
         }
+        gamesPlayed++;
       }
       if (game.teamB.toString() == team._id.toString()) {
         pointsPro += game.pointsTeamB;
@@ -225,12 +227,16 @@ export const getTournamentRanking = async (): Promise<
         if (game.pointsTeamA == game.pointsTeamB) {
           tournamentPoints += 1;
         }
+        gamesPlayed++;
       }
+      
+      
     }
     team.tournamentPoints = tournamentPoints;
     team.pointsPro = pointsPro;
     team.pointsCon = pointsCon;
     team.pointsDifference = pointsPro - pointsCon;
+    team.gamesPlayed = gamesPlayed;
   }
   const comparefunction = (a: any, b: any): number => {
     if (a.tournamentPoints > b.tournamentPoints) {
