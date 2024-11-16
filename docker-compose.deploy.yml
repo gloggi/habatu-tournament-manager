@@ -39,6 +39,8 @@ services:
             image: mongo
             volumes:
               - data:/data/db
+            ports:
+              - '27018:27017'
             environment:
               MONGO_INITDB_ROOT_USERNAME: ygbydmzfnfvbxbmqdqmy
               MONGO_INITDB_ROOT_PASSWORD: bQCrPwf2DTc7Wvm2XFT9
