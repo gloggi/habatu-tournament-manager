@@ -75,8 +75,8 @@ watch(() => game.value?.pointsTeamB, (newValue) => {
         </SheetDescription>
       </SheetHeader>
       <form class="flex flex-col space-y-2" @submit.prevent="handleSubmit">
-        <NumberInputField v-if="game.teamA" :label="`Pünkt Team ${game.teamA.name} (${game.teamA.section?.name})`" v-model="game.pointsTeamA" :min="0" />
-        <NumberInputField  v-if="game.teamB" :label="`Pünkt Team ${game.teamB.name} (${game.teamB.section?.name})`" v-model="game.pointsTeamB" :min="0" />
+        <NumberInputField v-if="game.teamA" :label="`Pünkt Team ${game.teamA.name} ${game.teamA.section?`(${game.teamA.section?.name})`:''}`" v-model="game.pointsTeamA" :min="0" />
+        <NumberInputField  v-if="game.teamB" :label="`Pünkt Team ${game.teamB.name} ${game.teamA.section?`(${game.teamB.section?.name})`:''}`" v-model="game.pointsTeamB" :min="0" />
         <MultiComboBox v-if="game" label="Schiri" optionsEntity="users" valueKey="nickname" v-model="referees" />
         <Switch v-model="game.played" label="Spiel gespielt" />
         <Button>Speicherä</Button>

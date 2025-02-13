@@ -17,8 +17,9 @@ class ActionsController extends Controller
         
         $timeslots = Timeslot::all();
         foreach ($timeslots as $timeslot) {
-            $games = Game::where('timeslot_id', $timeslot->id)->with('teamA', 'teamB')->get();
-            //error_log(json_encode($games[0]->teamA->section_id));
+            $games = Game::where('timeslot_id', $timeslot->id)
+            ->where('temporary', false)
+            ->with('teamA', 'teamB')->get();
             foreach ($games as $game) {
                 $referee = $refereeQueue[$refereePointer%$refereeQueue->count()];
                 $shiftCount = 1; 

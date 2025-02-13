@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nickname')->unique();
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null');
             $table->foreignId('section_id')->nullable()->constrained('sections')->onDelete('set null');
+            $table->string('role')->default('user');
             $table->timestamps();
         });
 

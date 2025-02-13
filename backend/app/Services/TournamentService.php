@@ -124,14 +124,12 @@ class TournamentService
             $looser = $groupIdx % 2 == 0 ? $groups->get($groupIdx + 1) : $groups->get($groupIdx - 1);
             $dummyTeamOne = Team::create([
                 'name' => "Gewinner {$winner->name}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
             ]);
             $dummyTeamTwo = Team::create([
                 'name' => "Verlierer {$looser->name}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
@@ -141,14 +139,12 @@ class TournamentService
             $categoryName = Category::find($category)->name;
             $dummyTeamOne = Team::create([
                 'name' => "1. Tabelle {$categoryName}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
             ]);
             $dummyTeamTwo = Team::create([
                 'name' => "1. Tabelle {$categoryName}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
@@ -158,7 +154,6 @@ class TournamentService
             $finalCount = $groupIdx * 2 + 1;
             $dummyTeamOne = Team::create([
                 'name' => "Gewinner {$this->finalsDict[$finaleType * 2]} {$finalCount}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
@@ -166,7 +161,6 @@ class TournamentService
             $finalCount++;
             $dummyTeamTwo = Team::create([
                 'name' => "Gewinner {$this->finalsDict[$finaleType * 2]} {$finalCount}",
-                'section_id' => 1,
                 'category_id' => $category,
                 'dummy' => true,
                 'temporary' => $this->temporary,
@@ -187,14 +181,12 @@ class TournamentService
             $multipleGroups = Group::where('category_id', $category->id)->count() > 1;
             $dummyTeamOne = Team::create([
                 'name' => $multipleGroups ? "Verlierer Halbfinale {$category->name}" : "3. Tabelle {$category->name}",
-                'section_id' => 1,
                 'category_id' => $category->id,
                 'dummy' => true,
                 'temporary' => $this->temporary,
             ]);
             $dummyTeamTwo = Team::create([
                 'name' => $multipleGroups ? "Verlierer Halbfinale {$category->name}" : "4. Tabelle {$category->name}",
-                'section_id' => 1,
                 'category_id' => $category->id,
                 'dummy' => true,
                 'temporary' => $this->temporary,

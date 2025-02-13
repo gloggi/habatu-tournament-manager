@@ -14,7 +14,7 @@ export interface IForm {
 export type Team = {
   id: number;
   name: string;
-  sectionId: number;
+  sectionId?: number;
   section?: Section;
   categoryId: number;
   createdAt: string;
