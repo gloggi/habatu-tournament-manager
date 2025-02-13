@@ -1,0 +1,301 @@
+[
+  {
+    "id": 22,
+    "name": "Pippi",
+    "section_id": 7,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:17:39.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 2,
+    "section": {
+      "id": 7,
+      "name": "Manegg",
+      "created_at": "2024-09-18T19:37:54.000000Z",
+      "updated_at": "2024-09-18T19:37:54.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 23,
+    "name": "no wilder(t)",
+    "section_id": 6,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:18:37.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 1,
+    "section": {
+      "id": 6,
+      "name": "Wildert",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 24,
+    "name": "Gryfensee",
+    "section_id": 1,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:18:49.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 1,
+    "section": {
+      "id": 1,
+      "name": "Gryfenssee",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 25,
+    "name": "Piranhaha",
+    "section_id": 5,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:18:57.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 2,
+    "section": {
+      "id": 5,
+      "name": "See",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 26,
+    "name": "Hai elei",
+    "section_id": 5,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:19:14.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 1,
+    "section": {
+      "id": 5,
+      "name": "See",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 27,
+    "name": "zu wild(ert)",
+    "section_id": 6,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:19:28.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 2,
+    "section": {
+      "id": 6,
+      "name": "Wildert",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 28,
+    "name": "Wikim",
+    "section_id": 2,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:19:38.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 2,
+    "section": {
+      "id": 2,
+      "name": "Hadlaub",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 29,
+    "name": "Radiazun",
+    "section_id": 4,
+    "category_id": 1,
+    "created_at": "2024-11-22T10:19:50.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 1,
+    "section": {
+      "id": 4,
+      "name": "L\u00e4gern",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 1,
+      "name": "Gemischt",
+      "color": "#fb7474",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2025-02-07T12:24:41.000000Z",
+      "subgroups": 2
+    }
+  },
+  {
+    "id": 30,
+    "name": "Running Gag",
+    "section_id": 5,
+    "category_id": 3,
+    "created_at": "2024-11-22T10:20:09.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 3,
+    "section": {
+      "id": 5,
+      "name": "See",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 3,
+      "name": "Leitende",
+      "color": "#73e873",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-11-29T19:11:01.000000Z",
+      "subgroups": 1
+    }
+  },
+  {
+    "id": 31,
+    "name": "Glunk",
+    "section_id": 6,
+    "category_id": 3,
+    "created_at": "2024-11-22T10:20:18.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 3,
+    "section": {
+      "id": 6,
+      "name": "Wildert",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 3,
+      "name": "Leitende",
+      "color": "#73e873",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-11-29T19:11:01.000000Z",
+      "subgroups": 1
+    }
+  },
+  {
+    "id": 32,
+    "name": "Langstrumpf",
+    "section_id": 7,
+    "category_id": 3,
+    "created_at": "2024-11-22T10:20:28.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 3,
+    "section": {
+      "id": 7,
+      "name": "Manegg",
+      "created_at": "2024-09-18T19:37:54.000000Z",
+      "updated_at": "2024-09-18T19:37:54.000000Z"
+    },
+    "category": {
+      "id": 3,
+      "name": "Leitende",
+      "color": "#73e873",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-11-29T19:11:01.000000Z",
+      "subgroups": 1
+    }
+  },
+  {
+    "id": 33,
+    "name": "Not for fun",
+    "section_id": 5,
+    "category_id": 3,
+    "created_at": "2024-11-22T10:20:41.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 3,
+    "section": {
+      "id": 5,
+      "name": "See",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 3,
+      "name": "Leitende",
+      "color": "#73e873",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-11-29T19:11:01.000000Z",
+      "subgroups": 1
+    }
+  },
+  {
+    "id": 34,
+    "name": "die Strahlende",
+    "section_id": 4,
+    "category_id": 3,
+    "created_at": "2024-11-22T10:20:56.000000Z",
+    "updated_at": "2025-02-11T12:39:04.000000Z",
+    "group_id": 3,
+    "section": {
+      "id": 4,
+      "name": "L\u00e4gern",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-09-08T17:24:38.000000Z"
+    },
+    "category": {
+      "id": 3,
+      "name": "Leitende",
+      "color": "#73e873",
+      "created_at": "2024-09-08T17:24:38.000000Z",
+      "updated_at": "2024-11-29T19:11:01.000000Z",
+      "subgroups": 1
+    }
+  }
+]
