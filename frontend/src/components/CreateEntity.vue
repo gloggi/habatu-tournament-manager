@@ -43,8 +43,8 @@ import { ref, onMounted, watch, computed } from "vue";
 import { useApi } from "@/api";
 import { IForm } from "@/types";
 import ComboBox from "./ComboBox.vue";
-import { useToast } from '@/components/ui/toast/use-toast'
-const { toast } = useToast()
+import { useToast } from "@/components/ui/toast/use-toast";
+const { toast } = useToast();
 
 const currentStep = defineModel("currentStep", {
   type: Number,
@@ -79,7 +79,7 @@ watch(
     initializeApi(); // Reinitialize the API
     api.value.fetchData(); // Fetch data for the new entity
   },
-  { immediate: true }
+  { immediate: true },
 ); // immediate ensures watcher triggers on mount
 
 const newEntity = ref<Record<string, number | string>>({});
@@ -95,9 +95,9 @@ const createHall = async () => {
     await api.value.createData(newEntity.value);
   } catch (error) {
     toast({
-      title: 'Es ist ein Fehler aufgetreten',
-      variant: 'destructive',
-    })
+      title: "Es ist ein Fehler aufgetreten",
+      variant: "destructive",
+    });
     console.log(error);
   }
   api.value.fetchData();

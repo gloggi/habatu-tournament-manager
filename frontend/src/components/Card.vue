@@ -6,7 +6,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card'
+} from "@/components/ui/card";
 
 const props = defineProps<{
   title?: string;
@@ -15,16 +15,16 @@ const props = defineProps<{
 }>();
 </script>
 <template>
-    <Card>
-      <CardHeader v-if="props.title || props.description">
-        <CardTitle>{{ props.title }}</CardTitle>
-        <CardDescription>{{ props.description }}</CardDescription>
-      </CardHeader>
-      <CardContent class="w-full h-full">
-       <slot></slot>
-      </CardContent>
-      <CardFooter v-if="props.footer">
-        {{ props.footer }}
-      </CardFooter>
-    </Card>
+  <Card>
+    <CardHeader v-if="props.title || props.description">
+      <CardTitle>{{ props.title }}</CardTitle>
+      <CardDescription>{{ props.description }}</CardDescription>
+    </CardHeader>
+    <CardContent class="w-full h-full">
+      <slot></slot>
+    </CardContent>
+    <CardFooter v-if="props.footer">
+      {{ props.footer }}
+    </CardFooter>
+  </Card>
 </template>

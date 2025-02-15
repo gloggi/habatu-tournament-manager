@@ -61,7 +61,7 @@ const processForm = async () => {
       <form @submit.prevent="processForm" class="flex flex-col space-y-2">
         <div class="flex space-x-2 h-full items-center">
           <ComboBox
-          class="w-full"
+            class="w-full"
             v-model="message.userId"
             display-key="nickname"
             label="An"

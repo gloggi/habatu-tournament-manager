@@ -3,7 +3,7 @@
     <div class="flex flex-col h-full p-5" v-if="currentStep < steps.length">
       <CreationStepper v-model:currentStep="currentStep" class="mb-5" />
       <CreateEntity
-      class="h-full"
+        class="h-full"
         v-if="steps[currentStep].component === 'CreateEntity'"
         :entity="steps[currentStep].entity"
         :name="steps[currentStep].name"
@@ -12,14 +12,11 @@
         :form="steps[currentStep].form"
         v-model:currentStep="currentStep"
       />
-      <CreateTournament
-        v-else
-        />
-        <div class="flex justify-between pt-5">
-    <Button variant="outline" @click="currentStep--">Zurück</Button>
-    <Button variant="outline" @click="currentStep++">Weiter</Button>
-  </div>
-
+      <CreateTournament v-else />
+      <div class="flex justify-between pt-5">
+        <Button variant="outline" @click="currentStep--">Zurück</Button>
+        <Button variant="outline" @click="currentStep++">Weiter</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -33,7 +30,9 @@ import { useRoute, useRouter } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
-const entity : string = route.params.entity? route.params.entity.toString() : "halls";
+const entity: string = route.params.entity
+  ? route.params.entity.toString()
+  : "halls";
 
 const entityToStep = {
   halls: 0,
@@ -49,12 +48,12 @@ const currentStep = ref(startingstep);
 
 watch(currentStep, (newStep) => {
   if (newStep >= steps.length) {
-    router.push({ name: 'Home' });
-    return
+    router.push({ name: "Home" });
+    return;
   }
   const entity = steps[newStep].entity;
   if (entity) {
-    router.push({ name: 'Create', params: { entity } });
+    router.push({ name: "Create", params: { entity } });
   }
 });
 
@@ -146,7 +145,6 @@ const steps = [
     columnNames: [],
     columnKeys: [],
     form: [],
-
-  }
+  },
 ];
 </script>

@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useToast } from '@/components/ui/toast/use-toast';
-import { useApi } from '@/api';
+import { computed, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { useToast } from "@/components/ui/toast/use-toast";
+import { useApi } from "@/api";
 
-import H1 from '@/components/H1.vue';
-import Container from '@/components/Container.vue';
-import { Button } from '@/components/ui/button';
-import { Save, Trash } from 'lucide-vue-next';
+import H1 from "@/components/H1.vue";
+import Container from "@/components/Container.vue";
+import { Button } from "@/components/ui/button";
+import { Save, Trash } from "lucide-vue-next";
 
 const props = defineProps<{
   resourceName: string;
@@ -36,7 +36,10 @@ onMounted(() => {
   } else {
     fetchData(id.value).catch((error) => {
       console.error(error);
-      toast({ title: `Error loading ${props.resourceName}`, variant: 'destructive' });
+      toast({
+        title: `Error loading ${props.resourceName}`,
+        variant: "destructive",
+      });
     });
   }
 });
@@ -57,7 +60,7 @@ const updateOrCreateItem = async () => {
     router.push(`/admin/${props.resourceName}`);
   } catch (error) {
     console.error(error);
-    toast({ title: 'Error saving', variant: 'destructive' });
+    toast({ title: "Error saving", variant: "destructive" });
   }
 };
 
@@ -70,7 +73,7 @@ const deleteItem = async () => {
     router.push(`/admin/${props.resourceName}`);
   } catch (error) {
     console.error(error);
-    toast({ title: 'Error deleting', variant: 'destructive' });
+    toast({ title: "Error deleting", variant: "destructive" });
   }
 };
 </script>
@@ -79,14 +82,23 @@ const deleteItem = async () => {
   <Container class="w-full">
     <H1>{{ title }}</H1>
     <div class="w-full flex justify-end space-x-2">
-      <Button variant="outline" size="icon" @click="deleteItem" :disabled="!item?.id">
+      <Button
+        variant="outline"
+        size="icon"
+        @click="deleteItem"
+        :disabled="!item?.id"
+      >
         <Trash class="w-4 h-4" />
       </Button>
       <Button variant="outline" size="icon" @click="updateOrCreateItem">
         <Save class="w-4 h-4" />
       </Button>
     </div>
-    <form v-if="item" @submit.prevent="updateOrCreateItem" class="flex flex-col space-y-2">
+    <form
+      v-if="item"
+      @submit.prevent="updateOrCreateItem"
+      class="flex flex-col space-y-2"
+    >
       <slot :item="item"></slot>
     </form>
   </Container>

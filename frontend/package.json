@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier .  --write"
   },
   "dependencies": {
     "@tanstack/vue-table": "^8.20.5",
@@ -20,6 +21,7 @@
     "lodash": "^4.17.21",
     "lucide-vue-next": "^0.441.0",
     "pinia": "^2.3.1",
+    "prettier": "^3.5.1",
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",

@@ -10,22 +10,29 @@
     </div>
     <div class="flex flex-col">
       <template v-for="(timeslot, time) in table">
-        
         <div
           class="flex flex-col md:flex-row w-full space-y-2 space-x-2 relative"
-          :class="{'hidden md:flex' : !Object.values(timeslot).some((entry) => entry.slotInfo.hasGames)}"
+          :class="{
+            'hidden md:flex': !Object.values(timeslot).some(
+              (entry) => entry.slotInfo.hasGames,
+            ),
+          }"
         >
           <div
             class="w-full mt-5 md:mt-0 md:w-1/4 font-medium text-xl md:text-base"
           >
-          <div v-if="timeIsNow(time)" class="absolute -z-10  inset-0 top-2 ring-4 ring-foreground ring-offset-1  rounded-md"></div>
+            <div
+              v-if="timeIsNow(time)"
+              class="absolute -z-10 inset-0 top-2 ring-4 ring-foreground ring-offset-1 rounded-md"
+            ></div>
             <TimeTile :time="time" />
           </div>
           <div v-for="scheduleEntry in timeslot" class="flex w-full">
-            <div
-              class="flex flex-col w-full"
-            >
-              <p v-if="scheduleEntry.slotInfo.hasGames" class="md:hidden font-medium text-sm">
+            <div class="flex flex-col w-full">
+              <p
+                v-if="scheduleEntry.slotInfo.hasGames"
+                class="md:hidden font-medium text-sm"
+              >
                 {{ scheduleEntry.slotInfo.hallName }}
               </p>
               <TimeHallSlot
@@ -37,10 +44,14 @@
           </div>
         </div>
       </template>
-      <Button @click="handleAddTimeslot" variant="ghost" class="hidden md:flex md:w-1/12 items-center"><PlusIcon class="size-4"/></Button>
+      <Button
+        @click="handleAddTimeslot"
+        variant="ghost"
+        class="hidden md:flex md:w-1/12 items-center"
+        ><PlusIcon class="size-4"
+      /></Button>
     </div>
   </Container>
-
 </template>
 <script setup lang="ts">
 import { TableType } from "@/types";
@@ -62,7 +73,6 @@ import TimeHallSlot from "@/components/TimeHallSlot.vue";
 
 const emit = defineEmits(["clickOnGame"]);
 
-
 const tableTypeUrlMapping = {
   [TableType.Normal]: "tournament/table",
   [TableType.Referee]: "tournament/referee-table",
@@ -70,7 +80,7 @@ const tableTypeUrlMapping = {
 };
 
 const { fetchData: fetchTournamentTable, data: table } = useApi<Schedule>(
-  tableTypeUrlMapping[tableType]
+  tableTypeUrlMapping[tableType],
 );
 
 const { fetchData: fetchHalls, dataList: halls } = useApi<Hall>("halls");
@@ -92,7 +102,7 @@ watch(
     if (!value) {
       await updateTable();
     }
-  }
+  },
 );
 const handleOpenGameSheet = (gameId: number) => {
   emit("clickOnGame", gameId);
@@ -103,24 +113,36 @@ import { useOptionsStore } from "@/stores/options";
 const optionsStore = useOptionsStore();
 
 const timeIsNow = (timeslot: string): boolean => {
-  const [startHour, startMin, endHour, endMin] = timeslot.split("_").map(Number);
-  
+  const [startHour, startMin, endHour, endMin] = timeslot
+    .split("_")
+    .map(Number);
+
   const now = new Date();
 
-  const startTime = set(now, { hours: startHour, minutes: startMin-optionsStore.getBreakDuration, seconds: 0, milliseconds: 0 });
-  const endTime = set(now, { hours: endHour, minutes: endMin, seconds: 0, milliseconds: 0 });
-  return isWithinInterval(now, { start: startOfMinute(startTime), end: startOfMinute(endTime) });
-  
+  const startTime = set(now, {
+    hours: startHour,
+    minutes: startMin - optionsStore.getBreakDuration,
+    seconds: 0,
+    milliseconds: 0,
+  });
+  const endTime = set(now, {
+    hours: endHour,
+    minutes: endMin,
+    seconds: 0,
+    milliseconds: 0,
+  });
+  return isWithinInterval(now, {
+    start: startOfMinute(startTime),
+    end: startOfMinute(endTime),
+  });
 };
 
 import { PlusIcon } from "lucide-vue-next";
 
-const { createData :addTimeslot } = useApi("tournament/new-timeslot");
+const { createData: addTimeslot } = useApi("tournament/new-timeslot");
 
 const handleAddTimeslot = async () => {
   await addTimeslot({});
   await updateTable();
 };
-
-
 </script>

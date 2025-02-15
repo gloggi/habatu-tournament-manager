@@ -25,16 +25,18 @@ import Messages from "./views/Messages.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
-  { path: "/setup", component: Create, children: [
-    { path: ":entity", name: "Create", component: Create },
-  ]},
+  {
+    path: "/setup",
+    component: Create,
+    children: [{ path: ":entity", name: "Create", component: Create }],
+  },
   { path: "/table", name: "GameTable", component: GameTable },
-  {path: "/ranking", name: "Ranking", component: Ranking},
+  { path: "/ranking", name: "Ranking", component: Ranking },
   { path: "/profile", name: "Profile", component: Profile },
-  {path: "/referee", name: "Referee", component: Referee},
-  {path: "/my-team", name: "MyTeam", component: MyTeamTable},
-  {path: "/whistle/:id", name: "Whistle", component: WhistleView},
-  {path: "/messages", name: "Messages", component: Messages},
+  { path: "/referee", name: "Referee", component: Referee },
+  { path: "/my-team", name: "MyTeam", component: MyTeamTable },
+  { path: "/whistle/:id", name: "Whistle", component: WhistleView },
+  { path: "/messages", name: "Messages", component: Messages },
   {
     path: "/admin",
     name: "Admin",
@@ -50,7 +52,11 @@ const routes = [
       { path: "teams/:id", name: "Team", component: Team },
       { path: "users", name: "Users", component: Users },
       { path: "users/:id", name: "User", component: User },
-      { path: "settings", name: "TournamentSettings", component: TournamentSettings },
+      {
+        path: "settings",
+        name: "TournamentSettings",
+        component: TournamentSettings,
+      },
     ],
   },
   { path: "/login", name: "Login", component: Login },
@@ -62,16 +68,15 @@ export const router = createRouter({
 });
 
 const isAuthenticated = (): boolean => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem("token");
   return !!token;
 };
 
 // Global Navigation Guard
 router.beforeEach((to, from, next) => {
-  if (to.name!=="Login" && !isAuthenticated()) {
-    next({ name: 'Login' });
+  if (to.name !== "Login" && !isAuthenticated()) {
+    next({ name: "Login" });
   } else {
     next();
   }
 });
-

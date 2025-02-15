@@ -5,7 +5,10 @@
     @drop="handleDrop"
     @dragleave="handleDragLeave"
     class="w-full h-full rounded-md md:min-h-11"
-    :class="{ 'border-2 border-gray-400 border-spacing-5 border-dashed': dragActive, 'h-28': dragActive }"
+    :class="{
+      'border-2 border-gray-400 border-spacing-5 border-dashed': dragActive,
+      'h-28': dragActive,
+    }"
   >
     <GameTile
       v-for="game in props.scheduleEntry.games"
@@ -22,9 +25,8 @@ import { ref } from "vue";
 import { useApi } from "@/api";
 
 const props = defineProps<{
-  scheduleEntry: ScheduleEntry
+  scheduleEntry: ScheduleEntry;
 }>();
-
 
 const emit = defineEmits(["clickOnGame", "change"]);
 
@@ -49,13 +51,15 @@ const handleDragLeave = (event: DragEvent) => {
   }
 };
 
-const { updateData: updateGame} = useApi<Game>("games");
+const { updateData: updateGame } = useApi<Game>("games");
 const handleDrop = async (event: DragEvent) => {
   handleDragLeave(event);
   const gameID = parseInt(event.dataTransfer?.getData("gameId")!);
-  await updateGame(gameID, { hallId: props.scheduleEntry.slotInfo.hallId, timeslotId: props.scheduleEntry.slotInfo.timeslotId });
+  await updateGame(gameID, {
+    hallId: props.scheduleEntry.slotInfo.hallId,
+    timeslotId: props.scheduleEntry.slotInfo.timeslotId,
+  });
   emit("change");
-
 };
 
 const handleOpenGameSheet = (gameId: number) => {

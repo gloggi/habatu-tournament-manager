@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import GenericEditComponent from '@/components/EditEntity.vue';
-import InputField from '@/components/InputField.vue';
+import GenericEditComponent from "@/components/EditEntity.vue";
+import InputField from "@/components/InputField.vue";
 </script>
 
 <template>

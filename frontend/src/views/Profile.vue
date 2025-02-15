@@ -9,7 +9,10 @@ const userStore = useUserStore();
 import { useApi } from "@/api";
 import { User } from "@/types";
 import { onMounted } from "vue";
-import { requestNotificationPermission, subscribeUserToPush } from "@/pushNotifications";
+import {
+  requestNotificationPermission,
+  subscribeUserToPush,
+} from "@/pushNotifications";
 const {
   fetchData: fetchUser,
   updateData: updateUser,
@@ -29,7 +32,7 @@ const enablePushNotifications = async () => {
   if (permissionGranted) {
     await subscribeUserToPush();
   }
-}
+};
 
 onMounted(async () => {
   await enablePushNotifications();

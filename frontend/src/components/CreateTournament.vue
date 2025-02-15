@@ -24,7 +24,11 @@
       </Card>
       <Card title="Tourniermodus">
         <div class="flex space-x-5">
-          <Switch v-model="specs.roundRobin" :disabled="false" label="Round-Robin" />
+          <Switch
+            v-model="specs.roundRobin"
+            :disabled="false"
+            label="Round-Robin"
+          />
           <Switch
             v-model="specs.groupPhase"
             :disabled="false"
@@ -33,7 +37,7 @@
         </div>
       </Card>
       <Card v-if="specs.groupPhase" title="Gruppen- und K.o.-Phase">
-        <div  class="w-full text-sm">
+        <div class="w-full text-sm">
           <div class="flex space-x-2 w-full font-medium">
             <div class="w-1/3">Kategorie</div>
             <div class="w-1/3">Teams / Kategorie</div>
@@ -64,10 +68,10 @@
     <div class="flex flex-col space-y-3 w-full h-full">
       <Card title="Weiter Einstellungen">
         <Switch
-            v-model="specs.playForThirdPlace"
-            :disabled="false"
-            label="Spiel um den 3. Platz ?"
-          />
+          v-model="specs.playForThirdPlace"
+          :disabled="false"
+          label="Spiel um den 3. Platz ?"
+        />
       </Card>
       <Card title="Anzahl Spiele">
         {{ calculation?.gameCount }}
@@ -98,16 +102,10 @@ const { toast } = useToast();
 const { data: specs, fetchData: fetchSpecs } =
   useApi<tournamentSpecifications>("tournament/specs");
 
-
-
 onMounted(async () => {
   await fetchSpecs(undefined, true);
   console.log(specs);
 });
-
-
-
-
 
 const calculation = ref();
 
@@ -121,21 +119,16 @@ interface tournamentSpecifications {
   playForThirdPlace: boolean;
 }
 
-
-
 const handleChange = (value: number, id: number, type: string) => {
-  if(!specs.value){
+  if (!specs.value) {
     return;
   }
   if (type === "increment") {
-    specs.value.groupsPerCategory[id] = 2 ** Math.ceil(Math.log2(value))
-  }else{
-    specs.value.groupsPerCategory[id] = 2 ** Math.floor(Math.log2(value))
+    specs.value.groupsPerCategory[id] = 2 ** Math.ceil(Math.log2(value));
+  } else {
+    specs.value.groupsPerCategory[id] = 2 ** Math.floor(Math.log2(value));
   }
 };
-
-
-
 
 watch(
   () => specs.value?.roundRobin,
@@ -143,7 +136,7 @@ watch(
     if (roundRobin && specs.value) {
       specs.value.groupPhase = false;
     }
-  }
+  },
 );
 
 watch(
@@ -152,19 +145,20 @@ watch(
     if (groupPhase && specs.value) {
       specs.value.roundRobin = false;
     }
-  }
+  },
 );
-
-
 
 const { dataList: categories, fetchData: fetchCategoriers } =
   useApi<Category>("categories");
 
 fetchCategoriers().then(() => {
-  specs.value!.groupsPerCategory = categories.value.reduce((acc: Record<number, number>, category) => {
-    acc[category.id] = 1;
-    return acc;
-  }, {} as Record<number, number>);
+  specs.value!.groupsPerCategory = categories.value.reduce(
+    (acc: Record<number, number>, category) => {
+      acc[category.id] = 1;
+      return acc;
+    },
+    {} as Record<number, number>,
+  );
 });
 
 let tournamentCalculateApi = useApi("tournament/calculate");
@@ -190,13 +184,10 @@ watch(
   async () => {
     calculate();
   },
-  { deep: true }
+  { deep: true },
 );
 
 onMounted(() => {
   calculate();
 });
-
-
-
 </script>

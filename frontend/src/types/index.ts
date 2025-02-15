@@ -154,4 +154,4 @@ export type Message = {
   userId: number;
   title: string;
   body: string;
-}
+};

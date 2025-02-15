@@ -1,35 +1,43 @@
-import { ref, Ref } from 'vue';
-import axios, { AxiosResponse } from 'axios';
-import applyCaseMiddleware from 'axios-case-converter';
+import { ref, Ref } from "vue";
+import axios, { AxiosResponse } from "axios";
+import applyCaseMiddleware from "axios-case-converter";
 
 export function useApi<T>(endpoint: string) {
   const data: Ref<T | null> = ref(null);
   const dataList: Ref<T[]> = ref([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
-  const backendUrl = 'http://localhost:8000/api/';
+  const backendUrl = "http://localhost:8000/api/";
   const client = applyCaseMiddleware(axios.create());
-  client.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  }, (error) => {
-    return Promise.reject(error);
-  });
+  client.interceptors.request.use(
+    (config) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+    },
+    (error) => {
+      return Promise.reject(error);
+    },
+  );
 
   /**
    * Fetch data from the API.
    * @param id Optional ID to fetch a specific item.
    */
-  const fetchData = async (id?: number | string, singleItem: boolean = false) => {
+  const fetchData = async (
+    id?: number | string,
+    singleItem: boolean = false,
+  ) => {
     loading.value = true;
     error.value = null;
 
     try {
       const url = id ? `${endpoint}/${id}` : endpoint;
-      const response: AxiosResponse<T | T[]> = await client.get(`${backendUrl}${url}`);
+      const response: AxiosResponse<T | T[]> = await client.get(
+        `${backendUrl}${url}`,
+      );
 
       if (id || singleItem) {
         data.value = response.data as T;
@@ -52,7 +60,10 @@ export function useApi<T>(endpoint: string) {
     error.value = null;
 
     try {
-      const response: AxiosResponse<T> = await client.post(`${backendUrl}${endpoint}`, payload);
+      const response: AxiosResponse<T> = await client.post(
+        `${backendUrl}${endpoint}`,
+        payload,
+      );
       data.value = response.data;
       return response.data;
     } catch (e) {
@@ -72,7 +83,10 @@ export function useApi<T>(endpoint: string) {
     error.value = null;
 
     try {
-      const response: AxiosResponse<T> = await client.put(`${backendUrl}${endpoint}/${id}`, payload);
+      const response: AxiosResponse<T> = await client.put(
+        `${backendUrl}${endpoint}/${id}`,
+        payload,
+      );
       data.value = response.data;
     } catch (e) {
       handleError(e);
@@ -111,19 +125,19 @@ export function useApi<T>(endpoint: string) {
     } */
   };
 
-   /**
+  /**
    * General POST method.
    * @param customEndpoint The endpoint to post to.
    * @param payload The data to post.
    */
-   const postData = async (payload: any) => {
+  const postData = async (payload: any) => {
     loading.value = true;
     error.value = null;
 
     try {
       const response: AxiosResponse<any> = await client.post(
         `${backendUrl}${endpoint}`,
-        payload
+        payload,
       );
       return response.data;
     } catch (e) {
@@ -131,7 +145,7 @@ export function useApi<T>(endpoint: string) {
     } finally {
       loading.value = false;
     }
-  }
+  };
 
   return {
     data,

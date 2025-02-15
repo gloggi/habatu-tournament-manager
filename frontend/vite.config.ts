@@ -14,7 +14,7 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    VitePWA({ 
+    VitePWA({
       registerType: "autoUpdate",
       injectRegister: "auto",
       srcDir: "src",
@@ -33,7 +33,7 @@ export default defineConfig({
             src: "/android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
-          }
+          },
         ],
       },
       workbox: {

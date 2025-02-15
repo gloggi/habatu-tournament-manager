@@ -5,64 +5,63 @@ import InputField from "@/components/InputField.vue";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/toast/use-toast";
-const { toast } = useToast()
+const { toast } = useToast();
 import { useRouter } from "vue-router";
 const router = useRouter();
-import { useUserStore } from '@/stores/user';
+import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 
 import { useApi } from "@/api";
-const {postData: doLogin} = useApi("login");
-const {postData: doRegister} = useApi("register");
+const { postData: doLogin } = useApi("login");
+const { postData: doRegister } = useApi("register");
 
 const loginForm = ref({
   nickname: "",
-  password: ""
+  password: "",
 });
 
 const registerForm = ref({
   nickname: "",
   password: "",
-  passwordRepeat: ""
+  passwordRepeat: "",
 });
 
 const login = async () => {
-  try{
-    const response = await doLogin(loginForm.value)
+  try {
+    const response = await doLogin(loginForm.value);
     localStorage.setItem("token", response.token);
     localStorage.setItem("userId", response.user.id);
     userStore.fetchUser();
-    router.push({name: "Home"});
-  }catch(e){
+    router.push({ name: "Home" });
+  } catch (e) {
     toast({
       title: "Fehler",
       description: "Fehler beim Login",
-      variant: "destructive"
+      variant: "destructive",
     });
   }
 };
 
 const register = async () => {
-
-  try{
-    if(registerForm.value.password !== registerForm.value.passwordRepeat){
+  try {
+    if (registerForm.value.password !== registerForm.value.passwordRepeat) {
       toast({
         title: "Fehler",
         description: "Passwörter stimmen nicht überein",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
-    const response = await doRegister(registerForm.value)
+    const response = await doRegister(registerForm.value);
     localStorage.setItem("token", response.token);
     localStorage.setItem("userId", response.user.id);
     userStore.fetchUser();
-    router.push({name: "Home"});
-  }catch(e){
+    router.push({ name: "Home" });
+  } catch (e) {
     toast({
       title: "Fehler",
       description: "Fehler beim Registrieren",
-      variant: "destructive"
+      variant: "destructive",
     });
   }
 };
@@ -70,7 +69,9 @@ const register = async () => {
 
 <template>
   <div class="w-full h-screen flex">
-    <div class="bg-red-500 w-0 hidden md:w-2/3 h-full md:flex items-center justify-center">
+    <div
+      class="bg-red-500 w-0 hidden md:w-2/3 h-full md:flex items-center justify-center"
+    >
       <div class="flex flex-col space-y-8 p-8">
         <img :src="rotatingBall" alt="rotating ball" class="w-72" />
         <div class="flex flex-col space-y-2">
@@ -88,22 +89,44 @@ const register = async () => {
         <Tabs default-value="login" class="w-full">
           <TabsList class="w-full mb-4">
             <TabsTrigger value="login" class="w-full"> Login </TabsTrigger>
-            <TabsTrigger value="register" class="w-full"> Registrieren </TabsTrigger>
+            <TabsTrigger value="register" class="w-full">
+              Registrieren
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="login">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Login</h2>
             <form class="flex flex-col space-y-3" @submit.prevent="login">
-              <InputField label="Benutzername" type="text" v-model="loginForm.nickname" />
-              <InputField label="Password" type="password" v-model="loginForm.password" />
+              <InputField
+                label="Benutzername"
+                type="text"
+                v-model="loginForm.nickname"
+              />
+              <InputField
+                label="Password"
+                type="password"
+                v-model="loginForm.password"
+              />
               <Button>Login</Button>
             </form>
           </TabsContent>
           <TabsContent value="register">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Registrieren</h2>
             <form class="flex flex-col space-y-3" @submit.prevent="register">
-              <InputField label="Benutzername" type="text" v-model="registerForm.nickname" />
-              <InputField label="Password" type="password" v-model="registerForm.password" />
-              <InputField label="Password wiederholen" type="password" v-model="registerForm.passwordRepeat" />
+              <InputField
+                label="Benutzername"
+                type="text"
+                v-model="registerForm.nickname"
+              />
+              <InputField
+                label="Password"
+                type="password"
+                v-model="registerForm.password"
+              />
+              <InputField
+                label="Password wiederholen"
+                type="password"
+                v-model="registerForm.passwordRepeat"
+              />
               <Button>Registrieren</Button>
             </form>
           </TabsContent>

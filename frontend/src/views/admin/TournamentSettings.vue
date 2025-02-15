@@ -55,14 +55,15 @@ const clearReferees = async () => {
         verteilt.
       </p>
       <div class="flex space-x-2">
-      <Button class="w-fit" @click="assignReferees">
-        <Megaphone class="w-6 h-6 mr-2" />
-        Schiris zuteilen</Button
-      >
-      <Button class="w-fit" @click="clearReferees">
-        <MegaphoneOff class="w-6 h-6 mr-2" />
-        Schiris entfernen</Button>
-    </div>
+        <Button class="w-fit" @click="assignReferees">
+          <Megaphone class="w-6 h-6 mr-2" />
+          Schiris zuteilen</Button
+        >
+        <Button class="w-fit" @click="clearReferees">
+          <MegaphoneOff class="w-6 h-6 mr-2" />
+          Schiris entfernen</Button
+        >
+      </div>
 
       <div
         data-orientation="horizontal"

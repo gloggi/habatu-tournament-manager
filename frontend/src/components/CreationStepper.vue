@@ -1,36 +1,53 @@
 <script setup lang="ts">
-import { HouseIcon, TrophyIcon, MapIcon, UsersIcon, Layers3Icon } from 'lucide-vue-next'
+import {
+  HouseIcon,
+  TrophyIcon,
+  MapIcon,
+  UsersIcon,
+  Layers3Icon,
+} from "lucide-vue-next";
 
-import { Stepper, StepperIndicator, StepperItem, StepperSeparator, StepperTitle, StepperTrigger } from '@/components/ui/stepper'
+import {
+  Stepper,
+  StepperIndicator,
+  StepperItem,
+  StepperSeparator,
+  StepperTitle,
+  StepperTrigger,
+} from "@/components/ui/stepper";
 
-const steps = [{
-  step: 0,
-  title: 'Hallen erfassen',
-  description: 'Füge alle Hallen hinzu',
-  icon: HouseIcon,
-}, {
-  step: 1,
-  title: 'Kategorien erfassen',
-  description: 'Füge alle Kategorien hinzu',
-  icon: Layers3Icon,
-}, {
-  step: 2,
-  title: 'Abteilungen erfassen',
-  description: 'Füge alle Abteilungen hinzu',
-  icon: MapIcon,
-}, {
-  step: 3,
-  title: 'Teams erfassen',
-  description: 'Füge alle Teams hinzu',
-  icon: UsersIcon,
-},
-{
+const steps = [
+  {
+    step: 0,
+    title: "Hallen erfassen",
+    description: "Füge alle Hallen hinzu",
+    icon: HouseIcon,
+  },
+  {
+    step: 1,
+    title: "Kategorien erfassen",
+    description: "Füge alle Kategorien hinzu",
+    icon: Layers3Icon,
+  },
+  {
+    step: 2,
+    title: "Abteilungen erfassen",
+    description: "Füge alle Abteilungen hinzu",
+    icon: MapIcon,
+  },
+  {
+    step: 3,
+    title: "Teams erfassen",
+    description: "Füge alle Teams hinzu",
+    icon: UsersIcon,
+  },
+  {
     step: 4,
-    title: 'Tournier generieren',
-    description: 'Generiere ein Tournier',
+    title: "Tournier generieren",
+    description: "Generiere ein Tournier",
     icon: TrophyIcon,
-}
-]
+  },
+];
 
 const currentStep = defineModel("currentStep", {
   type: Number,

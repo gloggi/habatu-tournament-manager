@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
-import { computed } from 'vue';
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { computed } from "vue";
 
 const props = defineProps<{
   label: string;
   modelValue: boolean;
   disabled?: boolean;
-}>()
+}>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(["update:modelValue"]);
 
 const value = computed({
   get: () => props.modelValue,
   set: (newValue) => {
-    emit('update:modelValue', newValue)
-  }
-})
+    emit("update:modelValue", newValue);
+  },
+});
 
-const id = computed(() => props.label.toLowerCase().replace(' ', '-'))
+const id = computed(() => props.label.toLowerCase().replace(" ", "-"));
 </script>
 
 <template>
