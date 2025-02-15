@@ -14,7 +14,7 @@ class Game extends Model
     protected $casts = [
         'played' => 'boolean',
     ];
-    protected $appends = ['final_type_label'];
+    protected $appends = ['final_type_label', 'classes'];
     protected $hidden = ['final_type'];
 
     public function getFinalTypeLabelAttribute()
@@ -30,7 +30,30 @@ class Game extends Model
             128 => 'Hundertachtundzwanzigstelfinale'
         ];
 
-        return $labels[$this->final_type] ?? null;
+        if($this->finale_type==1 && $this->play_for_third){
+            return 'Spiele um den dritten Platz';
+        }
+
+        return $labels[$this->finale_type] ?? null;
+    }
+
+    public function getClassesAttribute()
+    {
+        $classes = [
+            1   => 'final',
+            2   => 'semifinal',
+            4   => 'quarterfinal',
+            8   => 'eighthfinal',
+            16  => 'sixteenthfinal',
+            32  => 'thirtysecondfinal',
+            64  => 'sixtyfourthfinal',
+            128 => 'hundredtwentyeighthfinal'
+        ];
+        if($this->finale_type==1 && $this->play_for_third){
+            return 'third-place';
+        }
+
+        return $classes[$this->finale_type] ?? "";
     }
 
     public function teamA()

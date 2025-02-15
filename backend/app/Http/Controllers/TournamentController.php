@@ -194,5 +194,15 @@ class TournamentController extends Controller
     }
 
 
+    public function addNewTimeslot(Request $request)
+    {
+
+        $tournamentService = new TournamentService();
+        $newSlot = $tournamentService->getTimeAndHallSlot(newSlot: true);
+
+        return response()->json($newSlot);
+    }
+
+
 
 }

@@ -71,6 +71,7 @@ export type Game = {
   category: Category;
   referees: User[];
   played: boolean;
+  classes: string;
   finalTypeLabel?: string;
 };
 
@@ -147,4 +148,10 @@ export enum TableType {
   Normal = "NORMAL",
   Referee = "REFEREE",
   Team = "TEAM",
+}
+
+export type Message = {
+  userId: number;
+  title: string;
+  body: string;
 }

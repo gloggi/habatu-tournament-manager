@@ -4,8 +4,8 @@
     @dragover="handleDragOver"
     @drop="handleDrop"
     @dragleave="handleDragLeave"
-    class="w-full h-full rounded-md"
-    :class="{ 'border-2 border-gray-400 border-spacing-5 border-dashed': dragActive, 'h-28 ': dragActive }"
+    class="w-full h-full rounded-md md:min-h-11"
+    :class="{ 'border-2 border-gray-400 border-spacing-5 border-dashed': dragActive, 'h-28': dragActive }"
   >
     <GameTile
       v-for="game in props.scheduleEntry.games"

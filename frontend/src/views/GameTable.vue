@@ -6,6 +6,7 @@ import { ref } from 'vue';
 const showGameSheet = ref(false);
 const sheetGameId = ref(0);
 import { useUserStore } from '@/stores/user';
+import Container from '@/components/Container.vue';
 
 const userStore = useUserStore();
 
@@ -18,6 +19,8 @@ const handleClickOnGame = (gameId: number) => {
 }
 </script>
 <template>
+    <Container>  
         <TournamentTable @clickOnGame="handleClickOnGame" />
         <GameSheet v-model="showGameSheet" :gameId="sheetGameId" />
+    </Container>
 </template>

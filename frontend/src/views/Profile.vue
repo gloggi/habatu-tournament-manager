@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 const userStore = useUserStore();
 import { useApi } from "@/api";
 import { User } from "@/types";
+import { onMounted } from "vue";
+import { requestNotificationPermission, subscribeUserToPush } from "@/pushNotifications";
 const {
   fetchData: fetchUser,
   updateData: updateUser,
@@ -21,6 +23,17 @@ const updateAndFetch = async () => {
     await fetchUser(user.value.id);
   }
 };
+
+const enablePushNotifications = async () => {
+  const permissionGranted = await requestNotificationPermission();
+  if (permissionGranted) {
+    await subscribeUserToPush();
+  }
+}
+
+onMounted(async () => {
+  await enablePushNotifications();
+});
 </script>
 <template>
   <Container>

@@ -73,6 +73,15 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground h-full;
   }
+
 }
+
+/* .final {
+  @apply border-2 border-[#FFD700] pattern-rectangles pattern-yellow-600 pattern-size-6 pattern-opacity-40;
+ }
+ .third-place {
+  @apply border-2 border-[#CD7F32] pattern-vertical-lines pattern-yellow-600 pattern-size-6 pattern-opacity-40;
+ } */
+

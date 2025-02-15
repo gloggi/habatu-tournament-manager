@@ -21,17 +21,20 @@ import Profile from "./views/Profile.vue";
 import Referee from "./views/Referee.vue";
 import MyTeamTable from "./views/MyTeamTable.vue";
 import WhistleView from "./views/WhistleView.vue";
+import Messages from "./views/Messages.vue";
 
 const routes = [
   { path: "/", name: "Home", component: Home },
-  { path: "/setup/:entity", name: "Create", component: Create },
-  { path: "/setup", component: Create },
+  { path: "/setup", component: Create, children: [
+    { path: ":entity", name: "Create", component: Create },
+  ]},
   { path: "/table", name: "GameTable", component: GameTable },
   {path: "/ranking", name: "Ranking", component: Ranking},
   { path: "/profile", name: "Profile", component: Profile },
   {path: "/referee", name: "Referee", component: Referee},
   {path: "/my-team", name: "MyTeam", component: MyTeamTable},
   {path: "/whistle/:id", name: "Whistle", component: WhistleView},
+  {path: "/messages", name: "Messages", component: Messages},
   {
     path: "/admin",
     name: "Admin",
@@ -57,3 +60,18 @@ export const router = createRouter({
   history: createWebHistory(),
   routes,
 });
+
+const isAuthenticated = (): boolean => {
+  const token = localStorage.getItem('token');
+  return !!token;
+};
+
+// Global Navigation Guard
+router.beforeEach((to, from, next) => {
+  if (to.name!=="Login" && !isAuthenticated()) {
+    next({ name: 'Login' });
+  } else {
+    next();
+  }
+});
+

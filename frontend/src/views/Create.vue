@@ -1,8 +1,9 @@
 <template>
-  <div class="container pt-5 h-screen">
+  <div class="container pt-5 h-full">
     <div class="flex flex-col h-full p-5" v-if="currentStep < steps.length">
       <CreationStepper v-model:currentStep="currentStep" class="mb-5" />
       <CreateEntity
+      class="h-full"
         v-if="steps[currentStep].component === 'CreateEntity'"
         :entity="steps[currentStep].entity"
         :name="steps[currentStep].name"

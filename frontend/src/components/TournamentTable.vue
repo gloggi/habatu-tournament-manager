@@ -10,23 +10,22 @@
     </div>
     <div class="flex flex-col">
       <template v-for="(timeslot, time) in table">
+        
         <div
-          class="flex flex-col md:flex-row w-full space-y-2 space-x-2"
-          v-if="
-            Object.values(timeslot).some((entry) => entry.slotInfo.hasGames)
-          "
+          class="flex flex-col md:flex-row w-full space-y-2 space-x-2 relative"
+          :class="{'hidden md:flex' : !Object.values(timeslot).some((entry) => entry.slotInfo.hasGames)}"
         >
           <div
             class="w-full mt-5 md:mt-0 md:w-1/4 font-medium text-xl md:text-base"
           >
+          <div v-if="timeIsNow(time)" class="absolute -z-10  inset-0 top-2 ring-4 ring-foreground ring-offset-1  rounded-md"></div>
             <TimeTile :time="time" />
           </div>
           <div v-for="scheduleEntry in timeslot" class="flex w-full">
             <div
               class="flex flex-col w-full"
-              v-if="scheduleEntry.slotInfo.hasGames"
             >
-              <p class="md:hidden font-medium text-sm">
+              <p v-if="scheduleEntry.slotInfo.hasGames" class="md:hidden font-medium text-sm">
                 {{ scheduleEntry.slotInfo.hallName }}
               </p>
               <TimeHallSlot
@@ -38,6 +37,7 @@
           </div>
         </div>
       </template>
+      <Button @click="handleAddTimeslot" variant="ghost" class="hidden md:flex md:w-1/12 items-center"><PlusIcon class="size-4"/></Button>
     </div>
   </Container>
 
@@ -55,6 +55,7 @@ import { useApi } from "@/api";
 import { onMounted } from "vue";
 import { Schedule, Hall } from "@/types";
 import { ref, watch } from "vue";
+import { Button } from "./ui/button";
 
 import TimeTile from "@/components/TimeTile.vue";
 import TimeHallSlot from "@/components/TimeHallSlot.vue";
@@ -96,4 +97,30 @@ watch(
 const handleOpenGameSheet = (gameId: number) => {
   emit("clickOnGame", gameId);
 };
+import { isWithinInterval, set, startOfMinute } from "date-fns";
+import { useOptionsStore } from "@/stores/options";
+
+const optionsStore = useOptionsStore();
+
+const timeIsNow = (timeslot: string): boolean => {
+  const [startHour, startMin, endHour, endMin] = timeslot.split("_").map(Number);
+  
+  const now = new Date();
+
+  const startTime = set(now, { hours: startHour, minutes: startMin-optionsStore.getBreakDuration, seconds: 0, milliseconds: 0 });
+  const endTime = set(now, { hours: endHour, minutes: endMin, seconds: 0, milliseconds: 0 });
+  return isWithinInterval(now, { start: startOfMinute(startTime), end: startOfMinute(endTime) });
+  
+};
+
+import { PlusIcon } from "lucide-vue-next";
+
+const { createData :addTimeslot } = useApi("tournament/new-timeslot");
+
+const handleAddTimeslot = async () => {
+  await addTimeslot({});
+  await updateTable();
+};
+
+
 </script>

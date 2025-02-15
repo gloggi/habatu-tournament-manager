@@ -31,20 +31,11 @@ class TournamentService
     {
         $this->temporary = $temporary;
         $this->options = Option::first();
-        Game::where('temporary', true)->delete();
-        Timeslot::where('temporary', true)->delete();
-        Group::where('temporary', true)->delete();
-        Team::where('temporary', true)->delete();
-        if (!$temporary) {
-            Game::truncate();
-            Timeslot::truncate();
-            Group::truncate();
-            Team::where('dummy', true)->delete();
-        }
 
     }
     public function createTournament($temporary = false)
     {
+        $this->clearTournament();
         $categories = Category::all();
         $gamesByCategory = [];
         foreach ($categories as $category) {
@@ -58,6 +49,20 @@ class TournamentService
         $this->createFinals();
         return $this->getTournamentInfos();
 
+    }
+
+    private function clearTournament()
+    {
+        Game::where('temporary', true)->delete();
+        Timeslot::where('temporary', true)->delete();
+        Group::where('temporary', true)->delete();
+        Team::where('temporary', true)->delete();
+        if (!$this->temporary) {
+            Game::truncate();
+            Timeslot::truncate();
+            Group::truncate();
+            Team::where('dummy', true)->delete();
+        }
     }
     private function getTournamentInfos()
     {
@@ -219,7 +224,7 @@ class TournamentService
     }
 
 
-    private function getTimeAndHallSlot($newSlot = false)
+    public function getTimeAndHallSlot($newSlot = false)
     {
         $lastTimeSlot = Timeslot::orderBy('end_time', 'desc')->where('temporary', $this->temporary)->first();
         $halls = Hall::all();

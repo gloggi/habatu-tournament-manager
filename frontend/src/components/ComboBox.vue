@@ -22,11 +22,26 @@ import { computed} from 'vue'
 import { Label } from '@/components/ui/label'
 
 
-const props = defineProps<{
-  label: string;
-  optionsEntity: string;
-  modelValue: string | number | undefined;
-}>()
+import { PropType } from 'vue';
+
+const props = defineProps({
+  label: {
+    type: String as PropType<string>,
+    required: true
+  },
+  optionsEntity: {
+    type: String as PropType<string>,
+    required: true
+  },
+  modelValue: {
+    type: [String, Number] as PropType<string | number | undefined>,
+    required: true
+  },
+  displayKey: {
+    type: String as PropType<string>,
+    default: 'name'
+  }
+});
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -40,7 +55,7 @@ const options = computed(() => {
   const { dataList } = api;
   return dataList.value.map((item: any) => ({
     value: item.id,
-    label: item.name,
+    label: item[props.displayKey],
   }));
 });
 
