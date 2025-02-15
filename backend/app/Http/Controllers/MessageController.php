@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use App\Models\User;
 use App\Notifications\PushNotification;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -18,7 +17,7 @@ class MessageController extends Controller
             'keys.auth' => 'required|string',
         ]);
 
-        $user = $request->user("api");
+        $user = $request->user('api');
 
         $user->updatePushSubscription(
             $validated['endpoint'],
@@ -35,7 +34,7 @@ class MessageController extends Controller
             'title' => 'required|string',
             'body' => 'required|string',
         ]);
-        error_log("Hello");
+        error_log('Hello');
 
         $users = User::whereNotNull('push_subscriptions')->get();
         error_log($users->count());

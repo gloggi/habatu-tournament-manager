@@ -11,16 +11,16 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'id'         => 1,
-                'name'       => 'Gemischt',
-                'color'      => '#fb7474',
-                'subgroups'  => 2,
+                'id' => 1,
+                'name' => 'Gemischt',
+                'color' => '#fb7474',
+                'subgroups' => 2,
             ],
             [
-                'id'         => 2,
-                'name'       => 'Leitende',
-                'color'      => '#73e873',
-                'subgroups'  => 1,
+                'id' => 2,
+                'name' => 'Leitende',
+                'color' => '#73e873',
+                'subgroups' => 1,
             ],
         ]);
     }

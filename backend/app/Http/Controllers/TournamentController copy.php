@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Team;
 use App\Models\Game;
-use App\Models\Option;
+use App\Models\Group;
 use App\Models\Hall;
+use App\Models\Option;
+use App\Models\Team;
 use App\Models\Timeslot;
 use App\Models\User;
-use App\Models\Group;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TournamentControlleCopy extends Controller
 {
@@ -57,12 +57,14 @@ class TournamentControlleCopy extends Controller
 
         return response()->json($allGames);
     }
+
     public function testScheduleAllGames()
     {
         [$gameList, $timeslots] = $this->scheduleAllGames();
         foreach ($timeslots as $timeslot) {
             $timeslot->save();
         }
+
         return response()->json($gameList);
     }
 
@@ -113,7 +115,7 @@ class TournamentControlleCopy extends Controller
 
         // Schedule all games across halls / timeslots
         $all_games_scheduled = false;
-        while (!$all_games_scheduled) {
+        while (! $all_games_scheduled) {
             for ($i = 0; $i < $halls->count(); $i++) {
 
                 // Move to the correct category
@@ -122,6 +124,7 @@ class TournamentControlleCopy extends Controller
                 // If no games left for this category, skip to next
                 if (count($gamesByCategory[$current_category_id]) === 0) {
                     $category_pointer = ($category_pointer + 1) % $categories->count();
+
                     continue;
                 }
 
@@ -238,7 +241,7 @@ class TournamentControlleCopy extends Controller
         shuffle($teamsArray);
 
         // Figure out how many teams per group
-        // (We use ceil so that all teams end up in some group, 
+        // (We use ceil so that all teams end up in some group,
         // but you can distribute differently if you want.)
         $teamsPerGroup = ceil($totalTeams / $subgroupCount);
 
@@ -277,7 +280,6 @@ class TournamentControlleCopy extends Controller
                 }
             }
         }
-
 
         return [$games, $subGroups, $changedTeams];
     }
@@ -320,8 +322,6 @@ class TournamentControlleCopy extends Controller
         return $games;
     }
 
-
-
     public function calculateTournamentInfos(Request $request)
     {
         $validated = $request->validate([
@@ -356,12 +356,10 @@ class TournamentControlleCopy extends Controller
             'last_game_time' => $lastGameTime->format('H:i'),
         ]);
 
-
     }
 
     private function getTable($userId = null, $teamId = null)
     {
-
 
         // Fetch all halls and timeslots
         $halls = Hall::all();
@@ -370,7 +368,7 @@ class TournamentControlleCopy extends Controller
         // Initialize groupedGames with empty arrays for all hall-timeslot combinations
         $groupedGames = [];
         foreach ($timeslots as $timeslot) {
-            $formattedTimeslot = $timeslot->start_time->format('H:i') . " - " . $timeslot->end_time->format('H:i');
+            $formattedTimeslot = $timeslot->start_time->format('H:i').' - '.$timeslot->end_time->format('H:i');
             $groupedGames[$formattedTimeslot] = [];
 
             foreach ($halls as $hall) {
@@ -395,13 +393,12 @@ class TournamentControlleCopy extends Controller
 
         $games = $query->get();
         foreach ($games as $game) {
-            $timeslot = $game->timeslot->start_time->format('H:i') . " - " . $game->timeslot->end_time->format('H:i');
+            $timeslot = $game->timeslot->start_time->format('H:i').' - '.$game->timeslot->end_time->format('H:i');
             $hall = $game->hall->name;
 
             $groupedGames[$timeslot][$hall]['games'][] = $game;
             $groupedGames[$timeslot][$hall]['slot_info']['has_games'] = true;
         }
-
 
         return $groupedGames;
     }
@@ -417,7 +414,7 @@ class TournamentControlleCopy extends Controller
 
     public function getRefereeTable(Request $request)
     {
-        $userId = $request->user("api")->id;
+        $userId = $request->user('api')->id;
         $groupedGames = $this->getTable($userId);
 
         return response()->json($groupedGames);
@@ -426,19 +423,21 @@ class TournamentControlleCopy extends Controller
 
     public function getTeamTable(Request $request)
     {
-        $userId = $request->user("api")->id;
+        $userId = $request->user('api')->id;
         $userTeamId = User::find($userId)->team_id;
         $groupedGames = $this->getTable(null, $userTeamId);
 
         return response()->json($groupedGames);
 
     }
+
     public function createAllFinaleGames()
     {
         $categories = Category::all();
         foreach ($categories as $category) {
             $this->createFinaleGames($category->id);
         }
+
         return response()->json(['message' => 'All finale games created']);
     }
 
@@ -510,7 +509,7 @@ class TournamentControlleCopy extends Controller
             } else {
                 $groups = Group::where('category_id', $category_id)->get();
                 $finaleType = count($groups);
-                error_log("right place");
+                error_log('right place');
 
                 for ($i = 0; $i < count($groups); $i += 2) {
                     $firstGroupFirstTeam = Team::with('section')->where('group_id', $groups[$i]->id)->first();
@@ -556,7 +555,7 @@ class TournamentControlleCopy extends Controller
 
             foreach ($halls as $hall) {
                 $game = Game::where('hall_id', $hall->id)->where('timeslot_id', $lastTimeSlot->id)->first();
-                if (!$game) {
+                if (! $game) {
                     return [$lastTimeSlot, $hall];
                 }
             }
@@ -565,6 +564,7 @@ class TournamentControlleCopy extends Controller
             'start_time' => $lastTimeSlot->end_time->copy()->addMinutes(30),
             'end_time' => $lastTimeSlot->end_time->copy()->addMinutes(30)->addMinutes(30),
         ]);
+
         return [$newTimeSlot, $halls[0]];
     }
 
@@ -589,6 +589,7 @@ class TournamentControlleCopy extends Controller
             $ranking[] = $currentRanking;
 
         }
+
         return response()->json($ranking);
     }
 
@@ -648,7 +649,6 @@ class TournamentControlleCopy extends Controller
                 'points' => $team->points,
             ];
 
-
         }
 
         usort($teamsRanking, function ($a, $b) {
@@ -656,8 +656,10 @@ class TournamentControlleCopy extends Controller
                 if ($a['goals_conceded'] == $b['goals_conceded']) {
                     return $b['goals_scored'] - $a['goals_scored'];
                 }
+
                 return $b['goals_conceded'] - $a['goals_conceded'];
             }
+
             return $b['points'] - $a['points'];
         });
 
@@ -669,7 +671,6 @@ class TournamentControlleCopy extends Controller
 
         return $teamsRanking;
     }
-
 
     public function getSpecs()
     {
@@ -692,6 +693,4 @@ class TournamentControlleCopy extends Controller
 
         return response()->json($specs);
     }
-
-
 }

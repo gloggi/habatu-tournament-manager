@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Hall;
+use Illuminate\Http\Request;
 
 class HallController extends Controller
 {
@@ -13,6 +13,7 @@ class HallController extends Controller
     public function index()
     {
         $halls = Hall::all();
+
         return response()->json($halls);
     }
 
@@ -25,6 +26,7 @@ class HallController extends Controller
             'name' => 'required|string|max:255',
         ]);
         $hall = Hall::create($validated);
+
         return response()->json($hall);
     }
 
@@ -34,6 +36,7 @@ class HallController extends Controller
     public function show(string $id)
     {
         $hall = Hall::findOrFail($id);
+
         return response()->json($hall);
     }
 
@@ -47,6 +50,7 @@ class HallController extends Controller
         ]);
         $hall = Hall::findOrFail($id);
         $hall->update($validated);
+
         return response()->json($hall);
     }
 
@@ -57,6 +61,7 @@ class HallController extends Controller
     {
         $hall = Hall::findOrFail($id);
         $hall->delete();
+
         return response()->json(null, 204);
     }
 }

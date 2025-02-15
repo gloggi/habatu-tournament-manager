@@ -14,23 +14,25 @@ class Game extends Model
     protected $casts = [
         'played' => 'boolean',
     ];
+
     protected $appends = ['final_type_label', 'classes'];
+
     protected $hidden = ['final_type'];
 
     public function getFinalTypeLabelAttribute()
     {
         $labels = [
-            1   => 'Finale',
-            2   => 'Halbfinale',
-            4   => 'Viertelfinale',
-            8   => 'Achtelfinale',
-            16  => 'Achtundzwanzigstelfinale',
-            32  => 'Zweiunddreißigstelfinale',
-            64  => 'Vierundsechzigstelfinale',
-            128 => 'Hundertachtundzwanzigstelfinale'
+            1 => 'Finale',
+            2 => 'Halbfinale',
+            4 => 'Viertelfinale',
+            8 => 'Achtelfinale',
+            16 => 'Achtundzwanzigstelfinale',
+            32 => 'Zweiunddreißigstelfinale',
+            64 => 'Vierundsechzigstelfinale',
+            128 => 'Hundertachtundzwanzigstelfinale',
         ];
 
-        if($this->finale_type==1 && $this->play_for_third){
+        if ($this->finale_type == 1 && $this->play_for_third) {
             return 'Spiele um den dritten Platz';
         }
 
@@ -40,20 +42,20 @@ class Game extends Model
     public function getClassesAttribute()
     {
         $classes = [
-            1   => 'final',
-            2   => 'semifinal',
-            4   => 'quarterfinal',
-            8   => 'eighthfinal',
-            16  => 'sixteenthfinal',
-            32  => 'thirtysecondfinal',
-            64  => 'sixtyfourthfinal',
-            128 => 'hundredtwentyeighthfinal'
+            1 => 'final',
+            2 => 'semifinal',
+            4 => 'quarterfinal',
+            8 => 'eighthfinal',
+            16 => 'sixteenthfinal',
+            32 => 'thirtysecondfinal',
+            64 => 'sixtyfourthfinal',
+            128 => 'hundredtwentyeighthfinal',
         ];
-        if($this->finale_type==1 && $this->play_for_third){
+        if ($this->finale_type == 1 && $this->play_for_third) {
             return 'third-place';
         }
 
-        return $classes[$this->finale_type] ?? "";
+        return $classes[$this->finale_type] ?? '';
     }
 
     public function teamA()

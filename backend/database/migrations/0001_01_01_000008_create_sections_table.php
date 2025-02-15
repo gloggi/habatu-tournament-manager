@@ -20,4 +20,3 @@ class CreateSectionsTable extends Migration
         Schema::dropIfExists('sections');
     }
 }
-

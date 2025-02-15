@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Team;
+use Illuminate\Http\Request;
+
 class TeamController extends Controller
 {
     /**
@@ -12,8 +13,9 @@ class TeamController extends Controller
     public function index()
     {
         $teams = Team::with('section', 'category')->where('dummy', false)->get();
+
         return response()->json($teams);
-        
+
     }
 
     /**
@@ -27,6 +29,7 @@ class TeamController extends Controller
             'category_id' => 'required|integer',
         ]);
         $team = Team::create($validated);
+
         return response()->json($team);
     }
 
@@ -36,6 +39,7 @@ class TeamController extends Controller
     public function show(string $id)
     {
         $team = Team::findOrFail($id);
+
         return response()->json($team);
     }
 
@@ -50,6 +54,7 @@ class TeamController extends Controller
         ]);
         $team = Team::findOrFail($id);
         $team->update($validated);
+
         return response()->json($team);
     }
 
@@ -60,6 +65,7 @@ class TeamController extends Controller
     {
         $team = Team::findOrFail($id);
         $team->delete();
+
         return response()->json(null, 204);
     }
 }

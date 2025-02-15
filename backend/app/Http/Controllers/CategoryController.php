@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -15,6 +15,7 @@ class CategoryController extends Controller
         $categories = Category::with(['teams' => function ($query) {
             $query->where('dummy', false);
         }])->get();
+
         return response()->json($categories);
     }
 
@@ -28,6 +29,7 @@ class CategoryController extends Controller
             'color' => 'required|string|max:255',
         ]);
         $category = Category::create($validated);
+
         return response()->json($category);
     }
 
@@ -37,6 +39,7 @@ class CategoryController extends Controller
     public function show(string $id)
     {
         $category = Category::findOrFail($id);
+
         return response()->json($category);
     }
 
@@ -49,9 +52,10 @@ class CategoryController extends Controller
             'name' => 'string|max:255',
             'color' => 'string|max:255',
         ]);
-        //error_log(json_encode($request));
+        // error_log(json_encode($request));
         $category = Category::findOrFail($id);
         $category->update($validated);
+
         return response()->json($category);
     }
 
@@ -62,6 +66,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
+
         return response()->json(null, 204);
     }
 }

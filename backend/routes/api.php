@@ -1,19 +1,17 @@
 <?php
 
 use App\Http\Controllers\ActionsController;
-use App\Http\Controllers\GameController;
-use App\Http\Controllers\TimeslotController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\TeamController;
-use App\Http\Controllers\HallController;
-use App\Http\Controllers\SectionController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\HallController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\SectionController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TimeslotController;
 use App\Http\Controllers\TournamentController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\MessageController;
+use Illuminate\Support\Facades\Route;
 
 Route::apiResource('teams', TeamController::class);
 Route::apiResource('halls', HallController::class);
@@ -40,4 +38,3 @@ Route::post('actions/clear-referees', [ActionsController::class, 'clearReferees'
 Route::post('messages/subscribe', [MessageController::class, 'subscribe']);
 Route::post('messages/broadcast', [MessageController::class, 'sendMessageToAllUsers']);
 Route::post('messages/unicast', [MessageController::class, 'sendMessageToUser']);
-

@@ -11,8 +11,7 @@ use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable
 {
-    
-    use HasFactory, Notifiable, HasApiTokens, HasPushSubscriptions;
+    use HasApiTokens, HasFactory, HasPushSubscriptions, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +23,7 @@ class User extends Authenticatable
         'password',
         'section_id',
         'team_id',
-        'role'
+        'role',
     ];
 
     /**
@@ -33,7 +32,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password'
+        'password',
     ];
 
     /**

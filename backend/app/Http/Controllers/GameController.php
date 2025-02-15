@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Game;
-use Illuminate\Http\Request;
 use App\Services\FinaleService;
+use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
@@ -14,9 +14,10 @@ class GameController extends Controller
     public function index()
     {
         $games = Game::with(['teamA', 'teamB', 'hall', 'timeslot', 'category', 'referees'])
-        ->whereNull('finale_type')
-        ->where('temporary', false)
-        ->get();
+            ->whereNull('finale_type')
+            ->where('temporary', false)
+            ->get();
+
         return response()->json($games);
     }
 
@@ -45,6 +46,7 @@ class GameController extends Controller
     public function show(string $id)
     {
         $game = Game::with(['teamA', 'teamA.section', 'teamB', 'teamB.section', 'hall', 'timeslot', 'category', 'referees'])->findOrFail($id);
+
         return response()->json($game);
     }
 
@@ -64,28 +66,26 @@ class GameController extends Controller
             'referees' => 'sometimes|array',
             'played' => 'sometimes|boolean',
         ]);
-        if (isset($validated['points_team_a']) && isset($validated['points_team_b']) && ($validated['points_team_a'] >0 || $validated['points_team_b'] >0)) {
+        if (isset($validated['points_team_a']) && isset($validated['points_team_b']) && ($validated['points_team_a'] > 0 || $validated['points_team_b'] > 0)) {
             $validated['played'] = true;
         }
 
         $referees = $validated['referees'] ?? null;
         // Remove referees from the validated array
         unset($validated['referees']);
-        
 
         $game = Game::findOrFail($id);
         $game->update($validated);
 
-        //check if referee is array
-        if ($referees!==null){
+        // check if referee is array
+        if ($referees !== null) {
             $referee_ids = array_column($referees, 'id');
             $game->referees()->sync($referee_ids);
         }
 
         $newGame = Game::with(['teamA', 'teamB', 'hall', 'timeslot', 'category', 'referees'])->findOrFail($id);
-        $finaleService = new FinaleService();
+        $finaleService = new FinaleService;
         $finaleService->assignFinaleTeams();
-
 
         return response()->json($newGame);
     }

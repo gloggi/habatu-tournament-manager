@@ -22,7 +22,7 @@ class CreateGamesTable extends Migration
             $table->boolean('played')->default(false);
             $table->boolean('temporary')->default(false);
             $table->timestamps();
-        
+
             $table->foreign('team_a_id')->references('id')->on('teams')->onDelete('cascade');
             $table->foreign('team_b_id')->references('id')->on('teams')->onDelete('cascade');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

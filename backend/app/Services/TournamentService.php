@@ -2,19 +2,18 @@
 
 namespace App\Services;
 
-use App\Models\Option;
 use App\Models\Category;
-use App\Models\Group;
-use App\Models\Team;
 use App\Models\Game;
-use App\Models\Timeslot;
+use App\Models\Group;
 use App\Models\Hall;
-
-
+use App\Models\Option;
+use App\Models\Team;
+use App\Models\Timeslot;
 
 class TournamentService
 {
     private $temporary;
+
     private $options;
 
     private $finalsDict = [
@@ -25,14 +24,16 @@ class TournamentService
         16 => 'Achtundzwanzigstelfinale',
         32 => 'Zweiunddreißigstelfinale',
         64 => 'Vierundsechzigstelfinale',
-        128 => 'Hundertachtundzwanzigstelfinale'
+        128 => 'Hundertachtundzwanzigstelfinale',
     ];
+
     public function __construct($temporary = false)
     {
         $this->temporary = $temporary;
         $this->options = Option::first();
 
     }
+
     public function createTournament($temporary = false)
     {
         $this->clearTournament();
@@ -47,6 +48,7 @@ class TournamentService
         $mergedGames = $this->zipMergeGames($gamesByCategory);
         $this->createTimeTable($mergedGames);
         $this->createFinals();
+
         return $this->getTournamentInfos();
 
     }
@@ -57,22 +59,25 @@ class TournamentService
         Timeslot::where('temporary', true)->delete();
         Group::where('temporary', true)->delete();
         Team::where('temporary', true)->delete();
-        if (!$this->temporary) {
+        if (! $this->temporary) {
             Game::truncate();
             Timeslot::truncate();
             Group::truncate();
             Team::where('dummy', true)->delete();
         }
     }
+
     private function getTournamentInfos()
     {
         $games = Game::all();
         $lastGameTime = Game::orderBy('timeslot_id', 'desc')->first()->timeslot->end_time;
+
         return [
             'game_count' => $games->count(),
             'last_game_time' => $lastGameTime->format('H:i'),
         ];
     }
+
     private function createFinals()
     {
         $allCategories = Category::all();
@@ -139,8 +144,9 @@ class TournamentService
                 'dummy' => true,
                 'temporary' => $this->temporary,
             ]);
+
             return [$dummyTeamOne, $dummyTeamTwo];
-        } else if ($finaleType == 1 && $groups->count() == 0) {
+        } elseif ($finaleType == 1 && $groups->count() == 0) {
             $categoryName = Category::find($category)->name;
             $dummyTeamOne = Team::create([
                 'name' => "1. Tabelle {$categoryName}",
@@ -177,7 +183,7 @@ class TournamentService
 
     private function createPlayForThirdGames()
     {
-        if (!$this->options->play_for_third_place) {
+        if (! $this->options->play_for_third_place) {
             return;
         }
         $categories = Category::all();
@@ -212,6 +218,7 @@ class TournamentService
         $this->getTimeAndHallSlot(newSlot: true);
 
     }
+
     private function createTimeTable($zipMergedGames)
     {
         foreach ($zipMergedGames as $game) {
@@ -223,12 +230,11 @@ class TournamentService
         }
     }
 
-
     public function getTimeAndHallSlot($newSlot = false)
     {
         $lastTimeSlot = Timeslot::orderBy('end_time', 'desc')->where('temporary', $this->temporary)->first();
         $halls = Hall::all();
-        if (!$lastTimeSlot) {
+        if (! $lastTimeSlot) {
             $lastTimeSlot = Timeslot::create([
                 'start_time' => $this->options->start_time,
                 'end_time' => $this->options->start_time->copy()->addMinutes($this->options->game_duration),
@@ -239,7 +245,7 @@ class TournamentService
             $game = Game::where('hall_id', $hall->id)
                 ->where('timeslot_id', $lastTimeSlot->id)
                 ->where('temporary', $this->temporary)->first();
-            if (!$game && !$newSlot) {
+            if (! $game && ! $newSlot) {
                 return [$lastTimeSlot, $hall];
             }
         }
@@ -249,6 +255,7 @@ class TournamentService
             'end_time' => $lastTimeSlot->end_time->copy()->addMinutes($this->options->game_duration + $this->options->break_duration),
             'temporary' => $this->temporary,
         ]);
+
         return [$newTimeSlot, $halls->first()];
 
     }
@@ -289,6 +296,7 @@ class TournamentService
             $subGroupGames = $this->scheduleRoundRobin($subgroupTeams, $category, $currentGroup);
             $scheduledGames = array_merge($scheduledGames, $subGroupGames);
         }
+
         return $scheduledGames;
     }
 
@@ -306,6 +314,7 @@ class TournamentService
                 $mergedGames[] = array_shift($gamesByCategory[$category]);
             }
         }
+
         return $mergedGames;
     }
 
@@ -327,7 +336,6 @@ class TournamentService
         $rounds = $teamCount - 1;
         $half = $teamCount / 2;
 
-
         $fixedTeam = $teams->first();
         $rotatingTeams = $teams->slice(1)->values();
 
@@ -342,11 +350,9 @@ class TournamentService
                 ]);
             }
 
-
             for ($i = 1; $i < $half; $i++) {
                 $teamA = $rotatingTeams->get($i);
                 $teamB = $rotatingTeams->get($rotatingTeams->count() - $i);
-
 
                 if ($teamA && $teamB) {
                     $games[] = Game::create([
@@ -358,10 +364,9 @@ class TournamentService
                 }
             }
 
-
             $rotatingTeams = $rotatingTeams->slice(0, -1)->prepend($rotatingTeams->last());
         }
+
         return $games;
     }
-
 }

@@ -3,8 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushChannel;
 use NotificationChannels\WebPush\WebPushMessage;
@@ -14,6 +12,7 @@ class PushNotification extends Notification
     use Queueable;
 
     private string $title;
+
     private string $body;
 
     /**
@@ -44,15 +43,15 @@ class PushNotification extends Notification
             ->action('View account', 'view_account')
             ->vibrate([200, 100, 200])
             ->options(['TTL' => 1000]);
-            // ->data(['id' => $notification->id])
-            // ->badge()
-            // ->dir()
-            // ->image()
-            // ->lang()
-            // ->renotify()
-            // ->requireInteraction()
-            // ->tag()
-            // ->vibrate()
+        // ->data(['id' => $notification->id])
+        // ->badge()
+        // ->dir()
+        // ->image()
+        // ->lang()
+        // ->renotify()
+        // ->requireInteraction()
+        // ->tag()
+        // ->vibrate()
     }
 
     /**

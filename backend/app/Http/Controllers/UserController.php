@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Support\Str;
 use App\Models\Team;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -17,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with(['section', 'team'])->get();
+
         return response()->json($users);
     }
 
@@ -59,7 +59,7 @@ class UserController extends Controller
         $user = User::where('nickname', $validated['nickname'])->first();
 
         // Check if the user exists and if the password is correct
-        if (!$user || !Hash::check($validated['password'], $user->password)) {
+        if (! $user || ! Hash::check($validated['password'], $user->password)) {
             return response()->json([
                 'message' => 'Invalid login credentials.',
             ], 401);
@@ -81,6 +81,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::with(['section', 'team'])->findOrFail($id);
+
         return response()->json($user);
     }
 
@@ -102,6 +103,7 @@ class UserController extends Controller
             $validated['section_id'] = Team::find($validated['team_id'])->section_id;
         }
         $user->update($validated);
+
         return response()->json($user);
     }
 
@@ -112,10 +114,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+
         return response()->json(null, 204);
     }
 
-    public function  store(Request $request)
+    public function store(Request $request)
     {
         $validated = $request->validate([
             'nickname' => 'required|string|unique:users',
@@ -133,7 +136,8 @@ class UserController extends Controller
 
     public function getRoles()
     {
-        $availableRoles = [ ['id' => 'user', 'name' => 'User'], ['id' => 'referee', 'name' => 'Schiri'], ['id' => 'admin', 'name' => 'Admin'],];
+        $availableRoles = [['id' => 'user', 'name' => 'User'], ['id' => 'referee', 'name' => 'Schiri'], ['id' => 'admin', 'name' => 'Admin']];
+
         return response()->json($availableRoles);
     }
 }

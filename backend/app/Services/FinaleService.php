@@ -1,20 +1,22 @@
 <?php
 
 namespace App\Services;
+
 use App\Models\Category;
 use App\Models\Game;
 use App\Models\Group;
 use App\Models\Option;
 use App\Models\Team;
 
-
 class FinaleService
 {
     private $options;
+
     public function __construct()
     {
         $this->options = Option::first();
     }
+
     public function assignFinaleTeams()
     {
         $allCategories = Category::all();
@@ -42,12 +44,11 @@ class FinaleService
         $groups = Group::where('category_id', $category->id)->where('temporary', false)->get();
         if ($groups->count() > 0 && $nextFinaleType == $groups->count()) {
             $this->assignGroupWinnerAndLoosers($category, $groups, $nextFinaleType);
-        }else if($groups->count() >0){
+        } elseif ($groups->count() > 0) {
             $this->assignFinaleTeamsByCategory($category, $nextFinaleType);
-        }else{
+        } else {
             $this->assignFinaleTeamsZeroGroups($category, $nextFinaleType);
         }
-
 
     }
 
@@ -60,7 +61,7 @@ class FinaleService
             $firstGroup = $groups->get($i);
             $firstGroupTeams = Team::where('group_id', $firstGroup->id)
                 ->where('temporary', false)->get();
-            
+
             $winnerTeam = $this->rankTeams($firstGroupTeams)[0]['team'];
             $seccondGroup = $i % 2 == 0 ? $groups->get($i + 1) : $groups->get($i - 1);
             $seccondGroupTeams = Team::where('group_id', $seccondGroup->id)
@@ -74,8 +75,9 @@ class FinaleService
 
     }
 
-    private function assignFinaleTeamsByCategory($category, $nextFinaleType){
-        if(!$nextFinaleType){
+    private function assignFinaleTeamsByCategory($category, $nextFinaleType)
+    {
+        if (! $nextFinaleType) {
             return;
         }
         $gamesToAssign = Game::where('category_id', $category->id)
@@ -84,18 +86,18 @@ class FinaleService
             ->where('finale_type', $nextFinaleType)->get();
         $lastFinals = Game::where('category_id', $category->id)
             ->where('temporary', false)
-            ->where('finale_type', $nextFinaleType*2)->get();
-        for($i=0;$i<$gamesToAssign->count();$i++){
-            $finalOne = $lastFinals->get($i*2);
+            ->where('finale_type', $nextFinaleType * 2)->get();
+        for ($i = 0; $i < $gamesToAssign->count(); $i++) {
+            $finalOne = $lastFinals->get($i * 2);
             $winnerOne = $finalOne->points_team_a > $finalOne->points_team_b ? $finalOne->team_a_id : $finalOne->team_b_id;
-            $finalTwo = $lastFinals->get($i*2+1);
+            $finalTwo = $lastFinals->get($i * 2 + 1);
             $winnerTwo = $finalTwo->points_team_a > $finalTwo->points_team_b ? $finalTwo->team_a_id : $finalTwo->team_b_id;
             $gameToAssing = $gamesToAssign->get($i);
             $gameToAssing->team_a_id = $winnerOne;
             $gameToAssing->team_b_id = $winnerTwo;
             $gameToAssing->save();
         }
-        if($this->options->play_for_third_place && $nextFinaleType == 1){
+        if ($this->options->play_for_third_place && $nextFinaleType == 1) {
             $thirdPlaceGame = Game::where('category_id', $category->id)
                 ->where('temporary', false)
                 ->where('play_for_third', true)
@@ -111,7 +113,8 @@ class FinaleService
 
     }
 
-    public function assignFinaleTeamsZeroGroups($category, $nextFinaleType){
+    public function assignFinaleTeamsZeroGroups($category, $nextFinaleType)
+    {
         $final = Game::where('category_id', $category->id)
             ->where('temporary', false)
             ->where('play_for_third', false)
@@ -126,7 +129,7 @@ class FinaleService
         $final->team_a_id = $rankedTeams[0]['team']->id;
         $final->team_b_id = $rankedTeams[1]['team']->id;
         $final->save();
-        if($this->options->play_for_third_place){
+        if ($this->options->play_for_third_place) {
             $playForThird->team_a_id = $rankedTeams[2]['team']->id;
             $playForThird->team_b_id = $rankedTeams[3]['team']->id;
             $playForThird->save();
@@ -193,7 +196,6 @@ class FinaleService
                 'points' => $team->points,
             ];
 
-
         }
 
         usort($teamsRanking, function ($a, $b) {
@@ -201,8 +203,10 @@ class FinaleService
                 if ($a['goals_conceded'] == $b['goals_conceded']) {
                     return $b['goals_scored'] - $a['goals_scored'];
                 }
+
                 return $b['goals_conceded'] - $a['goals_conceded'];
             }
+
             return $b['points'] - $a['points'];
         });
 
@@ -214,6 +218,4 @@ class FinaleService
 
         return $teamsRanking;
     }
-
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Timeslot;
+use Illuminate\Http\Request;
 
 class TimeslotController extends Controller
 {
@@ -27,6 +27,7 @@ class TimeslotController extends Controller
             'end_time' => 'required|string|max:255',
         ]);
         $timeslot = Timeslot::create($validated);
+
         return response()->json($timeslot);
     }
 
@@ -36,6 +37,7 @@ class TimeslotController extends Controller
     public function show(string $id)
     {
         $timeslot = Timeslot::findOrFail($id);
+
         return response()->json($timeslot);
     }
 
@@ -46,10 +48,11 @@ class TimeslotController extends Controller
     {
         $validated = $request->validate([
             'start_time' => 'required|string|max:255',
-            'end_time' => 'required|string|max:255'
+            'end_time' => 'required|string|max:255',
         ]);
         $timeslot = Timeslot::findOrFail($id);
         $timeslot->update($validated);
+
         return response()->json($timeslot);
     }
 
@@ -60,6 +63,7 @@ class TimeslotController extends Controller
     {
         $timeslot = Timeslot::findOrFail($id);
         $timeslot->delete();
+
         return response()->json(null, 204);
     }
 }

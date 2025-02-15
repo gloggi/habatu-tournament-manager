@@ -2,9 +2,9 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Section;
 use App\Models\Category;
+use App\Models\Section;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Team>
@@ -20,7 +20,7 @@ class TeamFactory extends Factory
     {
         return [
             'name' => $this->faker->word,
-            'section_id' => Section::inRandomOrder()->first()->id,  
+            'section_id' => Section::inRandomOrder()->first()->id,
             'category_id' => Category::inRandomOrder()->first()->id,  // Pick a random existing category
         ];
     }

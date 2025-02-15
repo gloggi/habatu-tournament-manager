@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Models\Category;
-use App\Models\Team;
 use App\Models\Game;
-use App\Models\Option;
+use App\Models\Group;
 use App\Models\Hall;
+use App\Models\Option;
+use App\Models\Team;
 use App\Models\Timeslot;
 use App\Models\User;
-use App\Models\Group;
-use App\Services\TournamentService;
 use App\Services\FinaleService;
+use App\Services\TournamentService;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TournamentController extends Controller
 {
@@ -39,7 +39,6 @@ class TournamentController extends Controller
             ]
         );
 
-
         foreach ($validated['groups_per_category'] as $category_id => $subgroup_count) {
             $category = Category::find($category_id);
             if (($subgroup_count & ($subgroup_count - 1)) != 0) {
@@ -50,27 +49,31 @@ class TournamentController extends Controller
             $category->save();
         }
 
-
     }
+
     public function calculateTournamentInfos(Request $request)
     {
         $this->validateAndUpdateTorunamentSpecs($request);
 
         $tournamentService = new TournamentService(temporary: true);
         $tournamentInfos = $tournamentService->createTournament();
+
         return response()->json($tournamentInfos);
 
     }
+
     public function createTorunament(Request $request)
     {
         $this->validateAndUpdateTorunamentSpecs($request);
 
-        $tournamentService = new TournamentService();
+        $tournamentService = new TournamentService;
         $tournamentService->createTournament();
+
         return response()->json([
-            'message' => 'Tournament created successfully'
+            'message' => 'Tournament created successfully',
         ]);
     }
+
     public function getSpecs()
     {
         $options = Option::first();
@@ -96,7 +99,6 @@ class TournamentController extends Controller
     private function getTable($userId = null, $teamId = null)
     {
 
-
         // Fetch all halls and timeslots
         $halls = Hall::all();
         $timeslots = Timeslot::where('temporary', false)->get();
@@ -104,7 +106,7 @@ class TournamentController extends Controller
         // Initialize groupedGames with empty arrays for all hall-timeslot combinations
         $groupedGames = [];
         foreach ($timeslots as $timeslot) {
-            $formattedTimeslot = $timeslot->start_time->format('H:i') . " - " . $timeslot->end_time->format('H:i');
+            $formattedTimeslot = $timeslot->start_time->format('H:i').' - '.$timeslot->end_time->format('H:i');
             $groupedGames[$formattedTimeslot] = [];
 
             foreach ($halls as $hall) {
@@ -129,13 +131,12 @@ class TournamentController extends Controller
 
         $games = $query->get();
         foreach ($games as $game) {
-            $timeslot = $game->timeslot->start_time->format('H:i') . " - " . $game->timeslot->end_time->format('H:i');
+            $timeslot = $game->timeslot->start_time->format('H:i').' - '.$game->timeslot->end_time->format('H:i');
             $hall = $game->hall->name;
 
             $groupedGames[$timeslot][$hall]['games'][] = $game;
             $groupedGames[$timeslot][$hall]['slot_info']['has_games'] = true;
         }
-
 
         return $groupedGames;
     }
@@ -148,9 +149,10 @@ class TournamentController extends Controller
         return response()->json($groupedGames);
 
     }
+
     public function getRefereeTable(Request $request)
     {
-        $userId = $request->user("api")->id;
+        $userId = $request->user('api')->id;
         $groupedGames = $this->getTable($userId);
 
         return response()->json($groupedGames);
@@ -159,7 +161,7 @@ class TournamentController extends Controller
 
     public function getTeamTable(Request $request)
     {
-        $userId = $request->user("api")->id;
+        $userId = $request->user('api')->id;
         $userTeamId = User::find($userId)->team_id;
         $groupedGames = $this->getTable(null, $userTeamId);
 
@@ -169,7 +171,7 @@ class TournamentController extends Controller
 
     public function getRanking()
     {
-        $finaleService = new FinaleService();
+        $finaleService = new FinaleService;
 
         $categories = Category::all();
         $ranking = [];
@@ -190,19 +192,16 @@ class TournamentController extends Controller
             $ranking[] = $currentRanking;
 
         }
+
         return response()->json($ranking);
     }
-
 
     public function addNewTimeslot(Request $request)
     {
 
-        $tournamentService = new TournamentService();
+        $tournamentService = new TournamentService;
         $newSlot = $tournamentService->getTimeAndHallSlot(newSlot: true);
 
         return response()->json($newSlot);
     }
-
-
-
 }

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Option;
+use Illuminate\Http\Request;
 
 class OptionController extends Controller
 {
@@ -13,6 +13,7 @@ class OptionController extends Controller
     public function index()
     {
         $options = Option::first();
+
         return response()->json($options);
     }
 
@@ -30,7 +31,8 @@ class OptionController extends Controller
             'started_tournament' => 'required|boolean',
             'ended_round_games' => 'required|boolean',
         ]);
-        $option = Option::updateOrCreate(["id" => 1], $validated);
+        $option = Option::updateOrCreate(['id' => 1], $validated);
+
         return response()->json($option);
     }
 }

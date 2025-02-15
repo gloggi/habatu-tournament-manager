@@ -22,4 +22,3 @@ class CreateTimeslotsTable extends Migration
         Schema::dropIfExists('timeslots');
     }
 }
-
