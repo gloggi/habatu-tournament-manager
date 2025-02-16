@@ -20,6 +20,9 @@ export default defineConfig({
       srcDir: "src",
       filename: "service-worker.js",
       strategies: "injectManifest",
+      injectManifest: {
+        swSrc: "src/service-worker.js",
+      },
       devOptions: {
         enabled: true,
         type: "module",

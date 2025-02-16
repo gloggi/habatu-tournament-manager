@@ -7,7 +7,7 @@ export function useApi<T>(endpoint: string) {
   const dataList: Ref<T[]> = ref([]);
   const loading = ref(false);
   const error = ref<string | null>(null);
-  const backendUrl = "http://localhost:8000/api/";
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const client = applyCaseMiddleware(axios.create());
   client.interceptors.request.use(
     (config) => {

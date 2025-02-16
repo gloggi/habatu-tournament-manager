@@ -67,7 +67,7 @@ watch(
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="(data, i) in dataList">
+      <TableRow v-for="data in dataList">
         <TableCell v-for="(key, j) in props.columnKeys">
           <router-link
             class="font-semibold"

@@ -73,7 +73,7 @@ const isAuthenticated = (): boolean => {
 };
 
 // Global Navigation Guard
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   if (to.name !== "Login" && !isAuthenticated()) {
     next({ name: "Login" });
   } else {

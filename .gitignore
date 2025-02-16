@@ -20,6 +20,7 @@ pnpm-debug.log*
 *.bak
 *.rest
 *.py
+deploy.sh
 
 # Laravel ignores (backend/)
 backend/vendor/
