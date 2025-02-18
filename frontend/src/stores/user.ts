@@ -1,15 +1,16 @@
 import { defineStore } from "pinia";
 import { useApi } from "@/api";
 import { User } from "@/types";
+import { useRouter } from "vue-router";
 
 export const useUserStore = defineStore("user", {
   state: () => ({
-    user: null as User | null,
+    user: undefined as User | undefined,
+    router: useRouter(),
   }),
 
   getters: {
-    getUserId: (state) =>
-      state.user?.id || parseInt(localStorage.getItem("userId") || "0"),
+    getUserId: (state) => state.user?.id,
     isAdmin: (state) => state.user?.role === "admin",
     getUserNickname: (state) => state.user?.nickname ?? "",
     getTeamName: (state) => state.user?.team?.name ?? "",
@@ -18,13 +19,16 @@ export const useUserStore = defineStore("user", {
 
   actions: {
     async fetchUser() {
-      const userId = localStorage.getItem("userId");
-      if (!userId) return;
       if (this.user) return;
 
-      const { fetchData, data } = useApi<User>("users");
-      await fetchData(userId, true);
-      this.user = data.value;
+      const { fetchData, data } = useApi<User>("auth");
+      try {
+        await fetchData(undefined, true);
+        this.user = data.value || undefined;
+      } catch (e) {
+        this.user = undefined;
+        this.router.push("/login");
+      }
     },
 
     setUser(userData: User) {
@@ -32,7 +36,12 @@ export const useUserStore = defineStore("user", {
     },
 
     clearUser() {
-      this.user = null;
+      this.user = undefined;
+    },
+    logout() {
+      localStorage.removeItem("token");
+      this.router.push("/login");
+      this.clearUser();
     },
   },
 });

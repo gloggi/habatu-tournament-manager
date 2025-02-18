@@ -21,61 +21,6 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function register(Request $request)
-    {
-        $validated = $request->validate([
-            'nickname' => 'required|string|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
-
-        // Hash the password before storing it
-        $validated['password'] = Hash::make($validated['password']);
-
-        // Create the user
-        $user = User::create($validated);
-
-        // Create a personal access token for the user
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        // Return the token and user information
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ], 201);
-    }
-
-    public function login(Request $request)
-    {
-        $validated = $request->validate([
-            'nickname' => 'required|string',
-            'password' => 'required|string',
-            'section_id' => 'nullable|integer|exists:sections,id',
-            'team_id' => 'nullable|integer|exists:teams,id',
-        ]);
-
-        // Find the user by their nickname
-        $user = User::where('nickname', $validated['nickname'])->first();
-
-        // Check if the user exists and if the password is correct
-        if (! $user || ! Hash::check($validated['password'], $user->password)) {
-            return response()->json([
-                'message' => 'Invalid login credentials.',
-            ], 401);
-        }
-
-        // Create a new token for the user
-        $token = $user->createToken('auth_token')->plainTextToken;
-
-        // Return the token and user information
-        return response()->json([
-            'token' => $token,
-            'user' => $user,
-        ]);
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(string $id)

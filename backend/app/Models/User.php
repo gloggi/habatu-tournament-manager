@@ -24,6 +24,7 @@ class User extends Authenticatable
         'section_id',
         'team_id',
         'role',
+        'midata_id',
     ];
 
     /**

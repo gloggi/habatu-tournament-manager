@@ -176,7 +176,7 @@ class TournamentController extends Controller
         $categories = Category::all();
         $ranking = [];
         foreach ($categories as $category) {
-            $group = Group::where('category_id', $category->id)->get();
+            $group = Group::where('category_id', $category->id)->where('temporary', false)->get();
             $currentRanking = ['category_name' => $category->name, 'groups' => []];
             if (count($group) > 0) {
                 foreach ($group as $subgroup) {

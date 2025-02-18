@@ -34,7 +34,6 @@ class MessageController extends Controller
             'title' => 'required|string',
             'body' => 'required|string',
         ]);
-        error_log('Hello');
 
         $users = User::whereNotNull('push_subscriptions')->get();
         error_log($users->count());

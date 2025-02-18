@@ -1,6 +1,11 @@
-import { precacheAndRoute } from 'workbox-precaching';
+import { precacheAndRoute } from "workbox-precaching";
 
 precacheAndRoute(self.__WB_MANIFEST || []);
+
+self.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  event.prompt();
+});
 
 self.addEventListener("push", function (event) {
   console.log("[Service Worker] Push Received.");
@@ -9,6 +14,7 @@ self.addEventListener("push", function (event) {
     let options;
     try {
       options = event.data.json(); // Preferred method
+      console.log(options);
     } catch (error) {
       console.warn(
         "Error parsing push data as JSON, falling back to text:",

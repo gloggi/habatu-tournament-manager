@@ -20,6 +20,13 @@ onMounted(() => {
 onUnmounted(() => {
   clearInterval(interval);
 });
+
+import { useUserStore } from "@/stores/user";
+
+import PwaInstallButton from "./PwaInstallButton.vue";
+import PwaAllowPushNotifications from "./PwaAllowPushNotifications.vue";
+
+const userStore = useUserStore();
 </script>
 
 <template>
@@ -47,13 +54,19 @@ onUnmounted(() => {
       <div class="text-2xl font-semibold flex items-center space-x-2">
         <ClockIcon /><span>{{ time }}</span>
       </div>
-      <Button
-        @click="() => $router.push('/profile')"
-        class="aspect-square p-0"
-        variant="ghost"
-      >
-        <Avatar> TF </Avatar>
-      </Button>
+      <div class="flex space-x-2">
+        <PwaInstallButton />
+        <PwaAllowPushNotifications />
+        <Button
+          @click="() => $router.push('/profile')"
+          class="aspect-square p-0"
+          variant="ghost"
+        >
+          <Avatar>
+            {{ userStore.user?.nickname.substring(0, 1).toUpperCase() }}
+          </Avatar>
+        </Button>
+      </div>
     </div>
   </header>
 </template>

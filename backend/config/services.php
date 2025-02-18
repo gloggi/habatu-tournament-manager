@@ -35,4 +35,12 @@ return [
         ],
     ],
 
+    'midata' => [
+        'base_url' => env('MIDATA_BASE_URL'),
+        'client_id' => env('MIDATA_CLIENT_ID'),
+        'client_secret' => env('MIDATA_CLIENT_SECRET'),
+        'redirect' => env('MIDATA_REDIRECT_URI'),
+        'midata_id' => env('MIDATA_ID'),
+    ],
+
 ];

@@ -9,11 +9,13 @@
         class="text-foreground aspect-square cursor-pointer"
         @click="handleRouteChange(item.routeName)"
       >
-        <div class="w-full h-3/3 flex justify-center items-center">
-          <component class="size-full" :is="item.icon" />
-        </div>
-        <div class="w-full h-1/4 flex justify-center">
-          <p class="text-3xl font-semibold">{{ item.name }}</p>
+        <div class="object-cover transition-all hover:scale-105">
+          <div class="w-full h-3/3 flex justify-center items-center">
+            <component class="size-full" :is="item.icon" />
+          </div>
+          <div class="w-full h-1/4 flex justify-center">
+            <p class="text-xl font-semibold">{{ item.name }}</p>
+          </div>
         </div>
       </Card>
     </div>
@@ -29,6 +31,7 @@ import {
   UserRoundPen,
   CircleGauge,
   MessageCircleIcon,
+  Trophy,
 } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 import Container from "@/components/Container.vue";
@@ -50,6 +53,11 @@ const handleRouteChange = (routeName: string) => {
 };
 
 const menuList: IMenuItem[] = [
+  {
+    name: "Tournier erstellen",
+    icon: Trophy,
+    routeName: "Setup",
+  },
   {
     name: "Spielplan",
     icon: Table,

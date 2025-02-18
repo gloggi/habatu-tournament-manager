@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import rotatingBall from "../assets/rotating_ball_a.png";
 import InputField from "@/components/InputField.vue";
 import { Button } from "@/components/ui/button";
+import MiDataButton from "@/components/MiDataButton.vue";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/toast/use-toast";
 const { toast } = useToast();
@@ -30,7 +32,6 @@ const login = async () => {
   try {
     const response = await doLogin(loginForm.value);
     localStorage.setItem("token", response.token);
-    localStorage.setItem("userId", response.user.id);
     userStore.fetchUser();
     router.push({ name: "Home" });
   } catch (e) {
@@ -54,7 +55,6 @@ const register = async () => {
     }
     const response = await doRegister(registerForm.value);
     localStorage.setItem("token", response.token);
-    localStorage.setItem("userId", response.user.id);
     userStore.fetchUser();
     router.push({ name: "Home" });
   } catch (e) {
@@ -65,26 +65,79 @@ const register = async () => {
     });
   }
 };
+
+const { data: loginData, fetchData: getLoginURL } = useApi<{ url: string }>(
+  "auth/midata",
+);
+
+const loginWithMiData = async () => {
+  try {
+    await getLoginURL(undefined, true);
+    console.log(loginData);
+    if (loginData.value) {
+      window.location.href = loginData.value.url;
+    }
+  } catch (e) {
+    toast({
+      title: "Fehler",
+      description: "Fehler beim Login",
+      variant: "destructive",
+    });
+  }
+};
+
+import { useRoute } from "vue-router";
+const route = useRoute();
+
+const { postData: registerWithCode } = useApi("auth/midata/callback");
+const handleOAuthCode = async () => {
+  const code = route.query.code;
+  if (code) {
+    try {
+      const response = await registerWithCode({ code: code as string });
+      localStorage.setItem("token", response.token);
+      userStore.fetchUser();
+      router.push({ name: "Home" });
+    } catch (e) {
+      toast({
+        title: "Fehler",
+        description: "Fehler beim Registrieren",
+        variant: "destructive",
+      });
+    }
+  }
+};
+onMounted(() => {
+  handleOAuthCode();
+});
 </script>
 
 <template>
-  <div class="w-full h-screen flex">
+  <div class="w-full h-screen flex flex-col md:flex-row">
     <div
-      class="bg-red-500 w-0 hidden md:w-2/3 h-full md:flex items-center justify-center"
+      class="bg-red-500 flex flex-col w-full md:w-2/3 items-center justify-center h-48 md:h-full"
     >
-      <div class="flex flex-col space-y-8 p-8">
-        <img :src="rotatingBall" alt="rotating ball" class="w-72" />
-        <div class="flex flex-col space-y-2">
-          <div class="text-6xl font-bold text-white">
+      <div
+        class="flex flex-row space-x-5 justify-center items-center md:space-x-0 md:flex-col md:space-y-8 p-8 h-full"
+      >
+        <img
+          :src="rotatingBall"
+          alt="rotating ball"
+          class="size-24 md:size-72"
+        />
+        <div class="flex flex-col space-y-2 h-full md:h-auto">
+          <div class="text-2xl md:text-6xl font-bold text-white">
             HaBaTu Tournament Manager
           </div>
-          <div class="text-3xl font-light text-white">
+          <div class="text-sm md:text-3xl font-light text-white">
             Will jedes Turnier die perfekti Planig verdient
           </div>
         </div>
       </div>
     </div>
-    <div class="w-full md:w-1/3 h-full flex justify-center items-center">
+    <div
+      class="w-full md:w-1/3 h-full flex justify-center pt-8 md:pt-0 md:items-center"
+    >
       <div class="w-3/4">
         <Tabs default-value="login" class="w-full">
           <TabsList class="w-full mb-4">
@@ -95,19 +148,23 @@ const register = async () => {
           </TabsList>
           <TabsContent value="login">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Login</h2>
-            <form class="flex flex-col space-y-3" @submit.prevent="login">
-              <InputField
-                label="Benutzername"
-                type="text"
-                v-model="loginForm.nickname"
-              />
-              <InputField
-                label="Password"
-                type="password"
-                v-model="loginForm.password"
-              />
-              <Button>Login</Button>
-            </form>
+            <div class="space-y-5">
+              <form class="flex flex-col space-y-3" @submit.prevent="login">
+                <InputField
+                  label="Benutzername"
+                  type="text"
+                  v-model="loginForm.nickname"
+                />
+                <InputField
+                  label="Password"
+                  type="password"
+                  v-model="loginForm.password"
+                />
+                <Button>Login</Button>
+              </form>
+              <Separator label="oder" />
+              <MiDataButton @click="loginWithMiData" />
+            </div>
           </TabsContent>
           <TabsContent value="register">
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Registrieren</h2>

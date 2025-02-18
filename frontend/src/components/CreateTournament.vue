@@ -1,5 +1,8 @@
 <template>
-  <div v-if="specs" class="flex space-x-3 w-full h-full items-stretch">
+  <div
+    v-if="specs"
+    class="flex flex-col md:flex-row space-y-3 md:space-y-0 md:space-x-3 w-full h-full items-stretch"
+  >
     <div class="flex flex-col space-y-3 w-full">
       <Card title="Spielzeiten">
         <div class="flex flex-col space-y-5">

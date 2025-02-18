@@ -64,8 +64,8 @@ const currentStep = defineModel("currentStep", {
       :step="item.step"
     >
       <StepperTrigger>
-        <StepperIndicator>
-          <component :is="item.icon" class="w-4 h-4" />
+        <StepperIndicator class="object-cover transition-all hover:scale-105">
+          <component :is="item.icon" class="size-5" />
         </StepperIndicator>
         <div class="flex flex-col">
           <StepperTitle>

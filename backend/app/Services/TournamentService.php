@@ -55,14 +55,19 @@ class TournamentService
 
     private function clearTournament()
     {
+        // Delete all temporary entries
         Game::where('temporary', true)->delete();
         Timeslot::where('temporary', true)->delete();
         Group::where('temporary', true)->delete();
         Team::where('temporary', true)->delete();
+
         if (! $this->temporary) {
-            Game::truncate();
-            Timeslot::truncate();
-            Group::truncate();
+            // Use delete() instead of truncate() to respect foreign key constraints
+            Game::query()->delete();
+            Timeslot::query()->delete();
+            Group::query()->delete();
+
+            // Delete only dummy teams explicitly
             Team::where('dummy', true)->delete();
         }
     }

@@ -3,9 +3,10 @@ node_modules/
 dist/
 .DS_Store
 Thumbs.db
-.env
+.env.production
 .env.local
 .env.*.local
+.env.pro
 .idea/
 .vscode/
 *.log
@@ -46,6 +47,8 @@ backend/storage/framework/views
 backend/storage/logs/*.log
 backend/storage/oauth-private.key
 backend/storage/oauth-public.key
+backend/.env.example
+backend/.env
 
 # Vue 3 + TypeScript ignores (frontend/)
 frontend/node_modules/

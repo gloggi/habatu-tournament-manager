@@ -39,30 +39,10 @@ class PushNotification extends Notification
         return (new WebPushMessage)
             ->title($this->title)
             ->body($this->body)
-            ->icon('/android-chrome-192x192.png')
+            ->icon('/img/icons/android-chrome-192x192.png')
+            ->badge('/img/icons/android-chrome-192x192.png')
             ->action('View account', 'view_account')
             ->vibrate([200, 100, 200])
             ->options(['TTL' => 1000]);
-        // ->data(['id' => $notification->id])
-        // ->badge()
-        // ->dir()
-        // ->image()
-        // ->lang()
-        // ->renotify()
-        // ->requireInteraction()
-        // ->tag()
-        // ->vibrate()
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @return array<string, mixed>
-     */
-    public function toArray(object $notifiable): array
-    {
-        return [
-            //
-        ];
     }
 }

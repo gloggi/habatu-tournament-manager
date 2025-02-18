@@ -14,11 +14,12 @@ return new class extends Migration
         // Create the users table with all modifications applied
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('nickname')->unique();
             $table->foreignId('team_id')->nullable()->constrained('teams')->onDelete('set null');
             $table->foreignId('section_id')->nullable()->constrained('sections')->onDelete('set null');
             $table->string('role')->default('user');
+            $table->integer('midata_id')->nullable();
             $table->timestamps();
         });
 

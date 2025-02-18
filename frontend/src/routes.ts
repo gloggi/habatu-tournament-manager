@@ -28,6 +28,7 @@ const routes = [
   {
     path: "/setup",
     component: Create,
+    name: "Setup",
     children: [{ path: ":entity", name: "Create", component: Create }],
   },
   { path: "/table", name: "GameTable", component: GameTable },

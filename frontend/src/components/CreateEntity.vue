@@ -1,5 +1,7 @@
 <template>
-  <div class="flex space-x-5 h-3/4">
+  <div
+    class="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 h-3/4"
+  >
     <div class="w-full">
       <HeadingOne>Neue {{ name }} erstellen</HeadingOne>
       <form @submit.prevent="createHall" class="flex flex-col space-y-5">

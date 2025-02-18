@@ -5,7 +5,7 @@ import { useUserStore } from "@/stores/user";
 import InputField from "@/components/InputField.vue";
 import ComboBox from "@/components/ComboBox.vue";
 import { Button } from "@/components/ui/button";
-const userStore = useUserStore();
+import { RefreshCw, LogOut } from "lucide-vue-next";
 import { useApi } from "@/api";
 import { User } from "@/types";
 import { onMounted } from "vue";
@@ -13,17 +13,16 @@ import {
   requestNotificationPermission,
   subscribeUserToPush,
 } from "@/pushNotifications";
-const {
-  fetchData: fetchUser,
-  updateData: updateUser,
-  data: user,
-} = useApi<User>("users");
-fetchUser(userStore.getUserId);
+const { updateData: updateUser } = useApi<User>("users");
+
+const { data: user, fetchData: fetchUser } = useApi<User>("auth");
+
+const userStore = useUserStore();
 
 const updateAndFetch = async () => {
   if (user.value) {
     await updateUser(user.value.id, user.value);
-    await fetchUser(user.value.id);
+    await fetchUser(undefined, true);
   }
 };
 
@@ -35,8 +34,13 @@ const enablePushNotifications = async () => {
 };
 
 onMounted(async () => {
+  await fetchUser(undefined, true);
   await enablePushNotifications();
 });
+
+const logout = () => {
+  userStore.logout();
+};
 </script>
 <template>
   <Container>
@@ -53,7 +57,11 @@ onMounted(async () => {
         label="Abteilung"
         optionsEntity="sections"
       />
-      <Button>Update</Button>
+      <Button><RefreshCw class="w-4 h-4 mr-2" /> Update</Button>
     </form>
+
+    <Button @click="logout" variant="destructive" class="mt-5 w-full"
+      ><LogOut class="w-4 h-4 mr-2" /> Logout</Button
+    >
   </Container>
 </template>

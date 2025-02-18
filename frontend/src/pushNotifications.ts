@@ -27,11 +27,12 @@ export async function subscribeUserToPush() {
     console.log("Already subscribed:", existingSubscription);
     return existingSubscription;
   }
+  console.log(import.meta.env.VITE_VAPID_PUBLIC_KEY);
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(
-      "BOk8LrIuyRfp-K8kQ43eY5ve9KOakfjAYlnv3hf7Rfv2bKILvzhVi0FqjyoqbwmJo0vFKaNANBSLrWd9Jzagioc",
+      import.meta.env.VITE_VAPID_PUBLIC_KEY,
     ),
   });
 

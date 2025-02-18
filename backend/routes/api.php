@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActionsController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HallController;
@@ -19,6 +20,9 @@ Route::apiResource('sections', SectionController::class);
 Route::apiResource('categories', CategoryController::class);
 Route::apiResource('timeslots', TimeslotController::class);
 Route::apiResource('games', GameController::class);
+Route::get('auth', [AuthController::class, 'me']);
+Route::get('auth/midata', [AuthController::class, 'redirectToProvider']);
+Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCallback']);
 Route::apiResource('users', UserController::class);
 Route::post('options', [OptionController::class, 'store']);
 Route::get('options', [OptionController::class, 'index']);
@@ -30,8 +34,8 @@ Route::post('tournament/new-timeslot', [TournamentController::class, 'addNewTime
 Route::get('tournament/ranking', [TournamentController::class, 'getRanking']);
 Route::get('tournament/referee-table', [TournamentController::class, 'getRefereeTable']);
 Route::get('tournament/team-table', [TournamentController::class, 'getTeamTable']);
-Route::post('register', [UserController::class, 'register']);
-Route::post('login', [UserController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 Route::get('roles', [UserController::class, 'getRoles']);
 Route::post('actions/assign-referees', [ActionsController::class, 'assignReferees']);
 Route::post('actions/clear-referees', [ActionsController::class, 'clearReferees']);
