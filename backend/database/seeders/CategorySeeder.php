@@ -14,7 +14,7 @@ class CategorySeeder extends Seeder
                 'id' => 1,
                 'name' => 'Gemischt',
                 'color' => '#fb7474',
-                'subgroups' => 2,
+                'subgroups' => 1,
             ],
             [
                 'id' => 2,

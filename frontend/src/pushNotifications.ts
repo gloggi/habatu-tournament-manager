@@ -6,7 +6,6 @@ const { createData: createSubscription } =
 export async function requestNotificationPermission() {
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
-    console.log("Notification permission granted.");
     return true;
   } else {
     console.error("Notification permission denied.");
@@ -24,10 +23,8 @@ export async function subscribeUserToPush() {
 
   const existingSubscription = await registration.pushManager.getSubscription();
   if (existingSubscription) {
-    console.log("Already subscribed:", existingSubscription);
     return existingSubscription;
   }
-  console.log(import.meta.env.VITE_VAPID_PUBLIC_KEY);
 
   const subscription = await registration.pushManager.subscribe({
     userVisibleOnly: true,
@@ -36,13 +33,6 @@ export async function subscribeUserToPush() {
     ),
   });
 
-  console.log("Subscribing to push notifications...");
-
-  console.log(subscription);
-
-  console.log("Push Subscription:", JSON.stringify(subscription));
-
-  // Send this subscription to the backend
   await createSubscription(subscription);
 
   return subscription;

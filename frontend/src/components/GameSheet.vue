@@ -42,7 +42,6 @@ const open = computed({
 
 const referees = computed({
   get: () => {
-    console.log("value", game.value!.referees);
     return (
       game.value?.referees?.map((referee) => ({
         id: referee.id,

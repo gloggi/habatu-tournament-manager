@@ -42,7 +42,6 @@ const handleClick = () => {
 
 const handleDragStart = (event: DragEvent) => {
   event.dataTransfer?.setData("gameId", props.game.id.toString());
-  console.log("Gotgameid", event.dataTransfer?.getData("gameId"));
 };
 </script>
 <style>

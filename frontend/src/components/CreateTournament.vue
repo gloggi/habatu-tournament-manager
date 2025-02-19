@@ -104,10 +104,11 @@ const { toast } = useToast();
 
 const { data: specs, fetchData: fetchSpecs } =
   useApi<tournamentSpecifications>("tournament/specs");
-
+const { dataList: categories, fetchData: fetchCategories } =
+  useApi<Category>("categories");
 onMounted(async () => {
   await fetchSpecs(undefined, true);
-  console.log(specs);
+  await fetchCategories();
 });
 
 const calculation = ref();
@@ -151,19 +152,6 @@ watch(
   },
 );
 
-const { dataList: categories, fetchData: fetchCategoriers } =
-  useApi<Category>("categories");
-
-fetchCategoriers().then(() => {
-  specs.value!.groupsPerCategory = categories.value.reduce(
-    (acc: Record<number, number>, category) => {
-      acc[category.id] = 1;
-      return acc;
-    },
-    {} as Record<number, number>,
-  );
-});
-
 let tournamentCalculateApi = useApi("tournament/calculate");
 let tournamentCreateApi = useApi("tournament/create");
 
@@ -182,10 +170,20 @@ const create = async () => {
   });
 };
 
+let isCalculating = false;
+
 watch(
   specs,
   async () => {
-    calculate();
+    if (isCalculating) return;
+    isCalculating = true;
+
+    try {
+      await calculate();
+      await fetchSpecs(undefined, true);
+    } finally {
+      isCalculating = false;
+    }
   },
   { deep: true },
 );

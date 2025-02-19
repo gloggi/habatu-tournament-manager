@@ -87,4 +87,9 @@ class Game extends Model
     {
         return $this->belongsToMany(User::class, 'game_user');
     }
+
+    public function notifiedUsers()
+    {
+        return $this->belongsToMany(User::class, 'user_game_notification');
+    }
 }

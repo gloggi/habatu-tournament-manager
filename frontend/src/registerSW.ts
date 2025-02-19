@@ -2,8 +2,6 @@ import { registerSW } from "virtual:pwa-register";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    console.log("New service worker detected.");
-
     if (!localStorage.getItem("swUpdated")) {
       localStorage.setItem("swUpdated", "true");
 

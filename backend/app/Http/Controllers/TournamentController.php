@@ -38,6 +38,17 @@ class TournamentController extends Controller
                 'play_for_third_place' => $validated['play_for_third_place'],
             ]
         );
+        $updatedOptions = Option::first();
+        if ($updatedOptions->round_robin) {
+            $categories = Category::all();
+            foreach ($categories as $category) {
+                $category->subgroups = 1;
+                $category->save();
+            }
+
+            return;
+
+        }
 
         foreach ($validated['groups_per_category'] as $category_id => $subgroup_count) {
             $category = Category::find($category_id);

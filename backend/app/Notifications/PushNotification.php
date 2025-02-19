@@ -41,8 +41,8 @@ class PushNotification extends Notification
             ->body($this->body)
             ->icon('/img/icons/android-chrome-192x192.png')
             ->badge('/img/icons/android-chrome-192x192.png')
-            ->action('View account', 'view_account')
+            ->data(['url' => config('app.frontend_url').'/my-team'])
             ->vibrate([200, 100, 200])
-            ->options(['TTL' => 1000]);
+            ->options(['TTL' => 1000, 'urgency' => 'high']);
     }
 }

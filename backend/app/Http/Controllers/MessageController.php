@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Notifications\PushNotification;
+use App\Services\NotificationService;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
@@ -57,5 +58,14 @@ class MessageController extends Controller
         $user->notify(new PushNotification($validated['title'], $validated['body']));
 
         return response()->json(['success' => true], 200);
+    }
+
+    public function notifyTeamMembers()
+    {
+        $notificationService = new NotificationService;
+        $notificationService->notify();
+
+        return response()->json(['success' => true], 200);
+
     }
 }

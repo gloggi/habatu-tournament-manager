@@ -73,7 +73,6 @@ const { data: loginData, fetchData: getLoginURL } = useApi<{ url: string }>(
 const loginWithMiData = async () => {
   try {
     await getLoginURL(undefined, true);
-    console.log(loginData);
     if (loginData.value) {
       window.location.href = loginData.value.url;
     }

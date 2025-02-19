@@ -42,3 +42,4 @@ Route::post('actions/clear-referees', [ActionsController::class, 'clearReferees'
 Route::post('messages/subscribe', [MessageController::class, 'subscribe']);
 Route::post('messages/broadcast', [MessageController::class, 'sendMessageToAllUsers']);
 Route::post('messages/unicast', [MessageController::class, 'sendMessageToUser']);
+Route::get('messages/notify', [MessageController::class, 'notifyTeamMembers']);
