@@ -23,7 +23,7 @@
           >
             <div
               v-if="timeIsNow(time)"
-              class="absolute -z-10 inset-0 top-2 ring-4 ring-foreground ring-offset-1 rounded-md"
+              class="absolute -z-10 inset-0 top-2 ring-4 ring-foreground ring-offset-1 rounded-md ml-2 -mr-2 md:ml-0 md:-mr-0"
             ></div>
             <TimeTile :time="time" />
           </div>

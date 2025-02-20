@@ -55,8 +55,6 @@ const userStore = useUserStore();
         <ClockIcon /><span>{{ time }}</span>
       </div>
       <div class="flex space-x-2">
-        <PwaInstallButton />
-        <PwaAllowPushNotifications />
         <Button
           @click="() => $router.push('/profile')"
           class="aspect-square p-0"

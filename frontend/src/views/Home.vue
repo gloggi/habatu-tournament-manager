@@ -19,6 +19,7 @@
         </div>
       </Card>
     </div>
+    <FirstLoginDrawer />
   </Container>
 </template>
 <script setup lang="ts">
@@ -35,6 +36,7 @@ import {
 } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 import Container from "@/components/Container.vue";
+import FirstLoginDrawer from "@/components/FirstLoginDrawer.vue";
 
 const router = useRouter();
 
@@ -91,7 +93,7 @@ const menuList: IMenuItem[] = [
   {
     name: "Admin",
     icon: CircleGauge,
-    routeName: "Admin",
+    routeName: "TournamentSettings",
   },
 ];
 </script>

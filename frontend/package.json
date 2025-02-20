@@ -25,6 +25,7 @@
     "radix-vue": "^1.9.5",
     "tailwind-merge": "^2.5.2",
     "tailwindcss-animate": "^1.0.7",
+    "vaul-vue": "^0.2.1",
     "vue": "^3.4.37",
     "vue-router": "^4.4.5",
     "workbox-window": "^7.3.0"

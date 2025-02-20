@@ -67,12 +67,20 @@ const data = {
     },
   ],
 };
+
+import rotatingBall from "@/assets/rotating_ball_a.png";
 </script>
 
 <template>
   <SidebarProvider>
     <Sidebar collapsible="icon" class="bg-gray-100">
-      <SidebarHeader class="h-24 bg-gray-100"> </SidebarHeader>
+      <SidebarHeader class="h-24 bg-gray-100">
+        <div class="flex justify-center items-center size-full">
+          <router-link to="/">
+            <img :src="rotatingBall" alt="rotating ball" class="size-14" />
+          </router-link>
+        </div>
+      </SidebarHeader>
       <SidebarContent class="bg-gray-100">
         <SidebarGroup>
           <SidebarMenu>

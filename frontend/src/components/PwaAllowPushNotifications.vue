@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import { Button } from "./ui/button";
-import { BellIcon } from "lucide-vue-next";
+import { BellIcon, BellRingIcon } from "lucide-vue-next";
 
 import {
   requestNotificationPermission,
@@ -40,11 +40,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <Button
-    v-if="pushSupported && !pushSubscribed"
-    @click="subscribeToPush"
-    variant="ghost"
-  >
-    <BellIcon />
+  <Button v-if="!pushSubscribed" @click="subscribeToPush" variant="outline">
+    <BellIcon class="w-4 h-4 mr-2" /> Push Benachrichtigunge aktivierä
+  </Button>
+  <Button v-else variant="outline" class="text-green-700" disabled>
+    <BellRingIcon class="w-4 h-4 mr-2" /> Push Benachrichtigunge sind aktiviert
   </Button>
 </template>

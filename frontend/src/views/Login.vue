@@ -33,7 +33,7 @@ const login = async () => {
     const response = await doLogin(loginForm.value);
     localStorage.setItem("token", response.token);
     userStore.fetchUser();
-    router.push({ name: "Home" });
+    router.push({ name: "Home", query: { login: "true" } });
   } catch (e) {
     toast({
       title: "Fehler",
@@ -56,7 +56,7 @@ const register = async () => {
     const response = await doRegister(registerForm.value);
     localStorage.setItem("token", response.token);
     userStore.fetchUser();
-    router.push({ name: "Home" });
+    router.push({ name: "Home", query: { login: "true" } });
   } catch (e) {
     toast({
       title: "Fehler",
@@ -96,7 +96,7 @@ const handleOAuthCode = async () => {
       const response = await registerWithCode({ code: code as string });
       localStorage.setItem("token", response.token);
       userStore.fetchUser();
-      router.push({ name: "Home" });
+      router.push({ name: "Home", query: { login: "true" } });
     } catch (e) {
       toast({
         title: "Fehler",

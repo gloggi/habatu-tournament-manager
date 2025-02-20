@@ -11,30 +11,55 @@ class ActionsController extends Controller
 {
     public function assignReferees(Request $request)
     {
-        $refereeQueue = User::where('role', 'referee')->get();
+        $referees = User::where('role', 'referee')->get();
+        if ($referees->isEmpty()) {
+            return response()->json(['message' => 'No referees found'], 404);
+        }
 
+        $refereeCount = $referees->count();
         $refereePointer = 0;
 
-        $timeslots = Timeslot::all();
+        $timeslots = Timeslot::with([
+            'games' => function ($gameQuery) {
+                $gameQuery->where('temporary', false)->where('played', false)
+                    ->whereHas('teamA', function ($teamAQuery) {
+                        $teamAQuery->where('dummy', false);
+                    })
+                    ->whereHas('teamB', function ($teamBQuery) {
+                        $teamBQuery->where('dummy', false);
+                    })
+                    ->with(['teamA', 'teamB']);
+            },
+        ])->get();
+
         foreach ($timeslots as $timeslot) {
-            $games = Game::where('timeslot_id', $timeslot->id)
-                ->where('temporary', false)
-                ->with('teamA', 'teamB')->get();
-            foreach ($games as $game) {
-                $referee = $refereeQueue[$refereePointer % $refereeQueue->count()];
-                $shiftCount = 1;
-                while ($shiftCount < $refereeQueue->count() && ($game->teamA->section_id == $referee->section_id || $game->teamB->section_id == $referee->section_id)) {
-                    $referee = $refereeQueue[($refereePointer + $shiftCount) % $refereeQueue->count()];
+            $usedRefereeIds = [];
+
+            foreach ($timeslot->games as $game) {
+                $eligibleReferee = null;
+                $shiftCount = 0;
+                while ($shiftCount < $refereeCount) {
+                    $currentReferee = $referees[($refereePointer + $shiftCount) % $refereeCount];
+                    if (
+                        ! in_array($currentReferee->id, $usedRefereeIds)
+                        && $currentReferee->section_id != $game->teamA->section_id
+                        && $currentReferee->section_id != $game->teamB->section_id
+                    ) {
+                        $eligibleReferee = $currentReferee;
+                        break;
+                    }
                     $shiftCount++;
                 }
-                if ($shiftCount == 1) {
-                    $refereePointer++;
+
+                if ($eligibleReferee) {
+                    $game->referees()->attach($eligibleReferee->id);
+                    $usedRefereeIds[] = $eligibleReferee->id;
+                    $refereePointer = ($refereePointer + $shiftCount + 1) % $refereeCount;
                 }
-                $game->referees()->attach($referee->id);
-                $game->save();
             }
         }
 
+        return response()->json(['message' => 'Referees assigned successfully']);
     }
 
     public function clearReferees(Request $request)

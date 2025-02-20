@@ -47,31 +47,28 @@ class NotificationService
     private function generateTeamNotificationMessage($game, $opponentTeam)
     {
         $minuteDifference = round(Carbon::now()->diffInMinutes($game->timeslot->start_time), 0);
-        $minuteDifferenceString = $minuteDifference == 1 ? 'einer Minute' : "$minuteDifference Minuten";
+        $minuteDifferenceString = $minuteDifference == 1 ? 'einere Minutä' : "$minuteDifference Minutä";
 
         $startTime = $game->timeslot->start_time->toTimeString('minute');
         $hallName = $game->hall->name;
         $opponentName = $opponentTeam->name;
 
-        // Titel-Varianten (Startzeit und Halle sind immer enthalten)
         $titles = [
-            "🏀 Nächstes Spiel um {$startTime} in {$hallName}!",
-            "⏰ Spielzeit! Um {$startTime} in {$hallName}",
-            "🏟️ Nächstes Spiel um {$startTime} in {$hallName}",
-            "🕒 Bald geht's los! Um {$startTime} in {$hallName}",
-            "🏀 Bereit für das Spiel um {$startTime} in {$hallName}?",
+            "🏀 S nächschte Spiel am {$startTime} ih de {$hallName}!",
+            "⏰ Spiilziit! Am {$startTime} ih de {$hallName}",
+            "🏟️ S nächschte Spiel am {$startTime} ih de {$hallName}",
+            "🕒 Bald gaht's los! Am {$startTime} ih de {$hallName}",
+            "🏀 Parat fürs Spiel am {$startTime} ih de {$hallName}?",
         ];
 
-        // Body-Varianten (zufällig und mit Emojis)
         $bodies = [
-            "Das Spiel gegen {$opponentName} beginnt in {$minuteDifferenceString}. 🏃‍♂️ Begib dich mit deinem Team in die Halle!",
-            "Gegen {$opponentName} geht es in {$minuteDifferenceString} los. 🏀 Schnapp dir dein Team und ab in die Halle!",
-            "Noch {$minuteDifferenceString} bis zum Anpfiff gegen {$opponentName}. 🏃‍♀️ Los, mach dich bereit!",
-            "Das Spiel gegen {$opponentName} startet in {$minuteDifferenceString}. 🏃‍♀️ Auf in die Halle, das Team wartet!",
-            "Gegen {$opponentName} geht es in {$minuteDifferenceString} los. 🏃‍♂️ Schnell, ab in die Halle!",
+            "S Spiel gege {$opponentName} fangt ih {$minuteDifferenceString} ah. 🏃‍♂️ Begib dich mit dim Team id Halle!",
+            "Gäge {$opponentName} gahts ih {$minuteDifferenceString} los. 🏀 Schnapp dir dis Team und ab ih d Halle!",
+            "No {$minuteDifferenceString} bis zum Anpfiff gäge {$opponentName}. 🏃‍♀️ Los, mached eu parat!",
+            "S Spiel gege {$opponentName} startet ih {$minuteDifferenceString}. 🏃‍♀️ Ab id Halle!",
+            "Gäge {$opponentName} gahts ih {$minuteDifferenceString} los. 🏃‍♂️ Schnell, ab id Halle!",
         ];
 
-        // Wähle zufällige Titel- und Body-Varianten aus
         $title = $titles[array_rand($titles)];
         $body = $bodies[array_rand($bodies)];
 

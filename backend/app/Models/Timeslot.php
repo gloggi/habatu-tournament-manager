@@ -15,4 +15,9 @@ class Timeslot extends Model
         'start_time' => 'datetime:H:i',
         'end_time' => 'datetime:H:i',
     ];
+
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
 }
