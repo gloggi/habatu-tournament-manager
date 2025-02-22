@@ -14,6 +14,7 @@ import NumberInputField from "@/components/NumberInputField.vue";
 import { Button } from "@/components/ui/button";
 import MultiComboBox from "@/components/MultiComboBox.vue";
 import Switch from "./Switch.vue";
+import { BellIcon } from "lucide-vue-next";
 
 const {
   fetchData: fetchGame,
@@ -86,6 +87,32 @@ watch(
     }
   },
 );
+
+const { postData : sendTeamMessage } = useApi<{teamId: number; gameId: number;}>("messages/team");
+const { postData : sendRefereesMessage } = useApi<{gameId: number;}>("messages/referees");
+
+const notifyTeam = async (teamId: number) => {
+  try{
+    sendTeamMessage({
+      teamId: teamId,
+      gameId: game.value!.id,
+    });
+  }catch(e){
+    console.error(e);
+  }
+
+};
+
+const notifyReferee = async () => {
+  try{
+    sendRefereesMessage({
+      gameId: game.value!.id,
+    });
+  }catch(e){
+    console.error(e);
+  }
+
+};
 </script>
 
 <template>
@@ -103,20 +130,38 @@ watch(
           :label="`Pünkt Team ${game.teamA.name} ${game.teamA.section ? `(${game.teamA.section?.name})` : ''}`"
           v-model="game.pointsTeamA"
           :min="0"
-        />
+        >
+          <template #nexttolabel>
+            <Button @click.prevent="notifyTeam(game.teamAId)" variant="ghost" class="p-0 h-fit ml-2"
+              ><BellIcon class="size-4"
+            /></Button>
+          </template>
+        </NumberInputField>
         <NumberInputField
           v-if="game.teamB"
           :label="`Pünkt Team ${game.teamB.name} ${game.teamA.section ? `(${game.teamB.section?.name})` : ''}`"
           v-model="game.pointsTeamB"
           :min="0"
-        />
+        >
+        <template #nexttolabel>
+            <Button @click.prevent="notifyTeam(game.teamBId)" variant="ghost" class="p-0 h-fit ml-2"
+              ><BellIcon class="size-4"
+            /></Button>
+          </template>
+      </NumberInputField>
         <MultiComboBox
           v-if="game"
           label="Schiri"
           optionsEntity="users"
           valueKey="nickname"
           v-model="referees"
-        />
+        >
+        <template #nexttolabel>
+            <Button @click.prevent="notifyReferee" variant="ghost" class="p-0 h-fit ml-2"
+              ><BellIcon class="size-4"
+            /></Button>
+          </template>
+      </MultiComboBox>
         <Switch v-model="game.played" label="Spiel gespielt" />
         <Button>Speicherä</Button>
       </form>

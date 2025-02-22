@@ -67,7 +67,9 @@ const removeItem = (id: number) => {
 </script>
 
 <template>
-  <Label for="multicombobox">{{ props.label }}</Label>
+  <div class="flex">
+      <Label>{{ props.label }}</Label> <slot name="nexttolabel"></slot>
+    </div>
   <TagsInput class="px-0 gap-0" :model-value="value">
     <div class="flex flex-row gap-2 items-center px-3">
       <TagsInputItem v-for="item in value" :key="item.id" :value="item.label">

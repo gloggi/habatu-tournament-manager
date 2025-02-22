@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Notifications\PushNotification;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
+use App\Models\Game;
+use App\Models\Team;
 
 class MessageController extends Controller
 {
@@ -64,6 +66,43 @@ class MessageController extends Controller
     {
         $notificationService = new NotificationService;
         $notificationService->notify();
+
+        return response()->json(['success' => true], 200);
+
+    }
+
+    public function remindTeamMembers(Request $request){
+
+        $validated = $request->validate([
+            'team_id' => 'required|integer',
+            'game_id' => 'required|integer',
+        ]);
+
+        $game = Game::find($validated['game_id'])->with(['hall', 'timeslot'])->first();
+        $teamMembers = Team::find($validated['team_id'])->members()->get();
+
+        foreach ($teamMembers as $member) {
+            $member->notify(new PushNotification('🚨 Spielerinnerig',
+             "Begib dich mit dim Team id {$game->hall->name} fürs Spiel am {$game->timeslot->start_time->toTimeString('minute')}"));
+        }
+
+        return response()->json(['success' => true], 200);
+
+    }
+
+    public function remindReferees(Request $request){
+
+        $validated = $request->validate([
+            'game_id' => 'required|integer',
+        ]);
+
+        $game = Game::find($validated['game_id'])->with(['hall', 'timeslot', 'referees'])->first();
+        $referees = $game->referees;
+
+        foreach ($referees as $referee) {
+            $referee->notify(new PushNotification('🚨 Schiriiinnerig',
+             "Begib dich id {$game->hall->name} spiel am {$game->timeslot->start_time->toTimeString('minute')} z pfiife"));
+        }
 
         return response()->json(['success' => true], 200);
 

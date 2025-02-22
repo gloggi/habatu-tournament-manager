@@ -43,3 +43,5 @@ Route::post('messages/subscribe', [MessageController::class, 'subscribe']);
 Route::post('messages/broadcast', [MessageController::class, 'sendMessageToAllUsers']);
 Route::post('messages/unicast', [MessageController::class, 'sendMessageToUser']);
 Route::get('messages/notify', [MessageController::class, 'notifyTeamMembers']);
+Route::post('messages/team', [MessageController::class, 'remindTeamMembers']);
+Route::post('messages/referees', [MessageController::class, 'remindReferees']);

@@ -26,7 +26,9 @@ const value = computed({
 
 <template>
   <NumberField v-model="value" :min="props.min" :max="props.max">
-    <Label>{{ label }}</Label>
+    <div class="flex">
+      <Label>{{ label }}</Label> <slot name="nexttolabel"></slot>
+    </div>
     <NumberFieldContent>
       <NumberFieldDecrement @click="emit('decrement', modelValue)" />
       <NumberFieldInput />
