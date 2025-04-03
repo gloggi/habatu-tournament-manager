@@ -23,8 +23,6 @@ onUnmounted(() => {
 
 import { useUserStore } from "@/stores/user";
 
-import PwaInstallButton from "./PwaInstallButton.vue";
-import PwaAllowPushNotifications from "./PwaAllowPushNotifications.vue";
 
 const userStore = useUserStore();
 </script>
