@@ -96,7 +96,7 @@ class MessageController extends Controller
             'game_id' => 'required|integer',
         ]);
 
-        $game = Game::find($validated['game_id'])->with(['hall', 'timeslot', 'referees'])->first();
+        $game = Game::with(['hall', 'timeslot', 'referees'])->findOr($validated['game_id']);
         $referees = $game->referees;
 
         foreach ($referees as $referee) {
