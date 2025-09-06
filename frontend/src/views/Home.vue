@@ -3,9 +3,9 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"
     >
+    <template v-for="item in menuList" :key="item.name">
       <Card
-        v-for="item in menuList"
-        :key="item.name"
+      v-if="item.allowed !== false"
         class="text-foreground aspect-square cursor-pointer"
         @click="handleRouteChange(item.routeName)"
       >
@@ -18,6 +18,7 @@
           </div>
         </div>
       </Card>
+      </template>
     </div>
     <FirstLoginDrawer />
   </Container>
@@ -35,15 +36,19 @@ import {
   Trophy,
 } from "lucide-vue-next";
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 import Container from "@/components/Container.vue";
 import FirstLoginDrawer from "@/components/FirstLoginDrawer.vue";
 
 const router = useRouter();
+const userStore = useUserStore();
+
 
 interface IMenuItem {
   name: string;
   icon: any;
   routeName: string;
+  allowed?: boolean;
 }
 
 const handleRouteChange = (routeName: string) => {
@@ -74,6 +79,7 @@ const menuList: IMenuItem[] = [
     name: "Schiri",
     icon: Binoculars,
     routeName: "Referee",
+    allowed: userStore.isReferee || userStore.isAdmin
   },
   {
     name: "Mis Team",
@@ -89,11 +95,13 @@ const menuList: IMenuItem[] = [
     name: "Nachrichte",
     icon: MessageCircleIcon,
     routeName: "Messages",
+    allowed: userStore.isAdmin
   },
   {
     name: "Admin",
     icon: CircleGauge,
     routeName: "TournamentSettings",
+    allowed: userStore.isAdmin
   },
 ];
 </script>

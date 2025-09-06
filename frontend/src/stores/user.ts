@@ -12,6 +12,7 @@ export const useUserStore = defineStore("user", {
   getters: {
     getUserId: (state) => state.user?.id,
     isAdmin: (state) => state.user?.role === "admin",
+    isReferee: (state) => state.user?.role === "referee" || state.user?.role === "admin",
     getUserNickname: (state) => state.user?.nickname ?? "",
     getTeamName: (state) => state.user?.team?.name ?? "",
     getSectionName: (state) => state.user?.section?.name ?? "",

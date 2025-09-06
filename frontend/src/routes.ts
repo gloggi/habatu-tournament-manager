@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import { useUserStore } from "@/stores/user";
 
 import Home from "./views/Home.vue";
 import Create from "./views/Create.vue";
@@ -22,8 +23,9 @@ import Referee from "./views/Referee.vue";
 import MyTeamTable from "./views/MyTeamTable.vue";
 import WhistleView from "./views/WhistleView.vue";
 import Messages from "./views/Messages.vue";
+import { RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes : Array<RouteRecordRaw> = [
   { path: "/", name: "Home", component: Home },
   {
     path: "/setup",
@@ -73,11 +75,56 @@ const isAuthenticated = (): boolean => {
   return !!token;
 };
 
-// Global Navigation Guard
-router.beforeEach((to, _, next) => {
+const adminOnlyRoutes = [
+  "Admin",
+  "Halls", 
+  "Hall",
+  "Categories",
+  "Category",
+  "Sections", 
+  "Section",
+  "Teams",
+  "Team",
+  "Users",
+  "User",
+  "TournamentSettings"
+];
+
+const refereeOnlyRoutes = [
+  "Whistle",
+  "Referee"
+];
+
+
+router.beforeEach(async (to, _, next) => {
   if (to.name !== "Login" && !isAuthenticated()) {
     next({ name: "Login" });
-  } else {
-    next();
+    return;
   }
+
+
+  const userStore = useUserStore();
+
+
+  if (isAuthenticated()) {
+    await userStore.fetchUser();
+  }
+
+
+  if (to.name && adminOnlyRoutes.includes(to.name as string)) {
+    if (!userStore.isAdmin) {
+      next({ name: "Home" });
+      return;
+    }
+  }
+
+
+  if (to.name && refereeOnlyRoutes.includes(to.name as string)) {
+    if (!userStore.isReferee) {
+      next({ name: "Home" });
+      return;
+    }
+  }
+
+  next();
 });
