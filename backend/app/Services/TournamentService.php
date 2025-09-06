@@ -47,6 +47,7 @@ class TournamentService
 
         $mergedGames = $this->zipMergeGames($gamesByCategory);
         $this->createTimeTable($mergedGames);
+        $this->findTournamentConflicts();
         $this->createFinals();
 
         return $this->getTournamentInfos();
@@ -224,14 +225,70 @@ class TournamentService
 
     }
 
-    private function createTimeTable($zipMergedGames)
+    private function createTimeTable($queue)
     {
-        foreach ($zipMergedGames as $game) {
+        $carry = [];
+
+        $currentTimeSlot = null;
+        $teamsInCurrentSlot = [];
+        $preferCarry = false;
+
+        $stallCount = 0;
+
+        $stallThresholdForSlot = 0;
+
+        while (! empty($queue) || ! empty($carry)) {
+
+            if ($stallThresholdForSlot > 0 && $stallCount >= $stallThresholdForSlot) {
+                [$timeSlot, $hall] = $this->getTimeAndHallSlot(newSlot: true);
+                $currentTimeSlot = $timeSlot;
+                $teamsInCurrentSlot = [];
+                $preferCarry = ! empty($carry);
+                $stallCount = 0;
+                $stallThresholdForSlot = count($queue) + count($carry);
+            }
+
             [$timeSlot, $hall] = $this->getTimeAndHallSlot();
+
+            if ($currentTimeSlot?->id !== $timeSlot->id) {
+                $currentTimeSlot = $timeSlot;
+                $teamsInCurrentSlot = [];
+                $preferCarry = ! empty($carry);
+                $stallCount = 0;
+                $stallThresholdForSlot = count($queue) + count($carry);
+            }
+
+            if ($preferCarry && ! empty($carry)) {
+                $game = array_shift($carry);
+                if (empty($carry)) {
+                    $preferCarry = false;
+                }
+            } else {
+                $game = ! empty($queue) ? array_shift($queue) : array_shift($carry);
+                if (! $game) {
+                    break;
+                }
+            }
+
+            if (
+                in_array($game->team_a_id, $teamsInCurrentSlot, true) ||
+                in_array($game->team_b_id, $teamsInCurrentSlot, true)
+            ) {
+                $carry[] = $game;
+                $stallCount++;
+
+                continue;
+            }
+
+            $teamsInCurrentSlot[] = $game->team_a_id;
+            $teamsInCurrentSlot[] = $game->team_b_id;
 
             $game->timeslot_id = $timeSlot->id;
             $game->hall_id = $hall->id;
             $game->save();
+
+            $stallCount = 0;
+            $stallThresholdForSlot = count($queue) + count($carry);
         }
     }
 
@@ -373,5 +430,28 @@ class TournamentService
         }
 
         return $games;
+    }
+
+    public function findTournamentConflicts()
+    {
+        $timeslots = Timeslot::where('temporary', $this->temporary)->orderBy('start_time')->get();
+        $halls = Hall::all();
+        foreach ($timeslots as $timeslot) {
+            $numberOfGamesInTimeslot = Game::where('timeslot_id', $timeslot->id)->where('temporary', $this->temporary)->count();
+            $gamesInTimeSlot = Game::where('timeslot_id', $timeslot->id)->where('temporary', $this->temporary)->get();
+            $teamsInTimeslot = [];
+            foreach ($gamesInTimeSlot as $game) {
+                $teamsInTimeslot[] = $game->team_a_id;
+                $teamsInTimeslot[] = $game->team_b_id;
+            }
+            $numbersOfDifferentTeamsInTimeslot = count(array_unique($teamsInTimeslot));
+
+            if ($numberOfGamesInTimeslot * 2 == $numbersOfDifferentTeamsInTimeslot) {
+                continue;
+            }
+
+            return "Conflict detected in timeslot {$timeslot->id} at {$timeslot->start_time->format('H:i')} - {$timeslot->end_time->format('H:i')}. {$numberOfGamesInTimeslot} games scheduled with only {$numbersOfDifferentTeamsInTimeslot} different teams.";
+        }
+
     }
 }

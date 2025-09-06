@@ -34,6 +34,7 @@ Route::post('tournament/new-timeslot', [TournamentController::class, 'addNewTime
 Route::get('tournament/ranking', [TournamentController::class, 'getRanking']);
 Route::get('tournament/referee-table', [TournamentController::class, 'getRefereeTable']);
 Route::get('tournament/team-table', [TournamentController::class, 'getTeamTable']);
+Route::get('tournament/conflicts', [TournamentController::class, 'findConflicts']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 Route::get('roles', [UserController::class, 'getRoles']);

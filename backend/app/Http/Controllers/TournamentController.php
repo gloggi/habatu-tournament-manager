@@ -215,4 +215,12 @@ class TournamentController extends Controller
 
         return response()->json($newSlot);
     }
+
+    public function findConflicts()
+    {
+        $tournamentService = new TournamentService;
+        $conflicts = $tournamentService->findTournamentConflicts();
+
+        return response()->json($conflicts);
+    }
 }
