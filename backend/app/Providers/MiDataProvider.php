@@ -8,7 +8,7 @@ use Laravel\Socialite\Two\User;
 
 class MiDataProvider extends AbstractProvider implements Provider
 {
-    protected $scopes = ['email', 'name', 'with_roles'];
+    protected $scopes = ['email', 'name'];
 
     protected $scopeSeparator = ' ';
 
@@ -32,7 +32,7 @@ class MiDataProvider extends AbstractProvider implements Provider
         $response = $this->getHttpClient()->get("{$midataBaseUrl}/oauth/profile", [
             'headers' => [
                 'Authorization' => 'Bearer '.$token,
-                'X-Scope' => 'with_roles',
+                'X-Scope' => 'name',
             ],
         ]);
 
