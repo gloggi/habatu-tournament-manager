@@ -392,7 +392,7 @@ class TournamentService
         }
 
         if ($teamCount < 2) {
-            return;
+            return [];
         }
 
         $rounds = $teamCount - 1;
