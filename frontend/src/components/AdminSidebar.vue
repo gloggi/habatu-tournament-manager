@@ -77,7 +77,7 @@ import rotatingBall from "@/assets/rotating_ball_a.png";
       <SidebarHeader class="h-24 bg-gray-100">
         <div class="flex justify-center items-center size-full">
           <router-link to="/">
-            <img :src="rotatingBall" alt="rotating ball" class="size-14" />
+            <img :src="rotatingBall" alt="rotating ball" class="max-w-14 w-full aspect-square" />
           </router-link>
         </div>
       </SidebarHeader>

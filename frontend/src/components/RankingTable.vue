@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div>
     <div class="flex font-semibold space-x-2">
-      <p class="points-item">P</p>
+      <p class="points-item">🏅</p>
       <p class="w-1/3 md:w-1/6">Teamname</p>
       <p class="w-0 md:w-1/6 hidden md:block">Abteilung</p>
       <p class="points-item">SP.</p>
