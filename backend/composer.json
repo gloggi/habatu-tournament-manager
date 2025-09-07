@@ -6,8 +6,8 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel-notification-channels/webpush": "^9.0",
-        "laravel/framework": "^11.9",
+        "laravel-notification-channels/webpush": "^10.0",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.18",
         "laravel/telescope": "^5.11",
