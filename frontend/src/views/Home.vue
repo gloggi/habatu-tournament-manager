@@ -3,21 +3,21 @@
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"
     >
-    <template v-for="item in menuList" :key="item.name">
-      <Card
-      v-if="item.allowed !== false"
-        class="text-foreground aspect-square cursor-pointer"
-        @click="handleRouteChange(item.routeName)"
-      >
-        <div class="object-cover transition-all hover:scale-105">
-          <div class="w-full h-3/3 flex justify-center items-center">
-            <component class="size-full" :is="item.icon" />
+      <template v-for="item in menuList" :key="item.name">
+        <Card
+          v-if="item.allowed !== false"
+          class="text-foreground aspect-square cursor-pointer"
+          @click="handleRouteChange(item.routeName)"
+        >
+          <div class="object-cover transition-all hover:scale-105">
+            <div class="w-full h-3/3 flex justify-center items-center">
+              <component class="size-full" :is="item.icon" />
+            </div>
+            <div class="w-full h-1/4 flex justify-center">
+              <p class="text-xl font-semibold">{{ item.name }}</p>
+            </div>
           </div>
-          <div class="w-full h-1/4 flex justify-center">
-            <p class="text-xl font-semibold">{{ item.name }}</p>
-          </div>
-        </div>
-      </Card>
+        </Card>
       </template>
     </div>
     <FirstLoginDrawer />
@@ -42,7 +42,6 @@ import FirstLoginDrawer from "@/components/FirstLoginDrawer.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
-
 
 interface IMenuItem {
   name: string;
@@ -79,7 +78,7 @@ const menuList: IMenuItem[] = [
     name: "Schiri",
     icon: Binoculars,
     routeName: "Referee",
-    allowed: userStore.isReferee || userStore.isAdmin
+    allowed: userStore.isReferee || userStore.isAdmin,
   },
   {
     name: "Mis Team",
@@ -95,13 +94,13 @@ const menuList: IMenuItem[] = [
     name: "Nachrichte",
     icon: MessageCircleIcon,
     routeName: "Messages",
-    allowed: userStore.isAdmin
+    allowed: userStore.isAdmin,
   },
   {
     name: "Admin",
     icon: CircleGauge,
     routeName: "TournamentSettings",
-    allowed: userStore.isAdmin
+    allowed: userStore.isAdmin,
   },
 ];
 </script>

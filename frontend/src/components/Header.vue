@@ -22,7 +22,7 @@ onUnmounted(() => {
 });
 
 import { useUserStore } from "@/stores/user";
-
+import GameTableControlButtons from "@/components/GameTableControlButtons.vue";
 
 const userStore = useUserStore();
 </script>
@@ -53,6 +53,7 @@ const userStore = useUserStore();
         <ClockIcon /><span>{{ time }}</span>
       </div>
       <div class="flex space-x-2">
+        <GameTableControlButtons v-if="$route.name === 'GameTable'" />
         <Button
           @click="() => $router.push('/profile')"
           class="aspect-square p-0"

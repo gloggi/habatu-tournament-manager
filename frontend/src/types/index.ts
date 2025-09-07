@@ -73,6 +73,7 @@ export type Game = {
   played: boolean;
   classes: string;
   finalTypeLabel?: string;
+  hasReferee: boolean;
 };
 
 export type SlotInfo = {

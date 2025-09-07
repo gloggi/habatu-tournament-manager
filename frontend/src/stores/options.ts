@@ -5,6 +5,11 @@ import { Options } from "@/types";
 export const useOptionsStore = defineStore("options", {
   state: () => ({
     options: null as Options | null,
+    localOptions: {
+      gameTableRefreshRate: localStorage.getItem("gameTableRefreshRate")
+        ? parseInt(localStorage.getItem("gameTableRefreshRate") || "5")
+        : 5,
+    },
   }),
 
   getters: {
@@ -15,6 +20,8 @@ export const useOptionsStore = defineStore("options", {
     getAdditionalSlots: (state) => state.options?.additionalSlots ?? 0,
     isTournamentStarted: (state) => state.options?.startedTournament ?? false,
     hasEndedRoundGames: (state) => state.options?.endedRoundGames ?? false,
+    getLocalGameTableRefreshRate: (state) =>
+      state.localOptions.gameTableRefreshRate,
   },
 
   actions: {
@@ -32,6 +39,11 @@ export const useOptionsStore = defineStore("options", {
 
     clearOptions() {
       this.options = null;
+    },
+
+    setLocalGameTableRefreshRate(value: number) {
+      this.localOptions.gameTableRefreshRate = value;
+      localStorage.setItem("gameTableRefreshRate", value.toString());
     },
   },
 });

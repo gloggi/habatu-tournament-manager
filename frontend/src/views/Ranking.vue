@@ -3,6 +3,7 @@ import { useApi } from "@/api";
 import Card from "@/components/Card.vue";
 import Container from "@/components/Container.vue";
 import RankingTable from "@/components/RankingTable.vue";
+import H1 from "@/components/H1.vue";
 import { CategoryRankings } from "@/types";
 
 const { fetchData: getRanking, data: ranking } =
@@ -13,6 +14,8 @@ getRanking(undefined, true);
 
 <template>
   <Container>
+    <!--<H1 class="text-2xl font-bold mb-5">Ranglischte Finale</H1>-->
+    <H1 class="text-2xl font-bold mb-5">Ranglischte Gruppespiel</H1>
     <div class="flex flex-col space-y-5">
       <template v-for="category in ranking" :key="category.categoryName">
         <template v-if="category.groups.length > 1">

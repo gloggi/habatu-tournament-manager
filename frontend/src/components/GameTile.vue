@@ -13,7 +13,7 @@
     </div>
     <div
       class="absolute -z-20 inset-0 rounded-md"
-      :style="{ backgroundColor: props.game.category.color! }"
+      :style="{ backgroundColor: tileColor }"
     ></div>
     <div :class="`absolute -z-10  inset-0 rounded-md ${game.classes}`"></div>
     <div class="size-full flex space-x-2">
@@ -29,6 +29,12 @@
 </template>
 <script setup lang="ts">
 import { Game } from "@/types";
+import { useTournamentTableStore } from "@/stores/tournamentTable";
+import { storeToRefs } from "pinia";
+import { computed } from "vue";
+
+const tournamentTableStore = useTournamentTableStore();
+const { showRefereeView, showPlayedView } = storeToRefs(tournamentTableStore);
 
 const props = defineProps<{
   game: Game;
@@ -43,6 +49,12 @@ const handleClick = () => {
 const handleDragStart = (event: DragEvent) => {
   event.dataTransfer?.setData("gameId", props.game.id.toString());
 };
+
+const tileColor = computed(() => {
+  if (showRefereeView.value && !props.game.hasReferee) return "gray";
+  if (showPlayedView.value && !props.game.played) return "gray";
+  return props.game.category.color;
+});
 </script>
 <style>
 /* Style is located in the index.css with @apply */

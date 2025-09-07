@@ -88,30 +88,33 @@ watch(
   },
 );
 
-const { postData : sendTeamMessage } = useApi<{teamId: number; gameId: number;}>("messages/team");
-const { postData : sendRefereesMessage } = useApi<{gameId: number;}>("messages/referees");
+const { postData: sendTeamMessage } = useApi<{
+  teamId: number;
+  gameId: number;
+}>("messages/team");
+const { postData: sendRefereesMessage } = useApi<{ gameId: number }>(
+  "messages/referees",
+);
 
 const notifyTeam = async (teamId: number) => {
-  try{
+  try {
     sendTeamMessage({
       teamId: teamId,
       gameId: game.value!.id,
     });
-  }catch(e){
+  } catch (e) {
     console.error(e);
   }
-
 };
 
 const notifyReferee = async () => {
-  try{
+  try {
     sendRefereesMessage({
       gameId: game.value!.id,
     });
-  }catch(e){
+  } catch (e) {
     console.error(e);
   }
-
 };
 </script>
 
@@ -132,7 +135,10 @@ const notifyReferee = async () => {
           :min="0"
         >
           <template #nexttolabel>
-            <Button @click.prevent="notifyTeam(game.teamAId)" variant="ghost" class="p-0 h-fit ml-2"
+            <Button
+              @click.prevent="notifyTeam(game.teamAId)"
+              variant="ghost"
+              class="p-0 h-fit ml-2"
               ><BellIcon class="size-4"
             /></Button>
           </template>
@@ -143,12 +149,15 @@ const notifyReferee = async () => {
           v-model="game.pointsTeamB"
           :min="0"
         >
-        <template #nexttolabel>
-            <Button @click.prevent="notifyTeam(game.teamBId)" variant="ghost" class="p-0 h-fit ml-2"
+          <template #nexttolabel>
+            <Button
+              @click.prevent="notifyTeam(game.teamBId)"
+              variant="ghost"
+              class="p-0 h-fit ml-2"
               ><BellIcon class="size-4"
             /></Button>
           </template>
-      </NumberInputField>
+        </NumberInputField>
         <MultiComboBox
           v-if="game"
           label="Schiri"
@@ -156,12 +165,15 @@ const notifyReferee = async () => {
           valueKey="nickname"
           v-model="referees"
         >
-        <template #nexttolabel>
-            <Button @click.prevent="notifyReferee" variant="ghost" class="p-0 h-fit ml-2"
+          <template #nexttolabel>
+            <Button
+              @click.prevent="notifyReferee"
+              variant="ghost"
+              class="p-0 h-fit ml-2"
               ><BellIcon class="size-4"
             /></Button>
           </template>
-      </MultiComboBox>
+        </MultiComboBox>
         <Switch v-model="game.played" label="Spiel gespielt" />
         <Button>Speicherä</Button>
       </form>

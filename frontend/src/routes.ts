@@ -25,7 +25,7 @@ import WhistleView from "./views/WhistleView.vue";
 import Messages from "./views/Messages.vue";
 import { RouteRecordRaw } from "vue-router";
 
-const routes : Array<RouteRecordRaw> = [
+const routes: Array<RouteRecordRaw> = [
   { path: "/", name: "Home", component: Home },
   {
     path: "/setup",
@@ -77,24 +77,20 @@ const isAuthenticated = (): boolean => {
 
 const adminOnlyRoutes = [
   "Admin",
-  "Halls", 
+  "Halls",
   "Hall",
   "Categories",
   "Category",
-  "Sections", 
+  "Sections",
   "Section",
   "Teams",
   "Team",
   "Users",
   "User",
-  "TournamentSettings"
+  "TournamentSettings",
 ];
 
-const refereeOnlyRoutes = [
-  "Whistle",
-  "Referee"
-];
-
+const refereeOnlyRoutes = ["Whistle", "Referee"];
 
 router.beforeEach(async (to, _, next) => {
   if (to.name !== "Login" && !isAuthenticated()) {
@@ -102,14 +98,11 @@ router.beforeEach(async (to, _, next) => {
     return;
   }
 
-
   const userStore = useUserStore();
-
 
   if (isAuthenticated()) {
     await userStore.fetchUser();
   }
-
 
   if (to.name && adminOnlyRoutes.includes(to.name as string)) {
     if (!userStore.isAdmin) {
@@ -117,7 +110,6 @@ router.beforeEach(async (to, _, next) => {
       return;
     }
   }
-
 
   if (to.name && refereeOnlyRoutes.includes(to.name as string)) {
     if (!userStore.isReferee) {

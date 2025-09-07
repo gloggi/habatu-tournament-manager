@@ -92,6 +92,7 @@ const { postData: registerWithCode } = useApi("auth/midata/callback");
 const handleOAuthCode = async () => {
   const code = route.query.code;
   if (code) {
+    console.log("Handling OAuth code:", code);
     try {
       const response = await registerWithCode({ code: code as string });
       localStorage.setItem("token", response.token);

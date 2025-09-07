@@ -145,4 +145,18 @@ const handleAddTimeslot = async () => {
   await addTimeslot({});
   await updateTable();
 };
+
+import { storeToRefs } from "pinia";
+const { getLocalGameTableRefreshRate } = storeToRefs(optionsStore);
+
+function refreshLoop() {
+  if (getLocalGameTableRefreshRate.value > 0) {
+    updateTable();
+    setTimeout(refreshLoop, getLocalGameTableRefreshRate.value * 1000);
+  } else {
+    setTimeout(refreshLoop, 10000);
+  }
+}
+
+refreshLoop();
 </script>
