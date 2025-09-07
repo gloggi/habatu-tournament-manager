@@ -207,6 +207,10 @@ class TournamentController extends Controller
         return response()->json($ranking);
     }
 
+    public function getFinalsRanking(Request $request){
+        
+    }
+
     public function addNewTimeslot(Request $request)
     {
 

@@ -15,7 +15,7 @@ class Game extends Model
         'played' => 'boolean',
     ];
 
-    protected $appends = ['final_type_label', 'classes'];
+    protected $appends = ['final_type_label', 'classes', 'has_referee'];
 
     protected $hidden = ['final_type'];
 
@@ -56,6 +56,10 @@ class Game extends Model
         }
 
         return $classes[$this->finale_type] ?? '';
+    }
+    public function getHasRefereeAttribute()
+    {
+        return $this->referees()->exists();
     }
 
     public function teamA()

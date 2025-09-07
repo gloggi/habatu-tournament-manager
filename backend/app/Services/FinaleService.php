@@ -46,7 +46,7 @@ class FinaleService
             $this->assignGroupWinnerAndLoosers($category, $groups, $nextFinaleType);
         } elseif ($groups->count() > 0) {
             $this->assignFinaleTeamsByCategory($category, $nextFinaleType);
-        } else {
+        } elseif($nextFinaleType) {
             $this->assignFinaleTeamsZeroGroups($category, $nextFinaleType);
         }
 
@@ -197,6 +197,7 @@ class FinaleService
             ];
 
         }
+        
 
         usort($teamsRanking, function ($a, $b) {
             if ($a['points'] == $b['points']) {
@@ -217,5 +218,17 @@ class FinaleService
         }
 
         return $teamsRanking;
+    }
+
+    public function rankTeamsInFinals($teams){
+        $teamsRanking = [];
+        $games = Game::where('played', true)
+                ->where('temporary', false)
+                ->whereNotNull('finale_type')
+               ->where(function ($query) use ($team) {
+                    $query->where('team_a_id', $team->id)->orWhere('team_b_id', $team->id);
+                })
+                ->get();
+
     }
 }
