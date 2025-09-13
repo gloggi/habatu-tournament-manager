@@ -46,7 +46,7 @@ class FinaleService
             $this->assignGroupWinnerAndLoosers($category, $groups, $nextFinaleType);
         } elseif ($groups->count() > 0) {
             $this->assignFinaleTeamsByCategory($category, $nextFinaleType);
-        } elseif($nextFinaleType) {
+        } elseif ($nextFinaleType) {
             $this->assignFinaleTeamsZeroGroups($category, $nextFinaleType);
         }
 
@@ -136,7 +136,7 @@ class FinaleService
         }
     }
 
-    public function rankTeams($teams)
+    public function rankTeams($teams, $withFinals = false)
     {
         $teamsRanking = [];
         foreach ($teams as $team) {
@@ -146,13 +146,16 @@ class FinaleService
             $gamesLost = 0;
             $gamesDrawn = 0;
             $team->points = 0;
-            $games = Game::where('played', true)
-                ->where('temporary', false)
-                ->whereNull('finale_type')
-                ->where(function ($query) use ($team) {
-                    $query->where('team_a_id', $team->id)->orWhere('team_b_id', $team->id);
-                })
-                ->get();
+            $gamesQuery = Game::where('played', true)
+                ->where('temporary', false);
+            if (! $withFinals) {
+                $gamesQuery = $gamesQuery->whereNull('finale_type');
+            }
+            $gamesQuery = $gamesQuery->where(function ($query) use ($team) {
+                $query->where('team_a_id', $team->id)->orWhere('team_b_id', $team->id);
+            });
+
+            $games = $gamesQuery->get();
             foreach ($games as $game) {
                 if ($game->team_a_id == $team->id) {
                     $goalsScored += $game->points_team_a;
@@ -197,7 +200,6 @@ class FinaleService
             ];
 
         }
-        
 
         usort($teamsRanking, function ($a, $b) {
             if ($a['points'] == $b['points']) {
@@ -211,6 +213,10 @@ class FinaleService
             return $b['points'] - $a['points'];
         });
 
+        if ($withFinals) {
+            $teamsRanking = $this->sortTeamsForFinalRanking($teams, $teamsRanking);
+        }
+
         $rank = 1;
         foreach ($teamsRanking as $key => $team) {
             $teamsRanking[$key]['rank'] = $rank;
@@ -220,15 +226,60 @@ class FinaleService
         return $teamsRanking;
     }
 
-    public function rankTeamsInFinals($teams){
-        $teamsRanking = [];
-        $games = Game::where('played', true)
+    public function sortTeamsForFinalRanking($teams, $teamsRanking)
+    {
+        $categoryId = $teams[0]->category_id;
+        $rankingOrderByTeamsId = [];
+        $finaleTypes = [1, 2, 4, 8, 16, 32, 64, 128];
+        foreach ($finaleTypes as $finaleType) {
+            $finalGame = Game::where('category_id', $categoryId)
                 ->where('temporary', false)
-                ->whereNotNull('finale_type')
-               ->where(function ($query) use ($team) {
-                    $query->where('team_a_id', $team->id)->orWhere('team_b_id', $team->id);
-                })
-                ->get();
+                ->where('finale_type', $finaleType)
+                ->where('play_for_third', false)
+                ->first();
+            if (! $finalGame) {
+                break;
+            }
+            $winnerId = $finalGame->points_team_a > $finalGame->points_team_b ? $finalGame->team_a_id : $finalGame->team_b_id;
+            $loserId = $finalGame->points_team_a < $finalGame->points_team_b ? $finalGame->team_a_id : $finalGame->team_b_id;
+            if (! in_array($winnerId, $rankingOrderByTeamsId)) {
+                $rankingOrderByTeamsId[] = $winnerId;
+                $rankingOrderByTeamsId[] = $loserId;
+            }
+            if ($finaleType == 1 && $this->options->play_for_third_place) {
+                $thirdPlaceGame = Game::where('category_id', $categoryId)
+                    ->where('temporary', false)
+                    ->where('finale_type', $finaleType)
+                    ->where('play_for_third', true)
+                    ->first();
+                if ($thirdPlaceGame) {
+                    $thirdPlaceWinnerId = $thirdPlaceGame->points_team_a > $thirdPlaceGame->points_team_b ? $thirdPlaceGame->team_a_id : $thirdPlaceGame->team_b_id;
+                    $thirdPlaceLoserId = $thirdPlaceGame->points_team_a < $thirdPlaceGame->points_team_b ? $thirdPlaceGame->team_a_id : $thirdPlaceGame->team_b_id;
+                    if (! in_array($thirdPlaceWinnerId, $rankingOrderByTeamsId)) {
+                        $rankingOrderByTeamsId[] = $thirdPlaceWinnerId;
+                    }
+                    if (! in_array($thirdPlaceLoserId, $rankingOrderByTeamsId)) {
+                        $rankingOrderByTeamsId[] = $thirdPlaceLoserId;
+                    }
+                }
+            }
+        }
 
+        $newTeamsRanking = [];
+        foreach ($rankingOrderByTeamsId as $teamId) {
+            foreach ($teamsRanking as $teamRanking) {
+                if ($teamRanking['team']->id == $teamId) {
+                    $newTeamsRanking[] = $teamRanking;
+                    break;
+                }
+            }
+        }
+        foreach ($teamsRanking as $teamRanking) {
+            if (! in_array($teamRanking['team']->id, $rankingOrderByTeamsId)) {
+                $newTeamsRanking[] = $teamRanking;
+            }
+        }
+
+        return $newTeamsRanking;
     }
 }

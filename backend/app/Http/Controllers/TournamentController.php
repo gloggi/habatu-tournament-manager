@@ -207,8 +207,23 @@ class TournamentController extends Controller
         return response()->json($ranking);
     }
 
-    public function getFinalsRanking(Request $request){
-        
+    public function getFinalsRanking(Request $request)
+    {
+        $hasUnplayedFinalGame = Game::where('finale_type', '>', 0)->where('played', false)->exists();
+        if ($hasUnplayedFinalGame) {
+            return response()->json([]);
+        }
+
+        $finaleService = new FinaleService;
+        $categories = Category::all();
+        $finalsRanking = [];
+        foreach ($categories as $category) {
+            $teams = Team::with('section')->where('category_id', $category->id)->where('dummy', false)->get();
+            $rankedTeams = $finaleService->rankTeams($teams, true);
+            $finalsRanking[] = ['category_name' => $category->name, 'groups' => [['ranking' => $rankedTeams]]];
+        }
+
+        return response()->json($finalsRanking);
     }
 
     public function addNewTimeslot(Request $request)

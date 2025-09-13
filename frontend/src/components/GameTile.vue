@@ -13,7 +13,7 @@
     </div>
     <div
       class="absolute -z-20 inset-0 rounded-md"
-      :style="{ backgroundColor: tileColor }"
+      :style="{ backgroundColor: tileColor || 'transparent' }"
     ></div>
     <div :class="`absolute -z-10  inset-0 rounded-md ${game.classes}`"></div>
     <div class="size-full flex space-x-2">

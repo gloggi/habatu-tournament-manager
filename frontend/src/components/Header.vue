@@ -34,35 +34,41 @@ const userStore = useUserStore();
     <div
       class="container flex h-14 max-w-screen-2xl justify-between items-center w-full"
     >
-      <div class="flex items-center h-full space-x-2">
-        <Button
-          @click="() => $router.back()"
-          class="md:hidden aspect-square p-0"
-          variant="ghost"
-          ><ChevronLeftIcon
-        /></Button>
-        <Button
-          @click="() => $router.push('/')"
-          class="aspect-square p-0"
-          variant="ghost"
-        >
-          <img class="aspect-square" :src="logo" />
-        </Button>
+      <div class="w-1/3">
+        <div class="flex items-center h-full space-x-2">
+          <Button
+            @click="() => $router.back()"
+            class="md:hidden aspect-square p-0"
+            variant="ghost"
+            ><ChevronLeftIcon
+          /></Button>
+          <Button
+            @click="() => $router.push('/')"
+            class="aspect-square p-0"
+            variant="ghost"
+          >
+            <img class="aspect-square" :src="logo" />
+          </Button>
+        </div>
       </div>
-      <div class="text-2xl font-semibold flex items-center space-x-2">
-        <ClockIcon /><span>{{ time }}</span>
+      <div class="w-1/3 flex justify-center">
+        <div class="text-2xl font-semibold flex items-center space-x-2">
+          <ClockIcon /><span>{{ time }}</span>
+        </div>
       </div>
-      <div class="flex space-x-2">
-        <GameTableControlButtons v-if="$route.name === 'GameTable'" />
-        <Button
-          @click="() => $router.push('/profile')"
-          class="aspect-square p-0"
-          variant="ghost"
-        >
-          <Avatar>
-            {{ userStore.user?.nickname.substring(0, 1).toUpperCase() }}
-          </Avatar>
-        </Button>
+      <div class="w-1/3 flex justify-end">
+        <div class="flex space-x-2">
+          <GameTableControlButtons v-if="$route.name === 'GameTable'" />
+          <Button
+            @click="() => $router.push('/profile')"
+            class="aspect-square p-0"
+            variant="ghost"
+          >
+            <Avatar>
+              {{ userStore.user?.nickname.substring(0, 1).toUpperCase() }}
+            </Avatar>
+          </Button>
+        </div>
       </div>
     </div>
   </header>

@@ -57,6 +57,7 @@ class Game extends Model
 
         return $classes[$this->finale_type] ?? '';
     }
+
     public function getHasRefereeAttribute()
     {
         return $this->referees()->exists();
