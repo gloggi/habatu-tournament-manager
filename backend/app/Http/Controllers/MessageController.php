@@ -78,8 +78,7 @@ class MessageController extends Controller
             'team_id' => 'required|integer',
             'game_id' => 'required|integer',
         ]);
-
-        $game = Game::find($validated['game_id'])->with(['hall', 'timeslot'])->first();
+        $game = Game::with(['hall', 'timeslot'])->find($validated['game_id']);
         $teamMembers = Team::find($validated['team_id'])->members()->get();
 
         foreach ($teamMembers as $member) {
