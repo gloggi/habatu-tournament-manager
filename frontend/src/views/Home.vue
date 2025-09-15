@@ -1,8 +1,6 @@
 <template>
   <Container>
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"
-    >
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
       <template v-for="item in menuList" :key="item.name">
         <Card
           v-if="item.allowed !== false"
@@ -60,7 +58,7 @@ const handleRouteChange = (routeName: string) => {
 
 const menuList: IMenuItem[] = [
   {
-    name: "Tournier erstellen",
+    name: "Erstellen",
     icon: Trophy,
     routeName: "Setup",
   },

@@ -7,8 +7,8 @@ export const useOptionsStore = defineStore("options", {
     options: null as Options | null,
     localOptions: {
       gameTableRefreshRate: localStorage.getItem("gameTableRefreshRate")
-        ? parseInt(localStorage.getItem("gameTableRefreshRate") || "5")
-        : 5,
+        ? parseInt(localStorage.getItem("gameTableRefreshRate") || "0")
+        : 0,
     },
   }),
 

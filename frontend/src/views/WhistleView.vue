@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 const route = useRoute();
+import { useRouter } from "vue-router";
+const router = useRouter();
 import { useApi } from "@/api";
 import { Game } from "@/types";
 const {
@@ -38,6 +40,14 @@ const changePoints = async (points: number, team: "A" | "B") => {
     game.value!.pointsTeamB += points;
     await updateGame(game.value!.id, { pointsTeamB: game.value!.pointsTeamB });
   }
+};
+
+const saveGameAndReturn = async () => {
+  await updateGame(game.value!.id, {
+    pointsTeamA: game.value!.pointsTeamA,
+    pointsTeamB: game.value!.pointsTeamB,
+  });
+  router.push({ name: "Referee" });
 };
 
 let interval: NodeJS.Timeout = setInterval(() => {}, 0);
@@ -147,7 +157,7 @@ const restartTimer = () => {
           ><PauseIcon class="size-24"
         /></Button>
       </div>
-      <Button>Spielstand abschicken</Button>
+      <Button @click="saveGameAndReturn">Spielstand abschicken</Button>
     </div>
   </div>
 </template>

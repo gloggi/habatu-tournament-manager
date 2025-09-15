@@ -53,12 +53,15 @@ const userStore = useUserStore();
       </div>
       <div class="w-1/3 flex justify-center">
         <div class="text-2xl font-semibold flex items-center space-x-2">
-          <ClockIcon /><span>{{ time }}</span>
+          <ClockIcon class="hidden md:block" /><span>{{ time }}</span>
         </div>
       </div>
       <div class="w-1/3 flex justify-end">
         <div class="flex space-x-2">
-          <GameTableControlButtons v-if="$route.name === 'GameTable'" />
+          <GameTableControlButtons
+            class="hidden md:flex"
+            v-if="$route.name === 'GameTable'"
+          />
           <Button
             @click="() => $router.push('/profile')"
             class="aspect-square p-0"
