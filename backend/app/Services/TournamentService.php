@@ -454,4 +454,36 @@ class TournamentService
         }
 
     }
+
+    public function hasConflictingGames($hallsInTimeslot): array
+    {
+        $conflictingHalls = [];
+        $teamsInHalls = [];
+        foreach ($hallsInTimeslot as $hallName => $hallGames) {
+            if (count($hallGames['games']) > 1) {
+                $conflictingHalls[] = $hallName;
+            }
+            foreach ($hallGames['games'] as $game) {
+                $teamsInHalls[$hallName][] = $game->team_a_id;
+                $teamsInHalls[$hallName][] = $game->team_b_id;
+            }
+
+        }
+        foreach ($teamsInHalls as $hallNameA => $teamsA) {
+            foreach ($teamsInHalls as $hallNameB => $teamsB) {
+                if ($hallNameA === $hallNameB) {
+                    continue;
+                }
+                $commonTeams = array_intersect($teamsA, $teamsB);
+                if (count($commonTeams) > 0 && ! in_array($hallNameA, $conflictingHalls)) {
+                    $conflictingHalls[] = $hallNameA;
+                }
+                if (count($commonTeams) > 0 && ! in_array($hallNameB, $conflictingHalls)) {
+                    $conflictingHalls[] = $hallNameB;
+                }
+            }
+        }
+
+        return $conflictingHalls;
+    }
 }

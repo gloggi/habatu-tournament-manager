@@ -81,6 +81,7 @@ export type SlotInfo = {
   timeslotId: number;
   hallName: string;
   hasGames: boolean;
+  hasConflict: boolean;
 };
 
 export type ScheduleEntry = {

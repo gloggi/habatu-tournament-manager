@@ -8,6 +8,8 @@
     :class="{
       'border-2 border-gray-400 border-spacing-5 border-dashed': dragActive,
       'h-28': dragActive,
+      'border-red-600 border-dashed border-4':
+        props.scheduleEntry.slotInfo.hasConflict,
     }"
   >
     <GameTile

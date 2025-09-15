@@ -17,6 +17,15 @@ use Illuminate\Http\Request;
 
 class TournamentController extends Controller
 {
+    private $tournamentService;
+
+    public function __construct()
+    {
+        $this->tournamentService = new TournamentService;
+        $this->finaleService = new FinaleService;
+
+    }
+
     private function validateAndUpdateTorunamentSpecs(Request $request)
     {
         $validated = $request->validate([
@@ -77,8 +86,7 @@ class TournamentController extends Controller
     {
         $this->validateAndUpdateTorunamentSpecs($request);
 
-        $tournamentService = new TournamentService;
-        $tournamentService->createTournament();
+        $this->tournamentService->createTournament();
 
         return response()->json([
             'message' => 'Tournament created successfully',
@@ -147,6 +155,16 @@ class TournamentController extends Controller
 
             $groupedGames[$timeslot][$hall]['games'][] = $game;
             $groupedGames[$timeslot][$hall]['slot_info']['has_games'] = true;
+        }
+        foreach ($groupedGames as $timeslot => $hallsInTimeslot) {
+            if ($timeslot == '09:45 - 09:55') {
+                $test = 5;
+            }
+            $conflictingHalls = $this->tournamentService->hasConflictingGames($hallsInTimeslot);
+            foreach ($conflictingHalls as $hallName) {
+                $groupedGames[$timeslot][$hallName]['slot_info']['has_conflict'] = true;
+            }
+
         }
 
         return $groupedGames;
@@ -229,16 +247,14 @@ class TournamentController extends Controller
     public function addNewTimeslot(Request $request)
     {
 
-        $tournamentService = new TournamentService;
-        $newSlot = $tournamentService->getTimeAndHallSlot(newSlot: true);
+        $newSlot = $this->tournamentService->getTimeAndHallSlot(newSlot: true);
 
         return response()->json($newSlot);
     }
 
     public function findConflicts()
     {
-        $tournamentService = new TournamentService;
-        $conflicts = $tournamentService->findTournamentConflicts();
+        $conflicts = $this->tournamentService->findTournamentConflicts();
 
         return response()->json($conflicts);
     }
