@@ -20,6 +20,7 @@ import {
   UsersIcon,
   TrophyIcon,
   Users,
+  CircleUserIcon,
 } from "lucide-vue-next";
 
 import { useRoute } from "vue-router";
@@ -62,7 +63,7 @@ const data = {
     {
       name: "Users",
       url: "/admin/users",
-      icon: Users,
+      icon: CircleUserIcon,
       active: "/admin/users" === $route.path,
     },
   ],

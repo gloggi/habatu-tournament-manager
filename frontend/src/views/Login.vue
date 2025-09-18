@@ -129,9 +129,7 @@ onMounted(() => {
           <div class="text-2xl md:text-6xl font-bold text-white">
             HaBaTu Tournament Manager
           </div>
-          <div class="text-sm md:text-3xl font-light text-white">
-            Will jedes Turnier die perfekti Planig verdient
-          </div>
+          <div class="text-sm md:text-3xl font-light text-white"></div>
         </div>
       </div>
     </div>

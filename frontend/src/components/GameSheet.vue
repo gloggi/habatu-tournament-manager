@@ -161,7 +161,7 @@ const notifyReferee = async () => {
         <MultiComboBox
           v-if="game"
           label="Schiri"
-          optionsEntity="users"
+          optionsEntity="referees"
           valueKey="nickname"
           v-model="referees"
         >

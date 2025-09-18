@@ -15,7 +15,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(['section', 'team'])->get();
+        $users = User::with(['section', 'team'])->withExists('pushSubscriptions')->get();
+
+        return response()->json($users);
+    }
+
+    public function getAllReferees()
+    {
+        $users = User::with(['section', 'team'])->where('role', 'referee')->get();
 
         return response()->json($users);
     }

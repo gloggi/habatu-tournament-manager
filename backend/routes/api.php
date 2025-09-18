@@ -24,6 +24,7 @@ Route::get('auth', [AuthController::class, 'me']);
 Route::get('auth/midata', [AuthController::class, 'redirectToProvider']);
 Route::post('/auth/midata/callback', [AuthController::class, 'handleProviderCallback']);
 Route::apiResource('users', UserController::class);
+Route::get('referees', [UserController::class, 'getAllReferees']);
 Route::post('options', [OptionController::class, 'store']);
 Route::get('options', [OptionController::class, 'index']);
 Route::post('tournament/calculate', [TournamentController::class, 'calculateTournamentInfos']);
