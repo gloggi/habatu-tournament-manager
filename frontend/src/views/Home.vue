@@ -61,6 +61,7 @@ const menuList: IMenuItem[] = [
     name: "Erstellen",
     icon: Trophy,
     routeName: "Setup",
+    allowed: userStore.isAdmin,
   },
   {
     name: "Spielplan",

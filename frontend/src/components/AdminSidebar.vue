@@ -19,7 +19,6 @@ import {
   MapIcon,
   UsersIcon,
   TrophyIcon,
-  Users,
   CircleUserIcon,
 } from "lucide-vue-next";
 
