@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import rotatingBall from "../assets/rotating_ball_a.png";
+import voelkBall from "../assets/voelk_ball.png";
 import InputField from "@/components/InputField.vue";
 import { Button } from "@/components/ui/button";
 import MiDataButton from "@/components/MiDataButton.vue";
@@ -121,13 +122,20 @@ onMounted(() => {
         class="flex flex-row space-x-5 justify-center items-center md:space-x-0 md:flex-col md:space-y-8 p-8 h-full"
       >
         <img
+          v-if="$env.VITE_SHORT_NAME === 'habatu'"
           :src="rotatingBall"
+          alt="rotating ball"
+          class="size-24 md:size-72"
+        />
+        <img
+          v-else-if="$env.VITE_SHORT_NAME === 'voelk'"
+          :src="voelkBall"
           alt="rotating ball"
           class="size-24 md:size-72"
         />
         <div class="flex flex-col space-y-2 h-full md:h-auto">
           <div class="text-2xl md:text-6xl font-bold text-white">
-            HaBaTu Tournament Manager
+            {{ $env.VITE_APP_NAME }}
           </div>
           <div class="text-sm md:text-3xl font-light text-white"></div>
         </div>
@@ -160,8 +168,10 @@ onMounted(() => {
                 />
                 <Button>Login</Button>
               </form>
+              <template v-if="$env.VITE_SHOW_MIDATA_LOGIN==='true'">
               <Separator label="oder" />
               <MiDataButton @click="loginWithMiData" />
+              </template>
             </div>
           </TabsContent>
           <TabsContent value="register">

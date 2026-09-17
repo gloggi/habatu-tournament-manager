@@ -22,6 +22,8 @@ pnpm-debug.log*
 *.rest
 *.py
 deploy.sh
+deploy.habatu.sh
+deploy.voelk.sh
 
 # Laravel ignores (backend/)
 backend/vendor/
@@ -48,7 +50,7 @@ backend/storage/logs/*.log
 backend/storage/oauth-private.key
 backend/storage/oauth-public.key
 backend/.env.example
-backend/.env
+backend/.env*
 
 # Vue 3 + TypeScript ignores (frontend/)
 frontend/node_modules/

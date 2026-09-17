@@ -7,4 +7,6 @@ import "./registerSW";
 
 const pinia = createPinia();
 
-createApp(App).use(router).use(pinia).mount("#app");
+const app = createApp(App);
+app.config.globalProperties.$env = import.meta.env;
+app.use(router).use(pinia).mount("#app");

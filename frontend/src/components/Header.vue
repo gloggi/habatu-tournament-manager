@@ -2,7 +2,8 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { format } from "date-fns";
 
-import logo from "@/assets/rotating_ball_a.png";
+import rotatingBall from "@/assets/rotating_ball_a.png";
+import voelkBall from "@/assets/voelk_ball.png";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "./ui/button";
 import { ChevronLeftIcon, ClockIcon } from "lucide-vue-next";
@@ -47,7 +48,16 @@ const userStore = useUserStore();
             class="aspect-square p-0"
             variant="ghost"
           >
-            <img class="aspect-square" :src="logo" />
+            <img
+              v-if="$env.VITE_SHORT_NAME === 'habatu'"
+              class="aspect-square"
+              :src="rotatingBall"
+            />
+            <img
+              v-else-if="$env.VITE_SHORT_NAME === 'voelk'"
+              class="aspect-square"
+              :src="voelkBall"
+            />
           </Button>
         </div>
       </div>

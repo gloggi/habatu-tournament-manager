@@ -69,6 +69,7 @@ const data = {
 };
 
 import rotatingBall from "@/assets/rotating_ball_a.png";
+import voelkBall from "@/assets/voelk_ball.png";
 </script>
 
 <template>
@@ -78,7 +79,14 @@ import rotatingBall from "@/assets/rotating_ball_a.png";
         <div class="flex justify-center items-center size-full">
           <router-link to="/">
             <img
+              v-if="$env.VITE_SHORT_NAME === 'habatu'"
               :src="rotatingBall"
+              alt="rotating ball"
+              class="max-w-14 w-full aspect-square"
+            />
+            <img
+              v-else-if="$env.VITE_SHORT_NAME === 'voelk'"
+              :src="voelkBall"
               alt="rotating ball"
               class="max-w-14 w-full aspect-square"
             />

@@ -22,9 +22,9 @@ defineProps<{
         <p class="points-item">S</p>
         <p class="points-item">U</p>
         <p class="points-item">N</p>
-        <p class="points-item hidden md:block">T+</p>
-        <p class="points-item hidden md:block">T-</p>
-        <p class="points-item hidden md:block">T+/-</p>
+        <p class="points-item hidden md:block">{{$env.VITE_SHORT_NAME==='voelk'?'W':'T'}}+</p>
+        <p class="points-item hidden md:block">{{$env.VITE_SHORT_NAME==='voelk'?'W':'T'}}-</p>
+        <p class="points-item hidden md:block">{{$env.VITE_SHORT_NAME==='voelk'?'W':'T'}}+/-</p>
         <p class="points-item">PKT</p>
       </template>
     </div>
