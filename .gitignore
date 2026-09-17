@@ -1,4 +1,5 @@
 # General ignores
+.agents/
 node_modules/
 dist/
 .DS_Store
