@@ -22,7 +22,7 @@ class TournamentService
         4 => 'Viertelfinale',
         8 => 'Achtelfinale',
         16 => 'Achtundzwanzigstelfinale',
-        32 => 'Zweiunddreißigstelfinale',
+        32 => 'Zweiunddreissigstelfinale',
         64 => 'Vierundsechzigstelfinale',
         128 => 'Hundertachtundzwanzigstelfinale',
     ];
@@ -30,12 +30,17 @@ class TournamentService
     public function __construct($temporary = false)
     {
         $this->temporary = $temporary;
-        $this->options = Option::first();
+        $this->loadOptions();
+    }
 
+    public function loadOptions(): void
+    {
+        $this->options = Option::first();
     }
 
     public function createTournament($temporary = false)
     {
+        $this->loadOptions();
         $this->clearTournament();
         $categories = Category::all();
         $gamesByCategory = [];

@@ -30,12 +30,14 @@ Route::get('options', [OptionController::class, 'index']);
 Route::post('tournament/calculate', [TournamentController::class, 'calculateTournamentInfos']);
 Route::get('tournament/specs', [TournamentController::class, 'getSpecs']);
 Route::get('tournament/table', [TournamentController::class, 'getNormalTable']);
-Route::post('tournament/create', [TournamentController::class, 'createTorunament']);
+Route::post('tournament/create', [TournamentController::class, 'createTournament']);
 Route::post('tournament/new-timeslot', [TournamentController::class, 'addNewTimeslot']);
 Route::get('tournament/ranking', [TournamentController::class, 'getRanking']);
 Route::get('tournament/finals-ranking', [TournamentController::class, 'getFinalsRanking']);
-Route::get('tournament/referee-table', [TournamentController::class, 'getRefereeTable']);
-Route::get('tournament/team-table', [TournamentController::class, 'getTeamTable']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('tournament/referee-table', [TournamentController::class, 'getRefereeTable']);
+    Route::get('tournament/team-table', [TournamentController::class, 'getTeamTable']);
+});
 Route::get('tournament/conflicts', [TournamentController::class, 'findConflicts']);
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);

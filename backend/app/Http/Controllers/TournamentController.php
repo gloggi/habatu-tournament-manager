@@ -26,7 +26,7 @@ class TournamentController extends Controller
 
     }
 
-    private function validateAndUpdateTorunamentSpecs(Request $request)
+    private function validateAndUpdateTournamentSpecs(Request $request)
     {
         $validated = $request->validate([
             'start_time' => 'required|date_format:H:i',
@@ -47,6 +47,9 @@ class TournamentController extends Controller
                 'play_for_third_place' => $validated['play_for_third_place'],
             ]
         );
+
+        $this->tournamentService->loadOptions();
+
         $updatedOptions = Option::first();
         if ($updatedOptions->round_robin) {
             $categories = Category::all();
@@ -71,9 +74,14 @@ class TournamentController extends Controller
 
     }
 
+    private function validateAndUpdateTorunamentSpecs(Request $request)
+    {
+        return $this->validateAndUpdateTournamentSpecs($request);
+    }
+
     public function calculateTournamentInfos(Request $request)
     {
-        $this->validateAndUpdateTorunamentSpecs($request);
+        $this->validateAndUpdateTournamentSpecs($request);
 
         $tournamentService = new TournamentService(temporary: true);
         $tournamentInfos = $tournamentService->createTournament();
@@ -82,15 +90,20 @@ class TournamentController extends Controller
 
     }
 
-    public function createTorunament(Request $request)
+    public function createTournament(Request $request)
     {
-        $this->validateAndUpdateTorunamentSpecs($request);
+        $this->validateAndUpdateTournamentSpecs($request);
 
         $this->tournamentService->createTournament();
 
         return response()->json([
             'message' => 'Tournament created successfully',
         ]);
+    }
+
+    public function createTorunament(Request $request)
+    {
+        return $this->createTournament($request);
     }
 
     public function getSpecs()
@@ -103,42 +116,44 @@ class TournamentController extends Controller
         });
 
         $specs = [
-            'start_time' => $options->start_time->format('H:i'),
+            'start_time' => Carbon::parse($options->start_time)->format('H:i'),
             'game_duration' => $options->game_duration,
             'break_duration' => $options->break_duration,
             'round_robin' => $options->round_robin,
             'group_phase' => $options->group_phase,
-            'groups_per_category' => $groupsPerCategory,
             'play_for_third_place' => $options->play_for_third_place,
+            'groups_per_category' => $groupsPerCategory,
         ];
 
         return response()->json($specs);
     }
 
-    private function getTable($userId = null, $teamId = null)
+    private function getTable($refereeId = null, $teamId = null)
     {
-
-        // Fetch all halls and timeslots
-        $halls = Hall::all();
-        $timeslots = Timeslot::where('temporary', false)->get();
-
-        // Initialize groupedGames with empty arrays for all hall-timeslot combinations
         $groupedGames = [];
+        $timeslots = Timeslot::where('temporary', false)->orderBy('start_time')->get();
+        $halls = Hall::all();
         foreach ($timeslots as $timeslot) {
-            $formattedTimeslot = $timeslot->start_time->format('H:i').' - '.$timeslot->end_time->format('H:i');
-            $groupedGames[$formattedTimeslot] = [];
-
+            $timeslotString = $timeslot->start_time->format('H:i').' - '.$timeslot->end_time->format('H:i');
             foreach ($halls as $hall) {
-                $groupedGames[$formattedTimeslot][$hall->name] = ['games' => [], 'slot_info' => ['hall_id' => $hall->id, 'hall_name' => $hall->name, 'timeslot_id' => $timeslot->id, 'has_games' => false]];
+                $groupedGames[$timeslotString][$hall->name] = [
+                    'games' => [],
+                    'slot_info' => [
+                        'hall_id' => $hall->id,
+                        'hall_name' => $hall->name,
+                        'timeslot_id' => $timeslot->id,
+                        'has_games' => false,
+                        'has_conflict' => false,
+                    ],
+                ];
             }
         }
+        $query = Game::with(['timeslot', 'hall', 'teamA.section', 'teamB.section', 'category', 'referees'])
+            ->where('temporary', false);
 
-        // Fetch games and populate the array
-        $query = Game::with('teamA', 'teamB', 'hall', 'timeslot', 'category')->where('temporary', false);
-
-        if ($userId) {
-            $query->whereHas('referees', function ($query) use ($userId) {
-                $query->where('user_id', $userId);
+        if ($refereeId) {
+            $query->whereHas('referees', function ($query) use ($refereeId) {
+                $query->where('user_id', $refereeId);
             });
         }
         if ($teamId) {
@@ -157,9 +172,6 @@ class TournamentController extends Controller
             $groupedGames[$timeslot][$hall]['slot_info']['has_games'] = true;
         }
         foreach ($groupedGames as $timeslot => $hallsInTimeslot) {
-            if ($timeslot == '09:45 - 09:55') {
-                $test = 5;
-            }
             $conflictingHalls = $this->tournamentService->hasConflictingGames($hallsInTimeslot);
             foreach ($conflictingHalls as $hallName) {
                 $groupedGames[$timeslot][$hallName]['slot_info']['has_conflict'] = true;
@@ -181,7 +193,11 @@ class TournamentController extends Controller
 
     public function getRefereeTable(Request $request)
     {
-        $userId = $request->user('api')->id;
+        $user = $request->user('api') ?? $request->user();
+        if (! $user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $userId = $user->id;
         $groupedGames = $this->getTable($userId);
 
         return response()->json($groupedGames);
@@ -190,8 +206,14 @@ class TournamentController extends Controller
 
     public function getTeamTable(Request $request)
     {
-        $userId = $request->user('api')->id;
-        $userTeamId = User::find($userId)->team_id;
+        $user = $request->user('api') ?? $request->user();
+        if (! $user) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        $userTeamId = $user->team_id;
+        if (! $userTeamId) {
+            return response()->json([]);
+        }
         $groupedGames = $this->getTable(null, $userTeamId);
 
         return response()->json($groupedGames);
