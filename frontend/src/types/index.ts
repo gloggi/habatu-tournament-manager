@@ -93,6 +93,7 @@ export type Schedule = Record<string, Record<string, ScheduleEntry>>;
 
 export type User = {
   id: number;
+  username?: string;
   nickname: string;
   created_at?: string;
   updated_at?: string;

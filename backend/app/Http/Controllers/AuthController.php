@@ -11,8 +11,17 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
+        $loginName = $request->input('username') ?? $request->input('nickname');
+        $nickname = $request->input('nickname') ?? $request->input('username');
+
+        $request->merge([
+            'username' => $loginName,
+            'nickname' => $nickname,
+        ]);
+
         $validated = $request->validate([
-            'nickname' => 'required|string|unique:users',
+            'username' => 'required|string|max:255|unique:users,username',
+            'nickname' => 'required|string|max:255',
             'password' => 'required|string|min:6',
         ]);
 
@@ -35,14 +44,23 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'nickname' => 'required|string',
+            'username' => 'nullable|string',
+            'nickname' => 'nullable|string',
             'password' => 'required|string',
             'section_id' => 'nullable|integer|exists:sections,id',
             'team_id' => 'nullable|integer|exists:teams,id',
         ]);
 
-        // Find the user by their nickname
-        $user = User::where('nickname', $validated['nickname'])->first();
+        $loginName = $validated['username'] ?? $validated['nickname'] ?? null;
+        if (! $loginName) {
+            return response()->json([
+                'message' => 'The username or nickname field is required.',
+            ], 422);
+        }
+
+        // Find the user by their username (or fallback to nickname)
+        $user = User::where('username', $loginName)->first()
+            ?? User::where('nickname', $loginName)->first();
 
         // Check if the user exists and if the password is correct
         if (! $user || ! Hash::check($validated['password'], $user->password)) {
@@ -74,14 +92,26 @@ class AuthController extends Controller
         $accessToken = $tokenResponse['access_token'];
         $midataUser = Socialite::driver('midata')->userFromToken($accessToken);
 
+        //log midataUser to string
+        error_log(json_encode($midataUser));
+
         $user = User::where('midata_id', $midataUser->id)->first();
 
         if (! $user) {
+            $nickname = $midataUser->attributes['nickname'] ?? null;
+            if (empty($nickname)) {
+                $nickname = $midataUser->attributes['firstname'] ?? $midataUser->user['first_name'] ?? null;
+            }
+
             $user = User::create([
-                'nickname' => $midataUser->attributes['nickname'],
+                'username' => (string) $midataUser->attributes['id'],
+                'nickname' => $nickname,
                 'midata_id' => $midataUser->attributes['id'],
             ]);
 
+            $user->save();
+        } elseif (empty($user->username)) {
+            $user->username = (string) $midataUser->attributes['id'];
             $user->save();
         }
 

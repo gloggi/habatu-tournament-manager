@@ -43,6 +43,7 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
+            'username' => 'sometimes|string|max:255|unique:users,username,'.$id,
             'nickname' => 'sometimes|string|max:255',
             'email' => 'sometimes|email',
             'password' => 'sometimes|string|min:8',
@@ -72,8 +73,12 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $username = $request->input('username') ?? $request->input('nickname');
+        $request->merge(['username' => $username]);
+
         $validated = $request->validate([
-            'nickname' => 'required|string|unique:users',
+            'username' => 'required|string|max:255|unique:users,username',
+            'nickname' => 'required|string|max:255',
             'section_id' => 'nullable|integer|exists:sections,id',
             'team_id' => 'nullable|integer|exists:teams,id',
             'role' => 'nullable|string|in:admin,user,referee',

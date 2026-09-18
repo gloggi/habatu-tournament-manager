@@ -7,6 +7,7 @@ import ComboBox from "@/components/ComboBox.vue";
 <template>
   <GenericEditComponent resourceName="users">
     <template #default="{ item }">
+      <InputField v-model="item.username" label="Benutzername" />
       <InputField v-model="item.nickname" label="Pfadiname" />
       <ComboBox v-model="item.teamId" label="Team" optionsEntity="teams" />
       <ComboBox

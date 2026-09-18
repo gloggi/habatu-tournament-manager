@@ -19,11 +19,12 @@ const { postData: doLogin } = useApi("login");
 const { postData: doRegister } = useApi("register");
 
 const loginForm = ref({
-  nickname: "",
+  username: "",
   password: "",
 });
 
 const registerForm = ref({
+  username: "",
   nickname: "",
   password: "",
   passwordRepeat: "",
@@ -159,7 +160,7 @@ onMounted(() => {
                 <InputField
                   label="Benutzername"
                   type="text"
-                  v-model="loginForm.nickname"
+                  v-model="loginForm.username"
                 />
                 <InputField
                   label="Password"
@@ -178,7 +179,12 @@ onMounted(() => {
             <h2 class="text-4xl font-bold text-gray-800 mb-4">Registrieren</h2>
             <form class="flex flex-col space-y-3" @submit.prevent="register">
               <InputField
-                label="Benutzername"
+                label="Benutzername (Login)"
+                type="text"
+                v-model="registerForm.username"
+              />
+              <InputField
+                label="Pfadiname / Anzeigename (optional)"
                 type="text"
                 v-model="registerForm.nickname"
               />

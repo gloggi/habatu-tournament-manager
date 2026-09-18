@@ -3,8 +3,8 @@
     <EntityTable
       entity="users"
       name="Users"
-      :columnKeys="['nickname', 'boolean(pushSubscriptionsExists)']"
-      :columnNames="['Pfadiname', 'Push-Benachrichtigungen aktiviert']"
+      :columnKeys="['username', 'nickname', 'boolean(pushSubscriptionsExists)']"
+      :columnNames="['Benutzername', 'Pfadiname', 'Push-Benachrichtigungen aktiviert']"
     />
   </Container>
 </template>
