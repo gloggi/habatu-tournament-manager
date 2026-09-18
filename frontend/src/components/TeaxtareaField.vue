@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineEmits, computed } from "vue";
+import { computed } from "vue";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
